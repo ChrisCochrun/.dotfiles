@@ -14,4 +14,4 @@
 
 style="blurry"
 
-rofi -no-lazy-grab -show drun -modi drun,window,calc,ssh,run,emoji -monitor 1 -theme launchers-git/"$style".rasi && xprop -f _KDE_NET_WM_BLUR_BEHIND_REGION 32c -set _KDE_NET_WM_BLUR_BEHIND_REGION 0 -name rofi
+rofi -no-lazy-grab -show drun -modi drun,window,calc,ssh,run,emoji -monitor 1 -theme launchers-git/"$style".rasi & sleep 0.3 && xprop -f _KDE_NET_WM_BLUR_BEHIND_REGION 32c -set _KDE_NET_WM_BLUR_BEHIND_REGION 0 -name rofi
