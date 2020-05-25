@@ -18,21 +18,21 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-background = #222
-background-alt = #444
+background = #282a36
+background-alt = #34353e
 ;foreground = ${xrdb:color7:#222}
-foreground = #dfdfdf
-foreground-alt = #555
-primary = #ffb52a
-secondary = #e60053
-alert = #bd2c40
+foreground = #e3e4e5
+foreground-alt = #a5a5a9
+primary = #ff9f43
+secondary = #57c7ff
+alert = #ff5c57
 
-[bar/example]
+[bar/main]
 ;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
 height = 27
-;offset-x = 1%
-;offset-y = 1%
+; offset-x = 6%
+offset-y = 0.5%
 radius = 12.0
 fixed-center = true
 bottom = true
@@ -41,9 +41,9 @@ background = ${colors.background}
 foreground = ${colors.foreground}
 
 line-size = 2
-line-color = #f00
+line-color = ${colors.secondary}
 
-border-size = 0
+border-size = 4
 border-color = #00000000
 
 padding-left = 0
@@ -52,25 +52,33 @@ padding-right = 2
 module-margin-left = 1
 module-margin-right = 2
 
-font-0 = "fixed:pixelsize=10;1"
-font-1 = "unifont:fontformat=truetype:size=8:antialias=false;0"
-font-2 = "siji:pixelsize=10;1"
-font-3 = "recursive:size=10;1"
+font-0 = "fixed:pixelsize=12;1"
+font-1 = "Unifont:style=Sans-Serif:size=12:antialias=false;0"
+font-2 = "Wuncon Siji:pixelsize=12;1"
+font-3 = "Recursive Sans Linear Light:size=10;1"
 font-4 = "Noto Sans:size=10;1"
-font-5 = "Noto Color Emoji:size=10;1"
+font-5 = "Noto Color Emoji:style=Regular:size=10;1"
 
-modules-left = bspwm i3 xwindow
+modules-left = xwindow
 modules-center = date
-modules-right = filesystem xbacklight pulseaudio memory cpu wlan eth battery temperature mpd powermenu
+modules-right = filesystem pulseaudio memory cpu eth temperature powermenu
 
-tray-position = right
-tray-padding = 2
-;tray-background = #0063ff
+tray-position = center
+tray-detatched = false
+tray-padding = 4
+tray-maxsize = 16
+tray-scale = 1
+tray-offset-x = 200
+tray-offset-y = 1
+tray-background = ${colors.background}
+tray-radius = 12.0
+
+enable-ipc = true
 
 ;wm-restack = bspwm
 ;wm-restack = i3
 
-;override-redirect = true
+override-redirect = false
 
 ;scroll-up = bspwm-desknext
 ;scroll-down = bspwm-deskprev
@@ -80,6 +88,27 @@ tray-padding = 2
 
 cursor-click = pointer
 cursor-scroll = ns-resize
+
+[settings]
+
+throttle-output = 5
+throttle-output-for = 10
+throttle-input-for = 30
+
+screenchange-reload = false
+
+compositing-background = source
+compositing-foreground = over
+compositing-overline = over
+compositing-underline = over
+compositing-border = over
+
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+
+pseudo-transparency = false
 
 [module/xwindow]
 type = internal/xwindow
@@ -171,18 +200,18 @@ label-unmounted-foreground = ${colors.foreground-alt}
 ; ; label-separator = |
 
 
-[module/mpd]
-type = internal/mpd
-format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
+; [module/mpd]
+; type = internal/mpd
+; format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
 
-icon-prev = 
-icon-stop = 
-icon-play = 
-icon-pause = 
-icon-next = 
+; icon-prev = 
+; icon-stop = 
+; icon-play = 
+; icon-pause = 
+; icon-next = 
 
-label-song-maxlen = 24
-label-song-ellipsis = true
+; label-song-maxlen = 24
+; label-song-ellipsis = true
 
 [module/xbacklight]
 type = internal/xbacklight
@@ -209,17 +238,24 @@ card = intel_backlight
 [module/cpu]
 type = internal/cpu
 interval = 2
+format = <ramp-load> <label>
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #f90000
 label = %percentage:2%%
+
+ramp-load-spacing = 4
+ramp-load-0 = ▁
+ramp-load-1 = ▃
+ramp-load-2 = ▅
+ramp-load-3 = ▇
 
 [module/memory]
 type = internal/memory
 interval = 2
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #4bffdc
+format-underline = ${colors.alert}
 label = %percentage_used%%
 
 [module/wlan]
@@ -413,16 +449,8 @@ menu-2-0-exec = sudo poweroff
 menu-2-1 = cancel
 menu-2-1-exec = menu-open-0
 
-[settings]
-screenchange-reload = true
-;compositing-background = xor
-;compositing-background = screen
-;compositing-foreground = source
-;compositing-border = over
-;pseudo-transparency = false
-
 [global/wm]
-margin-top = 1
+margin-top = 0
 margin-bottom = 0
 
 ; vim:ft=dosini
