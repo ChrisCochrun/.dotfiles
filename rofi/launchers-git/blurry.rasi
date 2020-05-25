@@ -8,7 +8,7 @@
  */
 
 configuration {
-    font:                           "Noto Sans 10";
+    font:                           "Noto Sans 28";
     show-icons:                     true;
 	icon-theme: 					"Papirus";
     display-drun: 					"⮞";
@@ -36,7 +36,7 @@ configuration {
 window {
     background-color:               #44444444;
     text-color:                     @foreground;
-    border-radius:                  15px;
+    border-radius:                  35px;
     border:                         0px;
 //    height:                         60%;
     width:                          50%;
@@ -49,7 +49,7 @@ window {
 }
 
 mainbox {
-    border-radius:                  15px;
+    border-radius:                  35px;
     background-color:               @background-color;
     transparency:                   "real";
 }
@@ -58,7 +58,7 @@ inputbar {
     background-color:               @background-alt;
     text-color:                     @transparent;
     expand:                         false;
-    border-radius:                  26px;
+    border-radius:                  36px;
     margin:                         0px 0px 0px 0px;
     padding:                        10px 10px 10px 10px;
     position:                       north;
