@@ -9,10 +9,11 @@ local gears = require('gears')
 
 local gfs = require("gears.filesystem")
 local themes_path = gfs.get_themes_dir()
+local wallpaperdir = "/home/chris/Pictures/wallpapers"
 
 local theme = {}
 
-theme.font          = "Rec Mono Linear 10"
+theme.font          = "VictorMono Nerd Font SemiBold 10"
 
 theme.bg_normal     = "#282a36"
 theme.bg_focus      = "#43454f"
@@ -26,7 +27,7 @@ theme.fg_urgent     = "#e2e4e5"
 theme.fg_minimize   = "#e2e4e5"
 
 theme.useless_gap   = dpi(8)
-theme.border_width  = dpi(1)
+theme.border_width  = dpi(0)
 theme.border_normal = "#00000000"
 theme.border_focus  = "#00000000"
 theme.border_marked = "#00000000"
@@ -74,8 +75,9 @@ theme.menu_width  = dpi(100)
 -- wibar
 theme.wibar_shape = gears.shape.rounded_bar
 theme.wibar_bg = theme.bg_normal
+theme.wibar_fg = theme.fg_normal
 -- theme.wibar_y = 1030
-theme.wibar_x = 0
+-- theme.wibar_x = 0
 -- theme.wibar_stretch = false
 theme.wibar_border_width = 3
 theme.wibar_border_color = nil
@@ -84,9 +86,8 @@ theme.wibar_border_color = nil
 theme.wibar_opacity = 0.7
 -- theme.wibar_type = nil
 theme.wibar_width = dpi(1900)
--- theme.wibar_height = nil
+theme.wibar_height = dpi(30)
 -- theme.wibar_bgimage = nil
--- theme.wibar_fg = nil
 
 -- Define the image to load
 theme.titlebar_bg_normal = "#282A36FF"
@@ -117,7 +118,7 @@ theme.titlebar_maximized_button_focus_inactive  = themes_path.."default/titlebar
 theme.titlebar_maximized_button_normal_active = themes_path.."default/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active  = themes_path.."default/titlebar/maximized_focus_active.png"
 
-theme.wallpaper = themes_path.."default/background.png"
+theme.wallpaper = wallpaperdir.."RoyalKing.png"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = themes_path.."default/layouts/fairhw.png"
@@ -136,6 +137,8 @@ theme.layout_cornernw = themes_path.."default/layouts/cornernww.png"
 theme.layout_cornerne = themes_path.."default/layouts/cornernew.png"
 theme.layout_cornersw = themes_path.."default/layouts/cornersww.png"
 theme.layout_cornerse = themes_path.."default/layouts/cornersew.png"
+
+-- Notifications
 
 -- Generate Awesome icon:
 theme.awesome_icon = theme_assets.awesome_icon(

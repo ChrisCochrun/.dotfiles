@@ -1,0 +1,8 @@
+/* Color controls for theme_***.css files */
+:root{
+  --uc-dark-bkgnd-color: #2b2b2b;
+  --uc-light-bkgnd-color: rgb(24, 24, 24);
+  --uc-active-color: rgb(59, 59, 59);
+  --uc-text-color: rgb(228, 228, 228);
+  --uc-border-color: rgb(172, 172, 172);
+}

@@ -49,7 +49,7 @@ beautiful.init("/home/chris/.config/awesome/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
-editor = os.getenv("EDITOR") or "emacs"
+editor = os.getenv("EDITOR") or "emacsclient -a emacs"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
@@ -58,6 +58,7 @@ editor_cmd = terminal .. " -e " .. editor
 -- I suggest you to remap Mod4 to another key using xmodmap or other tools.
 -- However, you can use another modifier like Mod1, but it may interact with others.
 modkey = "Mod4"
+altkey = "Mod1"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
@@ -107,7 +108,10 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+mytextclock = wibox.widget.textclock(" %a %b %d, %l:%M %p ")
+
+-- Create a volume widget
+-- myvolumewidget = wibox.widget.button()
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -201,6 +205,14 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "bottom", screen = s })
 
+    s.myrightwidgets =
+        { -- Right widgets
+            layout = wibox.layout.ratio.horizontal,
+            s.mytasklist, -- Middle widget
+            s.mysystray,
+            s.mylayoutbox,
+            inner_fill_strategy = "right"
+        }
     -- Add widgets to the wibox
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
@@ -209,14 +221,17 @@ awful.screen.connect_for_each_screen(function(s)
             mylauncher,
             s.mytaglist,
             s.mypromptbox,
+            spacing = 15
         },
-        s.mytasklist, -- Middle widget
-        { -- Right widgets
-            layout = wibox.layout.fixed.horizontal,
+        mytextclock,
+        {
+            layout = wibox.layout.ratio.horizontal,
+            s.mytasklist, -- Middle widget
             s.mysystray,
-            mytextclock,
             s.mylayoutbox,
+            inner_fill_strategy = "right"
         },
+        expand = "outside"
     }
 end)
 -- }}}
@@ -277,10 +292,10 @@ globalkeys = gears.table.join(
 
     -- Increase-Decrease Gap
 
-    awful.key({ modkey, Mod1   }, "k", function () awful.tag.incgap (  1, null)    end,
+    awful.key({ modkey, altkey }, "k", function () awful.tag.incgap (  1, null)    end,
       {description = "increase gap", group = "layout"}),
 
-    awful.key({ Mod1,  modkey   }, "j", function () awful.tag.incgap ( -1, null)    end,
+    awful.key({ modkey, altkey }, "j", function () awful.tag.incgap ( -1, null)    end,
       {description = "decrease gap", group = "layout"}),
 
 
@@ -322,7 +337,7 @@ globalkeys = gears.table.join(
               {description = "restore minimized", group = "client"}),
 
     -- Prompt
-    awful.key({ modkey },            "r",     function ()
+    awful.key({ },       "Menu"     ,     function ()
         awful.util.spawn("/home/chris/.dotfiles/rofi/launchers-git/launcher.sh") end,
               {description = "launch rofi", group = "launcher"}),
 
@@ -486,7 +501,8 @@ awful.rules.rules = {
           "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
           "Wpa_gui",
           "veromix",
-          "xtightvncviewer"},
+          "xtightvncviewer",
+          "feh"},
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
         -- and the name shown there might not match defined rules here.
@@ -502,12 +518,19 @@ awful.rules.rules = {
 
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = true }
+      }, properties = { titlebars_enabled = false}
     },
 
-    -- Set Firefox to always map on the tag named "2" on screen 1.
-    -- { rule = { class = "Firefox" },
-    --   properties = { screen = 1, tag = "2" } },
+    -- Set Firefox to never have titlebars
+    { rule = { class = "Firefox" },
+      properties = { requests_no_titlebar = true, titlebars_enabled = false }
+    },
+
+    -- Set Feh center
+    { rule = {class = "feh"},
+      properties = {
+          placement = awful.placement.centered
+    }},
 }
 -- }}}
 
@@ -578,5 +601,6 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- Autostart Applications
 awful.spawn.with_shell("picom")
-awful.spawn.with_shell("nitrogen --restore")
 -- awful.spawn.with_shell("polybarstart")
+awful.spawn.with_shell("feh --bg-fill ~/Pictures/wallpapers/RoyalKing.png")
+awful.spawn.with_shell("/usr/lib/polkit-kde-authentication-agent-1")

@@ -1,0 +1,130 @@
+/* Modify these to change relative widths or default height */
+#navigator-toolbox{ --uc-navigationbar-width: 11vw; --uc-toolbar-height: 30px; --window-drag-space-width: 20px}
+/* Override for other densities */
+:root[uidensity="compact"] > #navigator-toolbox{ --uc-toolbar-height: 32px;}
+:root[uidensity="touch"] > #navigator-toolbox{ --uc-toolbar-height: 40px; }
+
+/* prevent urlbar overflow on narrow windows */
+/* Dependent on how many items are in navigation toolbar and tabs-/nav-bar ratio - ADJUST AS NEEDED */
+@media screen and (max-width: 1600px){
+  #urlbar-container{ min-width:unset !important }
+}
+
+
+#toolbar-menubar{ height:initial !important; }
+#toolbar-menubar[inactive] > #menubar-items{ opacity: 0; pointer-events: none; }
+#toolbar-menubar[inactive]{ 
+  margin-bottom: calc(0px - var(--uc-toolbar-height));
+  margin-left: 0px;
+}
+
+#TabsToolbar > .titlebar-buttonbox-container,
+#TabsToolbar > .toolbar-items > spacer,
+.titlebar-spacer[type="post-tabs"]{
+  display: none;
+  visibility: none;
+  max-width: 20px;
+}
+
+#TabsToolbar{
+  margin-right: calc(0px + var(--uc-navigationbar-width));
+  /* Remove empty space above tabs so that tabs are clickable at very top of screen */  
+  margin-top: -2px;
+  margin-left: 10px;
+  z-index: 10;
+}
+#toolbar-menubar[autohide="true"] > .titlebar-buttonbox-container,
+#tabbrowser-tabs,
+.tabbrowser-tab[pinned]{
+  height: var(--uc-toolbar-height) !important;
+  min-height: var(--uc-toolbar-height) !important;
+  margin-left: -10px;
+}
+
+.tabbrowser-tab[selected]{
+  min-width: 200px !important;
+  box-shadow: 0px 0px 15px 4px #111;
+  /*margin-top: -10px;*/
+}
+
+.tabbrowser-tab[pinned]{
+  max-width: 35px !important;
+  min-width: 0px !important;
+}
+
+#nav-bar{
+  margin-left: calc(100vw - var(--uc-navigationbar-width));
+  margin-top: calc(0px - var(--uc-toolbar-height));
+  padding-right: calc(3 * 46px + var(--window-drag-space-width));
+}
+
+/* Hide dropdown placeholder */
+#urlbar-container:not(:hover) .urlbar-history-dropmarker{margin-inline-start: -28px;}
+
+
+/* Autohide Navbar */
+
+#nav-bar:not([customizing="true"]):not([inFullscreen]) {
+  /*visibility: collapse !important;*/
+  min-height: 0px !important;
+  max-height: 0px !important;
+  margin-top: -15px !important;
+  margin-bottom: 14px !important;
+  margin-right: 200px !important;
+  margin-left: 200px !important;
+  transition: all 300ms ease .5s !important;
+  z-index: -5 !important;
+  border-radius: 50px;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+#navigator-toolbox:hover:not([inFullscreen]) :-moz-any(#nav-bar),
+#navigator-toolbox:focus-within :-moz-any(#nav-bar) {
+  /*visibility: visible !important;*/
+  min-height: 32px !important;
+  max-height: 32px !important;
+  margin-top: 5px !important;
+  margin-bottom: -38px !important;
+  transition: all 200ms	ease 0s !important;
+  z-index: 5 !important;
+  border: 0px !important;
+  box-shadow: 3px 3px 8px 2px #111 !important;
+ }
+
+/* make urlbar rounded */
+#urlbar{
+  margin-top: 30px !important;
+  padding-right: 10px !important;
+  padding-left: 10px !important;
+}
+
+#urlbar-background{
+  border-radius: 50px !important;
+}
+
+#urlbar[open] > #urlbar-background{
+  animation-duration: 200ms !important;
+  border-radius: 15px !important;
+}
+
+#urlbar[breakout][breakout-extend] {
+  margin-top: 20px !important;
+  top: 0px !important;
+}
+
+#urlbar[breakout][breakout-extend] > #urlbar-input-container {
+  height: calc(var(--uc-toolbar-height) + 2 * 2px) !important;
+  padding-block: calc(2px + (var(--uc-toolbar-height) - var(--urlbar-height)) / 2);
+  padding-inline: calc(5px + 2px);
+}
+
+#nav-bar-customization-target{
+  margin-top: -15px;
+}
+#nav-bar-overflow-button{
+  margin-top: -15px !important;
+}
+#PanelUI-button{
+  margin-top: -15px !important;
+}
