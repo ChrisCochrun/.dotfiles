@@ -15,9 +15,9 @@ naughty.config.defaults.ontop = true
 naughty.config.defaults.icon_size = dpi(32)
 naughty.config.defaults.timeout = 5
 naughty.config.defaults.title = 'System Notification'
-naughty.config.defaults.margin = dpi(16)
+naughty.config.defaults.margin = dpi(20)
 naughty.config.defaults.border_width = 0
-naughty.config.defaults.position = 'top_right'
+naughty.config.defaults.position = 'bottom_middle'
 naughty.config.defaults.shape = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, dpi(6)) end
 
 -- Apply theme variables
@@ -44,11 +44,11 @@ ruled.notification.connect_signal('request::rules', function()
 	ruled.notification.append_rule {
 		rule       = { urgency = 'critical' },
 		properties = { 
-			font        		= 'SF Pro Text Bold 10',
+			font        		= 'VictorMono Nerd Font 10',
 			bg 					= '#ff0000', 
 			fg 					= '#ffffff',
 			margin 				= dpi(16),
-			position 			= 'top_right',
+			position 			= 'bottom_middle',
 			implicit_timeout	= 0
 		}
 	}
@@ -57,11 +57,11 @@ ruled.notification.connect_signal('request::rules', function()
 	ruled.notification.append_rule {
 		rule       = { urgency = 'normal' },
 		properties = {
-			font        		= 'SF Pro Text Regular 10',
+			font        		= 'VictorMono Nerd Font 10',
 			bg      			= beautiful.transparent, 
 			fg 					= beautiful.fg_normal,
 			margin 				= dpi(16),
-			position 			= 'top_right',
+			position 			= 'bottom_middle',
 			implicit_timeout 	= 5
 		}
 	}
@@ -70,11 +70,11 @@ ruled.notification.connect_signal('request::rules', function()
 	ruled.notification.append_rule {
 		rule       = { urgency = 'low' },
 		properties = { 
-			font        		= 'SF Pro Text Regular 10',
+			font        		= 'VictorMono Nerd Font 10',
 			bg     				= beautiful.transparent,
 			fg 					= beautiful.fg_normal,
 			margin 				= dpi(16),
-			position 			= 'top_right',
+			position 			= 'bottom_middle',
 			implicit_timeout	= 5
 		}
 	}
@@ -117,7 +117,7 @@ naughty.connect_signal("request::display", function(n)
 	local actions_template = wibox.widget {
 		notification = n,
 		base_layout = wibox.widget {
-			spacing        = dpi(0),
+			spacing        = dpi(4),
 			layout         = wibox.layout.flex.horizontal
 		},
 		widget_template = {
@@ -126,7 +126,7 @@ naughty.connect_signal("request::display", function(n)
 					{
 						{
 							id     = 'text_role',
-							font   = 'SF Pro Text Regular 10',
+							font   = 'VictorMono Nerd Font 10',
 							widget = wibox.widget.textbox
 						},
 						widget = wibox.container.place
@@ -135,10 +135,10 @@ naughty.connect_signal("request::display", function(n)
 				},
 				bg                 = beautiful.groups_bg,
 				shape              = gears.shape.rounded_rect,
-				forced_height      = dpi(30),
+				forced_height      = dpi(35),
 				widget             = wibox.container.background
 			},
-			margins = dpi(4),
+			margins = dpi(8),
 			widget  = wibox.container.margin
 		},
 		style = { underline_normal = false, underline_selected = true },
@@ -164,7 +164,7 @@ naughty.connect_signal("request::display", function(n)
 												{
 													{
 														markup = n.app_name or 'System Notification',
-														font = 'SF Pro Text Bold 10',
+														font = 'VictorMono Nerd Font 10',
 														align = 'center',
 														valign = 'center',
 														widget = wibox.widget.textbox
@@ -217,7 +217,7 @@ naughty.connect_signal("request::display", function(n)
 										margins = dpi(0),
 										widget  = wibox.container.margin,
 									},
-									bg = beautiful.transparent,
+									bg = beautiful.bg_normal,
 									widget  = wibox.container.background,
 								},
 								-- Notification action list
@@ -226,7 +226,7 @@ naughty.connect_signal("request::display", function(n)
 								spacing = dpi(4),
 								layout  = wibox.layout.fixed.vertical,
 							},
-							bg     = beautiful.transparent,
+							bg     = beautiful.bg_normal,
 							id     = "background_role",
 							widget = naughty.container.background,
 						},
@@ -240,13 +240,17 @@ naughty.connect_signal("request::display", function(n)
 				},
 				-- Anti-aliasing container
 				-- Real BG
-				bg = beautiful.background,
+				bg = beautiful.bg_normal,
 				-- This will be the anti-aliased shape of the notification
 				shape = gears.shape.rounded_rect,
 				widget = wibox.container.background
 			},
 			-- Margin of the fake BG to have a space between notification and the screen edge
-			margins = dpi(5),--beautiful.notification_margin,
+			-- margins = dpi(15),--beautiful.notification_margin,
+            right = dpi(20),
+            left = dpi(20),
+            bottom = dpi(20),
+            top = dpi(5),
 			widget  = wibox.container.margin
 		}
 	
