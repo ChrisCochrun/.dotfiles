@@ -9,10 +9,12 @@ local gears = require('gears')
 
 local gfs = require("gears.filesystem")
 local themes_path = gfs.get_themes_dir()
+-- local theme_dir = filesystem.get_configuration_dir() .. '/theme'
 
 local theme = {}
 
-theme.font          = "Rec Mono Linear 10"
+theme.font          = "VictorMono Nerd Font 10"
+-- theme.icons = theme_dir .. '/icons/'
 
 theme.bg_normal     = "#282a36"
 theme.bg_focus      = "#43454f"
@@ -25,8 +27,10 @@ theme.fg_focus      = "#e2e4e5"
 theme.fg_urgent     = "#e2e4e5"
 theme.fg_minimize   = "#e2e4e5"
 
+theme.red           = "#ff5c57"
+
 theme.useless_gap   = dpi(8)
-theme.border_width  = dpi(1)
+theme.border_width  = dpi(0)
 theme.border_normal = "#00000000"
 theme.border_focus  = "#00000000"
 theme.border_marked = "#00000000"
@@ -45,13 +49,21 @@ theme.border_marked = "#00000000"
 --theme.taglist_bg_focus = "#ff0000"
 
 -- Generate taglist squares:
-local taglist_square_size = dpi(4)
+local taglist_square_size = dpi(8)
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
     taglist_square_size, theme.fg_normal
 )
 theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
     taglist_square_size, theme.fg_normal
 )
+
+-- Tasklists
+theme.tasklist_shape = gears.shape.rounded_bar
+theme.tasklist_spacing = 40
+theme.tasklist_align = "center"
+
+theme.tasklist_bg = theme.red
+
 
 -- Variables set for theming notifications:
 -- notification_font
@@ -77,7 +89,7 @@ theme.wibar_bg = theme.bg_normal
 -- theme.wibar_y = 1030
 theme.wibar_x = 0
 -- theme.wibar_stretch = false
-theme.wibar_border_width = 3
+theme.wibar_border_width = dpi(5)
 theme.wibar_border_color = nil
 -- theme.wibar_ontop = nil
 -- theme.wibar_cursor = nil
@@ -142,6 +154,7 @@ theme.awesome_icon = theme_assets.awesome_icon(
     theme.menu_height, theme.bg_focus, theme.fg_focus
 )
 
+-- theme.awesome_icon = theme.icons .. 'awesome.svg'
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 theme.icon_theme = nil

@@ -18,6 +18,39 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+
+-- Widgets to add
+-- local batteryarc_widget = require("awesome-wm-widget.batteryarc-widget.batteryarc")
+
+-- >> Daemons
+-- Most widgets that display system/external info depend on evil.
+-- Make sure to initialize it last in order to allow all widgets to connect to
+-- their needed evil signals.
+-- require("evil")
+-- ===================================================================
+-- ===================================================================
+
+
+--  ========================================
+--                    Modules
+--          Load all the modules
+--  ========================================
+
+require('module.notifications')
+-- require('module.auto-start')
+require('module.decorate-client')
+require('module.backdrop')
+-- require('module.exit-screen')
+-- require('module.quake-terminal')
+-- require('module.titlebar')
+-- require('module.menu')
+require('module.volume-osd')
+require('module.brightness-osd')
+require('module.dynamic-wallpaper')
+-- require('module.battery-notifier')
+-- require('module.lockscreen')
+
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -107,7 +140,7 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+mytextclock = wibox.widget.textclock(" %a %b %d, %l:%M %p ")
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -192,30 +225,91 @@ awful.screen.connect_for_each_screen(function(s)
     s.mysystray = wibox.widget.systray()
 
     -- Create a tasklist widget
-    s.mytasklist = awful.widget.tasklist {
-        screen  = s,
-        filter  = awful.widget.tasklist.filter.currenttags,
-        buttons = tasklist_buttons
-    }
+    -- s.mytasklist = awful.widget.tasklist {
+    --     screen  = s,
+    --     filter  = awful.widget.tasklist.filter.currenttags,
+    --     buttons = tasklist_buttons
+    --     style =
+    -- }
 
+    s.mytasklist = awful.widget.tasklist {
+        screen   = s,
+        filter   = awful.widget.tasklist.filter.currenttags,
+        buttons  = tasklist_buttons,
+        style    = {
+            border_width = 0,
+            border_color = '#777777',
+            shape        = gears.shape.rounded_bar,
+
+        },
+        layout   = {
+            spacing = 20,
+            spacing_widget = {
+                {
+                    forced_width = 5,
+                    forced_height = 30,
+                    -- shape        = gears.shape.circle,
+                    widget       = wibox.widget.separator
+                },
+                valign = 'center',
+                halign = 'center',
+                widget = wibox.container.place,
+            },
+            layout  = wibox.layout.flex.horizontal
+        },
+        -- notice that there is *no* wibox.wibox prefix, it is a template,
+        -- not a widget instance.
+        widget_template = {
+            {
+                {
+                    {
+                        {
+                            id     = 'icon_role',
+                            widget = wibox.widget.imagebox,
+                        },
+                        margins = 4,
+                        widget  = wibox.container.margin,
+                    },
+                    {
+                        id     = 'text_role',
+                        widget = wibox.widget.textbox,
+                    },
+                    layout = wibox.layout.align.horizontal,
+                },
+                left  = 10,
+                right = 10,
+                widget = wibox.container.margin
+            },
+            id     = 'background_role',
+            widget = wibox.container.background,
+        },
+    }
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "bottom", screen = s })
+    -- Create Battery, Network, and Volume widget
+    s.battery = require('widget.battery')()
+    s.network = require('widget.network')()
+    -- s.volume = require('widget.volume-slider')()
+    s.updater = require('widget.package-updater')()
 
     -- Add widgets to the wibox
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            mylauncher,
-            s.mytaglist,
+            wibox.container.margin (s.mytaglist,25,0,0,0),
             s.mypromptbox,
         },
-        s.mytasklist, -- Middle widget
+        wibox.container.margin (s.mytasklist,35,35,0,0), -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             s.mysystray,
+            -- s.volume,
+            s.updater,
+            s.network,
+            s.battery,
             mytextclock,
-            s.mylayoutbox,
+            wibox.container.margin (s.mylayoutbox,0,25,0,0),
         },
     }
 end)
@@ -275,6 +369,11 @@ globalkeys = gears.table.join(
         end,
         {description = "go back", group = "client"}),
 
+
+    -- Screenshots
+    awful.key({}, "Print", function() awful.util.spawn("flameshot gui")    end,
+       {description = "take a screenshot", group = "screen"}),
+
     -- Increase-Decrease Gap
 
     awful.key({ modkey, Mod1   }, "k", function () awful.tag.incgap (  1, null)    end,
@@ -321,8 +420,42 @@ globalkeys = gears.table.join(
               end,
               {description = "restore minimized", group = "client"}),
 
+   -- Volume Keys
+   awful.key({}, "XF86AudioLowerVolume", function ()
+     awful.util.spawn("amixer -q -D pulse sset Master 5%-", false)
+   end),
+   awful.key({}, "XF86AudioRaiseVolume", function ()
+     awful.util.spawn("amixer -q -D pulse sset Master 5%+", false)
+   end),
+   awful.key({}, "XF86AudioMute", function ()
+     awful.util.spawn("amixer -D pulse set Master 1+ toggle", false)
+   end),
+   -- Media Keys
+   awful.key({}, "XF86AudioPlay", function()
+     awful.util.spawn("playerctl play-pause", false)
+   end),
+   awful.key({}, "XF86AudioNext", function()
+     awful.util.spawn("playerctl next", false)
+   end),
+   awful.key({}, "XF86AudioPrev", function()
+     awful.util.spawn("playerctl previous", false)
+   end),
+
+    -- Brightness Keys
+   awful.key({}, "XF86MonBrightnessUp", function()
+           awful.util.spawn("brightnessctl set +10%", false)
+           awesome.emit_signal('widget::brightness')
+           awesome.emit_signal('module::brightness_osd:show', true)
+   end),
+
+   awful.key({}, "XF86MonBrightnessDown", function()
+           awful.util.spawn("brightnessctl set 10%-", false)
+           awesome.emit_signal('widget::brightness')
+           awesome.emit_signal('module::brightness_osd:show', true)
+   end),
+
     -- Prompt
-    awful.key({ modkey },            "r",     function ()
+    awful.key({ },   "Menu",     function ()
         awful.util.spawn("/home/chris/.dotfiles/rofi/launchers-git/launcher.sh") end,
               {description = "launch rofi", group = "launcher"}),
 
@@ -502,12 +635,15 @@ awful.rules.rules = {
 
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = true }
+      }, properties = { titlebars_enabled = false }
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
-    -- { rule = { class = "Firefox" },
-    --   properties = { screen = 1, tag = "2" } },
+    { rule = { class = "Firefox" },
+      properties = { screen = 1, tag = "2",
+                     maximized_vertical = true,
+                     maximized_horizontal = true,
+    } },
 }
 -- }}}
 
@@ -578,5 +714,6 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- Autostart Applications
 awful.spawn.with_shell("picom")
-awful.spawn.with_shell("nitrogen --restore")
--- awful.spawn.with_shell("polybarstart")
+awful.spawn.with_shell("feh --bg-fill /home/chris/Pictures/royalking.png")
+awful.spawn.with_shell("libinput-gestures-setup start")
+awful.spawn.with_shell("flameshot")
