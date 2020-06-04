@@ -298,11 +298,10 @@ awful.screen.connect_for_each_screen(function(s)
 
     s.myrightwidgets =
         { -- Right widgets
-            layout = wibox.layout.ratio.horizontal,
+            layout = wibox.layout.align.horizontal,
             s.mytasklist, -- Middle widget
             s.mysystray,
             s.mylayoutbox,
-            inner_fill_strategy = "right"
         }
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -324,7 +323,6 @@ awful.screen.connect_for_each_screen(function(s)
             mytextclock,
             wibox.container.margin (s.mylayoutbox,0,25,0,0),
         },
-        expand = "outside"
     }
 end)
 -- }}}
