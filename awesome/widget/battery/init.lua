@@ -88,6 +88,7 @@ local return_button = function()
 
 			if (stdout == nil or stdout == '') then
 				battery_tooltip:set_text('No battery detected!')
+				battery_widget:set_visible(false)
 				return
 			end
 
