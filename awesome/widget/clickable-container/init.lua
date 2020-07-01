@@ -5,6 +5,7 @@ function build(widget)
 	local container =
 		wibox.widget {
 		widget,
+		-- bg = beautiful.theme_bg,
 		widget = wibox.container.background
 	}
 	local old_cursor, old_wibox

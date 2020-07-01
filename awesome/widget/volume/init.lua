@@ -2,6 +2,7 @@ local wibox = require('wibox')
 local gears = require('gears')
 local awful = require('awful')
 local beautiful = require('beautiful')
+local naughty = require('naughty')
 
 local watch = awful.widget.watch
 local spawn = awful.spawn
@@ -9,6 +10,8 @@ local spawn = awful.spawn
 local dpi = beautiful.xresources.apply_dpi
 
 local icons = require('theme.icons')
+
+local return_widget = function ()
 
 local slider = wibox.widget {
 	nil,
@@ -39,7 +42,7 @@ volume_slider:connect_signal(
 
 		local volume_level = volume_slider:get_value()
 		
-		spawn('amixer set Master ' ..
+		spawn('amixer sset Master ' ..
 			volume_level .. '%',
 			false
 		)
@@ -85,11 +88,13 @@ volume_slider:buttons(
 
 local update_slider = function()
 	awful.spawn.easy_async_with_shell(
-		[[bash -c "amixer sget Master"]],
+		[[bash -c "amixer get Master"]],
 		function(stdout)
 
 			local volume = string.match(stdout, '(%d?%d?%d)%%')
 
+			-- debugging
+			-- naughty.notify{ title = "Volume changed", message = volume}
 			volume_slider:set_value(tonumber(volume))
 		end
 	)
@@ -123,19 +128,23 @@ local volume_setting = wibox.widget {
 				resize = true,
 				widget = wibox.widget.imagebox
 			},
-			top = dpi(12),
-			bottom = dpi(12),
+			top = dpi(2),
+			bottom = dpi(2),
 			widget = wibox.container.margin
 		},
 		slider,
-		spacing = dpi(24),
+		spacing = dpi(2),
 		layout = wibox.layout.fixed.horizontal
 
 	},
-	left = dpi(24),
-	right = dpi(24),
-	forced_height = dpi(48),
+	left = dpi(2),
+	right = dpi(2),
+	forced_width = dpi(140),
+	-- forced_height = dpi(48),
 	widget = wibox.container.margin
 }
 
 return volume_setting
+end
+
+return return_widget

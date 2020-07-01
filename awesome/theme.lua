@@ -15,10 +15,13 @@ local theme = {}
 
 theme.font          = "VictorMono Nerd Font SemiBold 10"
 
+-- COLORS
+-- Try to build a theme off of SNAZZY
 theme.bg_normal     = "#282a36"
+theme.bg_light      = "#34353e"
 theme.bg_focus      = "#43454f"
-theme.bg_urgent     = "#ff5c57"
 theme.bg_minimize   = "#78787e"
+theme.bg_urgent     = "#ff5c57"
 theme.bg_systray    = theme.bg_normal
 
 theme.fg_normal     = "#a5a5a9"
@@ -48,7 +51,7 @@ theme.border_marked = "#00000000"
 --theme.taglist_bg_focus = "#ff0000"
 
 -- Generate taglist squares:
-local taglist_square_size = dpi(8)
+local taglist_square_size = dpi(0)
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
     taglist_square_size, theme.fg_normal
 )
@@ -86,17 +89,17 @@ theme.menu_width  = dpi(100)
 theme.wibar_shape = gears.shape.rounded_bar
 theme.wibar_bg = theme.bg_normal
 theme.wibar_fg = theme.fg_normal
--- theme.wibar_y = 1030
--- theme.wibar_x = 0
+theme.wibar_y = 1030
+theme.wibar_x = 0
 -- theme.wibar_stretch = false
-theme.wibar_border_width = dpi(5)
-theme.wibar_border_color = nil
+theme.wibar_border_width = dpi(0)
+theme.wibar_border_color = ""
 -- theme.wibar_ontop = nil
 -- theme.wibar_cursor = nil
-theme.wibar_opacity = 0.7
+theme.wibar_opacity = 0.6
 -- theme.wibar_type = nil
-theme.wibar_width = dpi(1900)
-theme.wibar_height = dpi(30)
+theme.wibar_width = dpi(1850)
+-- theme.wibar_height = dpi(20)
 -- theme.wibar_bgimage = nil
 
 -- Define the image to load

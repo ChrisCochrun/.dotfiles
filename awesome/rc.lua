@@ -5,6 +5,8 @@ pcall(require, "luarocks.loader")
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
+local xresources = require("beautiful.xresources")
+local dpi = xresources.apply_dpi
 require("awful.autofocus")
 -- Widget and layout library
 local wibox = require("wibox")
@@ -18,6 +20,8 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+
+-- require('layout')
 
 -- Widgets to add
 -- local batteryarc_widget = require("awesome-wm-widget.batteryarc-widget.batteryarc")
@@ -51,30 +55,30 @@ require('module.brightness-osd')
 -- require('module.lockscreen')
 
 
--- {{{ Error handling
--- Check if awesome encountered an error during startup and fell back to
--- another config (This code will only ever execute for the fallback config)
-if awesome.startup_errors then
-    naughty.notify({ preset = naughty.config.presets.critical,
-                     title = "Oops, there were errors during startup!",
-                     text = awesome.startup_errors })
-end
+-- -- {{{ Error handling
+-- -- Check if awesome encountered an error during startup and fell back to
+-- -- another config (This code will only ever execute for the fallback config)
+-- if awesome.startup_errors then
+--     naughty.notify({ preset = naughty.config.presets.critical,
+--                      title = "Oops, there were errors during startup!",
+--                      text = awesome.startup_errors })
+-- end
 
--- Handle runtime errors after startup
-do
-    local in_error = false
-    awesome.connect_signal("debug::error", function (err)
-        -- Make sure we don't go into an endless error loop
-        if in_error then return end
-        in_error = true
+-- -- Handle runtime errors after startup
+-- do
+--     local in_error = false
+--     awesome.connect_signal("debug::error", function (err)
+--         -- Make sure we don't go into an endless error loop
+--         if in_error then return end
+--         in_error = true
 
-        naughty.notify({ preset = naughty.config.presets.critical,
-                         title = "Oops, an error happened!",
-                         text = tostring(err) })
-        in_error = false
-    end)
-end
--- }}}
+--         naughty.notify({ preset = naughty.config.presets.critical,
+--                          title = "Oops, an error happened!",
+--                          text = tostring(err) })
+--         in_error = false
+--     end)
+-- end
+-- -- }}}
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
@@ -95,6 +99,7 @@ altkey = "Mod1"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
+    awful.layout.suit.magnifier,
     awful.layout.suit.tile,
     awful.layout.suit.floating,
     -- awful.layout.suit.tile.left,
@@ -106,7 +111,6 @@ awful.layout.layouts = {
     awful.layout.suit.spiral.dwindle,
     awful.layout.suit.max,
     -- awful.layout.suit.max.fullscreen,
-    -- awful.layout.suit.magnifier,
     -- awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
@@ -201,12 +205,57 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
+
+--     mynewpanel:setup {
+--         layout = wibox.layout.align.horizontal,
+--         expand = "outside",
+--         { -- Left widgets
+--             layout = wibox.layout.align.horizontal,
+--             -- wibox.container.margin (s.mytaglist,25,0,0,0),
+--             -- wibox.container.margin (s.mytasklist,25,25,0,0), -- Middle widget
+--             -- s.myemptywidget,
+--             spacing = 15
+--         },
+--             -- mytextclock,
+--         { -- Right widgets
+--             layout = wibox.layout.align.horizontal,
+--             -- s.myemptywidget,
+--             -- s.myemptywidget,
+--             -- s.myrightwidgets,
+--         },
+--     }
+
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "main", "www", "code", "fun"}, s, awful.layout.layouts[1])
+    awful.tag({ "◉", "◉", "◉", "◉"}, s, awful.layout.layouts[1])
+
+
+    yoffset = dpi(35)
+    xoffset = dpi(18)
+
+    mypanel = wibox
+    ({
+        x = s.geometry.x + xoffset,
+        y = s.geometry.height - yoffset,
+        height = dpi(25),
+        width = s.geometry.width - (xoffset * 2),
+        ontop = true,
+        stretch = false,
+        type = "dock",
+        screen = s,
+        shape = gears.shape.rounded_bar,
+        -- widget = wibox.widget.textbox
+        bg = beautiful.bg_normal,
+        fg = beautiful.fg_normal,
+        opacity = 0.65,
+    })
+
+    mypanel:struts {
+        bottom = dpi(30)
+    }
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -226,8 +275,11 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     -- Create a systray widget
-    s.mysystray = wibox.widget.systray()
-
+    s.mysystray = {
+        wibox.widget.systray(),
+        -- bg = "#00FF0066",
+        widget = wibox.container.background,
+    }
     -- Create a tasklist widget
     -- s.mytasklist = awful.widget.tasklist {
     --     screen  = s,
@@ -251,7 +303,7 @@ awful.screen.connect_for_each_screen(function(s)
             spacing_widget = {
                 {
                     forced_width = 5,
-                    forced_height = 30,
+                    forced_height = dpi(20),
                     -- shape        = gears.shape.circle,
                     widget       = wibox.widget.separator
                 },
@@ -271,7 +323,7 @@ awful.screen.connect_for_each_screen(function(s)
                             id     = 'icon_role',
                             widget = wibox.widget.imagebox,
                         },
-                        margins = 4,
+                        margins = 2,
                         widget  = wibox.container.margin,
                     },
                     {
@@ -288,45 +340,88 @@ awful.screen.connect_for_each_screen(function(s)
             widget = wibox.container.background,
         },
     }
-    -- Create the wibox
-    s.mywibox = awful.wibar({ position = "bottom", screen = s })
     -- Create Battery, Network, and Volume widget
     s.battery = require('widget.battery')()
     s.network = require('widget.network')()
-    -- s.volume = require('widget.volume-slider')()
+    s.volume = require('widget.volume')()
     s.updater = require('widget.package-updater')()
 
+    -- Create the wibox
+    -- s.mywibox = awful.wibar({
+    --         y = s.geometry.y + dpi(1080) - yoffset,
+    --         position = "bottom",
+    --         screen = s})
+
     s.myrightwidgets =
-        { -- Right widgets
-            layout = wibox.layout.align.horizontal,
-            s.mytasklist, -- Middle widget
-            s.mysystray,
-            s.mylayoutbox,
+        {
+            { -- Right widgets
+                layout = wibox.layout.fixed.horizontal,
+                s.volume,
+                s.mysystray,
+                s.updater,
+                s.network,
+                s.battery,
+                wibox.container.margin (s.mylayoutbox,0,25,0,0),
+            },
+            -- bg = "#00FF0066",
+            widget = wibox.container.background,
         }
+    -- Empty widget to use for spacing
+    s.myemptywidget = wibox.widget{
+        markup = '',
+        align = '',
+        valign = '',
+        widget = wibox.widget.textbox
+    }
     -- Add widgets to the wibox
-    s.mywibox:setup {
+    -- s.mywibox:setup {
+    --     layout = wibox.layout.align.horizontal,
+    --     expand = "outside",
+    --     { -- Left widgets
+    --         layout = wibox.layout.align.horizontal,
+    --         wibox.container.margin (s.mytaglist,25,0,0,0),
+    --         wibox.container.margin (s.mytasklist,25,25,0,0), -- Middle widget
+    --         s.myemptywidget,
+    --         spacing = 15
+    --     },
+    --         mytextclock,
+    --     { -- Right widgets
+    --         layout = wibox.layout.align.horizontal,
+    --         s.myemptywidget,
+    --         s.myemptywidget,
+    --         s.myrightwidgets,
+    --     },
+    -- }
+
+    -- Add widgets to the wibox
+    mypanel:setup {
         layout = wibox.layout.align.horizontal,
+        expand = "outside",
         { -- Left widgets
-            layout = wibox.layout.fixed.horizontal,
-            wibox.container.margin (s.mytaglist,25,0,0,0),
-            s.mypromptbox,
+            layout = wibox.layout.align.horizontal,
+            wibox.container.margin (s.mytaglist,15,0,-3,0),
+            wibox.container.margin (s.mytasklist,25,25,0,0), -- Middle widget
+            s.myemptywidget,
             spacing = 15
         },
-        wibox.container.margin (s.mytasklist,35,35,0,0), -- Middle widget
-        { -- Right widgets
-            layout = wibox.layout.fixed.horizontal,
-            s.mysystray,
-            -- s.volume,
-            s.updater,
-            s.network,
-            s.battery,
             mytextclock,
-            wibox.container.margin (s.mylayoutbox,0,25,0,0),
+        { -- Right widgets
+            layout = wibox.layout.align.horizontal,
+            s.myemptywidget,
+            s.myemptywidget,
+            s.myrightwidgets,
         },
+        visible = true,
     }
+
+    mypanel.visible = true
+    -- return mypanel
 end)
 -- }}}
 
+testwibox = wibox {x = 20, y = 10, width = 10, height = 10, ontop = true, bg = "#000000"}
+
+testwibox:to_widget()
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
     awful.button({ }, 3, function () mymainmenu:toggle() end),
@@ -403,6 +498,12 @@ globalkeys = gears.table.join(
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
 
+    -- Programs
+    awful.key({ modkey,           }, "b", function () awful.spawn("firefox") end,
+              {description = "open firefox", group = "apps"}),
+    awful.key({ modkey,           }, "e", function () awful.spawn("emacsclient -c") end,
+              {description = "open emacs frame connected to server", group = "apps"}),
+
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
               {description = "increase master width factor", group = "layout"}),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)          end,
@@ -434,13 +535,17 @@ globalkeys = gears.table.join(
 
    -- Volume Keys
    awful.key({}, "XF86AudioLowerVolume", function ()
-     awful.util.spawn("amixer -q -D pulse sset Master 5%-", false)
+     awful.util.spawn("amixer set Master 5%-", false)
+     awesome.emit_signal('widget::volume')
+     awesome.emit_signal('module::volume_osd:show', true)
    end),
    awful.key({}, "XF86AudioRaiseVolume", function ()
-     awful.util.spawn("amixer -q -D pulse sset Master 5%+", false)
+     awful.util.spawn("amixer -q set Master 5%+", false)
+     awesome.emit_signal('widget::volume')
+     awesome.emit_signal('module::volume_osd:show', true)
    end),
    awful.key({}, "XF86AudioMute", function ()
-     awful.util.spawn("amixer -D pulse set Master 1+ toggle", false)
+     awful.util.spawn("amixer set Master 1+ toggle", false)
    end),
    -- Media Keys
    awful.key({}, "XF86AudioPlay", function()
@@ -493,7 +598,7 @@ clientkeys = gears.table.join(
             c:raise()
         end,
         {description = "toggle fullscreen", group = "client"}),
-    awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end,
+    awful.key({ modkey, }, "q",      function (c) c:kill()                         end,
               {description = "close", group = "client"}),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,
               {description = "toggle floating", group = "client"}),
@@ -632,12 +737,15 @@ awful.rules.rules = {
           "Wpa_gui",
           "veromix",
           "xtightvncviewer",
+          "mpv",
+          "gl",
           "feh"},
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
         -- and the name shown there might not match defined rules here.
         name = {
           "Event Tester",  -- xev.
+          "remove images?" -- darktable delete window.
         },
         role = {
           "AlarmWindow",  -- Thunderbird's calendar.
@@ -659,9 +767,10 @@ awful.rules.rules = {
     -- Set Feh center
     { rule = {class = "feh"},
       properties = {
-          placement = awful.placement.centered
+          placement = awful.placement.centered,
+          floating = true
     }},
-    { rule = {class = "FelgoLiveClient"},
+    { rule = {class = "FelgoLiveClient", "mpv"},
       properties = {floating = true, ontop = true}
     }
 }
@@ -723,9 +832,9 @@ client.connect_signal("request::titlebars", function(c)
 end)
 
 -- Enable sloppy focus, so that focus follows mouse.
-client.connect_signal("mouse::enter", function(c)
-    c:emit_signal("request::activate", "mouse_enter", {raise = false})
-end)
+-- client.connect_signal("mouse::enter", function(c)
+--     c:emit_signal("request::activate", "mouse_enter", {raise = false})
+-- end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
@@ -738,3 +847,4 @@ awful.spawn.with_shell("libinput-gestures-setup start")
 awful.spawn.with_shell("flameshot")
 awful.spawn.with_shell("feh --bg-fill ~/Pictures/wallpapers/RoyalKing.png")
 awful.spawn.with_shell("/usr/lib/polkit-kde-authentication-agent-1")
+awful.spawn.with_shell("emacs -daemon")

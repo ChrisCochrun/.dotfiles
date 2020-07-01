@@ -12,6 +12,6 @@
 # gnome_do	slingshot		appdrawer			appfolder		column
 # row		row_center		screen				row_dock		row_dropdown
 
-style="blurry"
+style="blurry_full"
 
-rofi -no-lazy-grab -show drun -modi drun,window,calc,ssh,run,emoji -theme launchers-git/"$style".rasi & sleep 0.3 && xprop -f _KDE_NET_WM_BLUR_BEHIND_REGION 32c -set _KDE_NET_WM_BLUR_BEHIND_REGION 0 -name rofi
+rofi -no-lazy-grab -show drun -modi drun,window,calc,ssh,run,emoji -theme launchers-git/"$style".rasi
