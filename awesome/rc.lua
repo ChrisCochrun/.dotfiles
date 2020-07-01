@@ -46,7 +46,7 @@ require('module.backdrop')
 -- require('module.menu')
 require('module.volume-osd')
 require('module.brightness-osd')
-require('module.dynamic-wallpaper')
+-- require('module.dynamic-wallpaper')
 -- require('module.battery-notifier')
 -- require('module.lockscreen')
 
@@ -661,6 +661,9 @@ awful.rules.rules = {
       properties = {
           placement = awful.placement.centered
     }},
+    { rule = {class = "FelgoLiveClient"},
+      properties = {floating = true, ontop = true}
+    }
 }
 -- }}}
 

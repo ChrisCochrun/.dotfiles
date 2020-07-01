@@ -8,7 +8,7 @@
  */
 
 configuration {
-    font:                           "VictorMono Nerd Font 11";
+    font:                           "VictorMono Nerd Font 24.0";
     show-icons:                     true;
 	icon-theme: 					"Papirus";
     display-drun: 					"⮞";
