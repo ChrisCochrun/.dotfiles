@@ -11,7 +11,7 @@ local spawn = require('awful.spawn')
 
 screen.connect_signal("request::desktop_decoration", function(s)
 
-	s.show_vol_osd = false
+	s.show_vol_osd = true
 
 	local osd_header = wibox.widget {
 		text = 'Volume',
@@ -59,7 +59,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
 
 			local volume_level = vol_osd_slider:get_value()
 
-			spawn('amixer -D pulse sset Master ' .. volume_level .. '%', false)
+			spawn('amixer set Master ' .. volume_level .. '%', false)
 
 			-- Update textbox widget text
 			osd_value.text = volume_level .. '%'
@@ -141,8 +141,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
 		maximum_height = osd_height,
 		maximum_width = osd_width,
 		offset = dpi(5),
-		shape = gears.shape.rectangle,
-		bg = beautiful.transparent,
+		shape = gears.shape.rounded_rect,
+		bg = "#282a36",
 		preferred_anchors = 'middle',
 		preferred_positions = {'left', 'right', 'top', 'bottom'},
 
@@ -167,7 +167,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
 			widget = wibox.container.margin
 
 		},
-		bg = beautiful.background,
 		shape = gears.shape.rounded_rect,
 		widget = wibox.container.background()
 	}
@@ -214,12 +213,12 @@ screen.connect_signal("request::desktop_decoration", function(s)
 
 		if right_panel and left_panel then
 			if right_panel.visible then
-				awful.placement.bottom_left(focused.volume_osd_overlay, { margins = { 
+				awful.placement.bottom_left(focused.volume_osd_overlay, { margins = {
 					left = osd_margin + left_panel.width,
 					right = 0,
 					top = 0,
 					bottom = osd_margin,
-					}, 
+					},
 					parent = focused }
 				)
 				return
@@ -228,37 +227,37 @@ screen.connect_signal("request::desktop_decoration", function(s)
 
 		if right_panel then
 			if right_panel.visible then
-				awful.placement.bottom_left(focused.volume_osd_overlay, { margins = { 
+				awful.placement.bottom_left(focused.volume_osd_overlay, { margins = {
 					left = osd_margin,
 					right = 0,
 					top = 0,
 					bottom = osd_margin,
-					}, 
+					},
 					parent = focused }
 				)
 				return
 			end
 		end
 
-		awful.placement.bottom_right(focused.volume_osd_overlay, { margins = { 
+		awful.placement.centered(focused.volume_osd_overlay, { margins = {
 			left = 0,
 			right = osd_margin,
-			top = 0,
+			top = dpi(800),
 			bottom = osd_margin,
-			}, 
+			},
 			parent = focused }
 		)
 	end
 
 	awesome.connect_signal(
-		'module::volume_osd:show', 
+		'module::volume_osd:show',
 		function(bool)
 			placement_placer()
 			awful.screen.focused().volume_osd_overlay.visible = bool
 			if bool then
 				timer_rerun()
 				awesome.emit_signal(
-					'module::brightness_osd:show', 
+					'module::brightness_osd:show',
 					false
 				)
 			else

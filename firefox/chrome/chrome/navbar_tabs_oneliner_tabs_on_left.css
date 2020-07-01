@@ -1,5 +1,5 @@
 /* Modify these to change relative widths or default height */
-#navigator-toolbox{ --uc-navigationbar-width: 11vw; --uc-toolbar-height: 30px; --window-drag-space-width: 20px}
+#navigator-toolbox{ --uc-navigationbar-width: 11vw; --uc-toolbar-height: 29px; --window-drag-space-width: 20px}
 /* Override for other densities */
 :root[uidensity="compact"] > #navigator-toolbox{ --uc-toolbar-height: 32px;}
 :root[uidensity="touch"] > #navigator-toolbox{ --uc-toolbar-height: 40px; }
@@ -16,6 +16,7 @@
 #toolbar-menubar[inactive]{ 
   margin-bottom: calc(0px - var(--uc-toolbar-height));
   margin-left: 0px;
+  height: calc(--uc-toolbar-height) !important;
 }
 
 #TabsToolbar > .titlebar-buttonbox-container,
@@ -29,7 +30,6 @@
 #TabsToolbar{
   margin-right: calc(0px + var(--uc-navigationbar-width));
   /* Remove empty space above tabs so that tabs are clickable at very top of screen */  
-  margin-top: -2px;
   margin-left: 10px;
   z-index: 10;
 }

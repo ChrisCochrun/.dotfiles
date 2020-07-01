@@ -11,7 +11,7 @@ configuration {
     font:                           "VictorMono Nerd Font 11";
     show-icons:                     true;
 	icon-theme: 					"Papirus";
-    display-drun: 					"⮞";
+    display-drun: 					"";
     drun-display-format:            "{name} {description}";
     threads:                        0;
     scroll-method:                  0;
@@ -66,9 +66,9 @@ inputbar {
 
 prompt {
   enabled:                  				true;
-	padding: 						              -5px 10px 0px 8px;
+	padding: 						              0px 10px 0px 5px;
 	background-color: 				        @transparent;
-	font:							                "FantasqueSansMono Nerd Font 16";
+	// font:							                "FantasqueSansMono Nerd Font 16";
   border:                           0px;
 }
 
@@ -77,9 +77,10 @@ entry {
     placeholder-color:              @foreground;
     expand:                         true;
     horizontal-align:               0;
-    placeholder:                    "Search";
+    // placeholder:                    "Search";
     blink:                          true;
     border:                         0px;
+    padding:                        0px 0px 0px 10px;
 }
 
 case-indicator {

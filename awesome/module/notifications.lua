@@ -49,7 +49,7 @@ ruled.notification.connect_signal('request::rules', function()
 			fg 					= '#ffffff',
 			margin 				= dpi(16),
 			position 			= 'bottom_middle',
-			implicit_timeout	= 0
+			implicit_timeout	= 15
 		}
 	}
 
@@ -62,7 +62,7 @@ ruled.notification.connect_signal('request::rules', function()
 			fg 					= beautiful.fg_normal,
 			margin 				= dpi(16),
 			position 			= 'bottom_middle',
-			implicit_timeout 	= 5
+			implicit_timeout 	= 8
 		}
 	}
 
@@ -228,6 +228,7 @@ naughty.connect_signal("request::display", function(n)
 							},
 							bg     = beautiful.bg_normal,
 							id     = "background_role",
+                            shape = gears.shape.rounded_rect,
 							widget = naughty.container.background,
 						},
 						strategy = "min",
@@ -247,9 +248,9 @@ naughty.connect_signal("request::display", function(n)
 			},
 			-- Margin of the fake BG to have a space between notification and the screen edge
 			-- margins = dpi(15),--beautiful.notification_margin,
-            right = dpi(20),
-            left = dpi(20),
-            bottom = dpi(20),
+            right = dpi(10),
+            left = dpi(10),
+            bottom = dpi(10),
             top = dpi(5),
 			widget  = wibox.container.margin
 		}
