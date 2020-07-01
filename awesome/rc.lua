@@ -361,7 +361,7 @@ awful.screen.connect_for_each_screen(function(s)
                 s.updater,
                 s.network,
                 s.battery,
-                wibox.container.margin (s.mylayoutbox,0,25,0,0),
+                wibox.container.margin (s.mylayoutbox,0,dpi(25),0,0),
             },
             -- bg = "#00FF0066",
             widget = wibox.container.background,
@@ -399,10 +399,10 @@ awful.screen.connect_for_each_screen(function(s)
         expand = "outside",
         { -- Left widgets
             layout = wibox.layout.align.horizontal,
-            wibox.container.margin (s.mytaglist,15,0,-3,0),
-            wibox.container.margin (s.mytasklist,25,25,0,0), -- Middle widget
+            wibox.container.margin (s.mytaglist,dpi(15),0,dpi(-3),0),
+            wibox.container.margin (s.mytasklist,dpi(25),dpi(25),0,0), -- Middle widget
             s.myemptywidget,
-            spacing = 15
+            spacing = dpi(15)
         },
             mytextclock,
         { -- Right widgets
