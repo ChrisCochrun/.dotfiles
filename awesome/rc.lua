@@ -16,6 +16,7 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
+local ruled = require("ruled")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
@@ -536,11 +537,13 @@ globalkeys = gears.table.join(
    -- Volume Keys
    awful.key({}, "XF86AudioLowerVolume", function ()
      awful.util.spawn("amixer set Master 5%-", false)
+     awful.util.spawn("mpv /home/chris/Music/notifications/Pop-709f8e26-a350-3999-9e86-aa91b8602650.mp3")
      awesome.emit_signal('widget::volume')
      awesome.emit_signal('module::volume_osd:show', true)
    end),
    awful.key({}, "XF86AudioRaiseVolume", function ()
      awful.util.spawn("amixer -q set Master 5%+", false)
+     awful.util.spawn("mpv /home/chris/Music/notifications/Pop-16da230f-5ffc-4a42-93df-a169e9253ddc.mp3")
      awesome.emit_signal('widget::volume')
      awesome.emit_signal('module::volume_osd:show', true)
    end),
@@ -705,7 +708,7 @@ root.keys(globalkeys)
 
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
-awful.rules.rules = {
+ruled.client.append_rules {
     -- All clients will match this rule.
     { rule = { },
       properties = { border_width = beautiful.border_width,
@@ -739,6 +742,7 @@ awful.rules.rules = {
           "xtightvncviewer",
           "mpv",
           "gl",
+          "Blender",
           "feh"},
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
@@ -773,6 +777,15 @@ awful.rules.rules = {
     { rule = {class = "FelgoLiveClient", "mpv"},
       properties = {floating = true, ontop = true}
     }
+}
+
+ruled.client.append_rule {
+    rule = { class = 'mpv' },
+    properties = {
+        floating = true,
+        placement = awful.placement.centered,
+        ontop = true,
+    },
 }
 -- }}}
 
