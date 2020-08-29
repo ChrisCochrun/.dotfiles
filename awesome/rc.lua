@@ -100,8 +100,8 @@ altkey = "Mod1"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    awful.layout.suit.magnifier,
     awful.layout.suit.tile,
+    awful.layout.suit.magnifier,
     awful.layout.suit.floating,
     -- awful.layout.suit.tile.left,
     -- awful.layout.suit.tile.bottom,
@@ -234,16 +234,16 @@ awful.screen.connect_for_each_screen(function(s)
     awful.tag({ "◉", "◉", "◉", "◉"}, s, awful.layout.layouts[1])
 
 
-    yoffset = dpi(35)
+    yoffset = dpi(45)
     xoffset = dpi(18)
 
     mypanel = wibox
     ({
         x = s.geometry.x + xoffset,
         y = s.geometry.height - yoffset,
-        height = dpi(25),
+        height = dpi(30),
         width = s.geometry.width - (xoffset * 2),
-        ontop = true,
+        ontop = false,
         stretch = false,
         type = "dock",
         screen = s,
@@ -255,7 +255,7 @@ awful.screen.connect_for_each_screen(function(s)
     })
 
     mypanel:struts {
-        bottom = dpi(30)
+        bottom = dpi(40)
     }
 
     -- Create a promptbox for each screen
@@ -536,13 +536,13 @@ globalkeys = gears.table.join(
 
    -- Volume Keys
    awful.key({}, "XF86AudioLowerVolume", function ()
-     awful.util.spawn("amixer set Master 5%-", false)
+     awful.util.spawn("amixer -D pulse sset Master 5%-", false)
      awful.util.spawn("mpv /home/chris/Music/notifications/Pop-709f8e26-a350-3999-9e86-aa91b8602650.mp3")
      awesome.emit_signal('widget::volume')
      awesome.emit_signal('module::volume_osd:show', true)
    end),
    awful.key({}, "XF86AudioRaiseVolume", function ()
-     awful.util.spawn("amixer -q set Master 5%+", false)
+     awful.util.spawn("amixer -D pulse sset Master 5%+", false)
      awful.util.spawn("mpv /home/chris/Music/notifications/Pop-16da230f-5ffc-4a42-93df-a169e9253ddc.mp3")
      awesome.emit_signal('widget::volume')
      awesome.emit_signal('module::volume_osd:show', true)
@@ -708,45 +708,28 @@ root.keys(globalkeys)
 
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
-ruled.client.append_rules {
+ruled.client.append_rule {
     -- All clients will match this rule.
-    { rule = { },
-      properties = { border_width = beautiful.border_width,
-                     border_color = beautiful.border_normal,
-                     focus = awful.client.focus.filter,
-                     raise = true,
-                     keys = clientkeys,
-                     buttons = clientbuttons,
-                     screen = awful.screen.preferred,
-                     placement = awful.placement.no_overlap+awful.placement.no_offscreen
-     }
-    },
+    rule = {},
+    properties = { border_width = beautiful.border_width,
+                   border_color = beautiful.border_normal,
+                   focus = awful.client.focus.filter,
+                   raise = true,
+                   keys = clientkeys,
+                   buttons = clientbuttons,
+                   screen = awful.screen.preferred,
+                   placement = awful.placement.no_overlap+awful.placement.no_offscreen
+      },
+}
 
+ruled.client.append_rule {
     -- Floating clients.
-    { rule_any = {
-        instance = {
-          "DTA",  -- Firefox addon DownThemAll.
-          "copyq",  -- Includes session name in class.
-          "pinentry",
-        },
+     rule_any = {
         class = {
           "Arandr",
-          "Blueman-manager",
-          "Gpick",
-          "Kruler",
-          "MessageWin",  -- kalarm.
-          "Sxiv",
-          "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
-          "Wpa_gui",
-          "veromix",
-          "xtightvncviewer",
-          "mpv",
-          "gl",
           "Blender",
-          "feh"},
-
-        -- Note that the name property shown in xprop might be set slightly after creation of the client
-        -- and the name shown there might not match defined rules here.
+          "dolphin",
+        },
         name = {
           "Event Tester",  -- xev.
           "remove images?" -- darktable delete window.
@@ -756,37 +739,36 @@ ruled.client.append_rules {
           "ConfigManager",  -- Thunderbird's about:config.
           "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
         }
-      }, properties = { floating = true }},
-
-    -- Add titlebars to normal clients and dialogs
-    { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = false}
-    },
-
-    -- Set Firefox to never have titlebars
-    { rule = { class = "Firefox" },
-      properties = { requests_no_titlebar = true, titlebars_enabled = false }
-    },
-
-    -- Set Feh center
-    { rule = {class = "feh"},
-      properties = {
-          placement = awful.placement.centered,
-          floating = true
-    }},
-    { rule = {class = "FelgoLiveClient", "mpv"},
-      properties = {floating = true, ontop = true}
-    }
+     },
+     properties = { floating = true },
 }
 
 ruled.client.append_rule {
-    rule = { class = 'mpv' },
+    -- Add titlebars to normal clients and dialogs
+    rule_any = { type = { "normal", "dialog" } },
+    properties = { titlebars_enabled = false},
+}
+
+ruled.client.append_rule {
+    -- Set Firefox to never have titlebars
+    rule = { class = "Firefox" },
+    properties = { requests_no_titlebar = true, titlebars_enabled = false },
+}
+
+ruled.client.append_rule {
+    -- Set Feh center
+    rule = { class = "feh" },
     properties = {
-        floating = true,
         placement = awful.placement.centered,
-        ontop = true,
+        floating = true
     },
 }
+
+ruled.client.append_rule {
+    rule_any = { class = { "FelgoLiveClient", "mpv", "gl" } },
+    properties = {floating = true, ontop = true},
+}
+
 -- }}}
 
 -- {{{ Signals
@@ -855,9 +837,12 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 
 -- Autostart Applications
-awful.spawn.with_shell("picom")
+awful.spawn.with_shell("picom --experimental-backend")
 awful.spawn.with_shell("libinput-gestures-setup start")
 awful.spawn.with_shell("flameshot")
+awful.spawn.with_shell("xset r rate 220 90")
 awful.spawn.with_shell("feh --bg-fill ~/Pictures/wallpapers/RoyalKing.png")
 awful.spawn.with_shell("/usr/lib/polkit-kde-authentication-agent-1")
 awful.spawn.with_shell("emacs -daemon")
+awful.spawn.with_shell("nextcloud --background")
+awful.spawn.with_shell("caffeine")

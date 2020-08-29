@@ -42,7 +42,7 @@ volume_slider:connect_signal(
 
 		local volume_level = volume_slider:get_value()
 		
-		spawn('amixer sset Master ' ..
+		spawn('amixer -D pulse sset Master ' ..
 			volume_level .. '%',
 			false
 		)
@@ -88,7 +88,7 @@ volume_slider:buttons(
 
 local update_slider = function()
 	awful.spawn.easy_async_with_shell(
-		[[bash -c "amixer get Master"]],
+		[[bash -c "amixer -D pulse sget Master"]],
 		function(stdout)
 
 			local volume = string.match(stdout, '(%d?%d?%d)%%')

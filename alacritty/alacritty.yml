@@ -327,7 +327,7 @@ background_opacity: 0.70
   #save_to_clipboard: false
 
 # Allow terminal applications to change Alacritty's window title.
-dynamic_title: true
+window.dynamic_title: true
 
 #cursor:
   # Cursor style
@@ -355,7 +355,7 @@ dynamic_title: true
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
 shell:
-  program: /bin/zsh
+  program: /bin/fish
 #  args:
 #    - --login
 
