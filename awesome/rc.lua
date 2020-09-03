@@ -407,7 +407,7 @@ root.buttons(gears.table.join(
 -- }}}
 
 -- {{{ Key bindings
-globalkeys = gears.table.join(
+awful.keyboard.append_global_keybindings({
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
@@ -571,9 +571,10 @@ globalkeys = gears.table.join(
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"})
-)
+})
 
-clientkeys = gears.table.join(
+client.connect_signal("request::default_keybindings", function()
+    awful.keyboard.append_client_keybindings({
     awful.key({ modkey,           }, "f",
         function (c)
             c.fullscreen = not c.fullscreen
@@ -615,7 +616,9 @@ clientkeys = gears.table.join(
             c:raise()
         end ,
         {description = "(un)maximize horizontally", group = "client"})
-)
+    })
+end)
+
 
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
@@ -687,7 +690,7 @@ root.keys(globalkeys)
 
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
-client.connect_signal("request::rules", function(c)
+ruled.client.connect_signal('request::manage', function()
        ruled.client.append_rule {
            -- All clients will match this rule.
            rule = {},
@@ -715,7 +718,8 @@ client.connect_signal("request::rules", function(c)
            properties = {
                placement = awful.placement.centered,
                floating = true,
-               ontop = true
+               ontop = true,
+               raise = true
            },
 
        }
