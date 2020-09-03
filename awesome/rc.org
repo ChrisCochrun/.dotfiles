@@ -1,4 +1,19 @@
+#+TITLE: Awesome RC Config
+#+AUTHOR: Chris Cochrun
+#+DESCRIPTION: This is my awesomewm config
+#+PROPERTY: header-args :tangle rc.lua
+
+* AWESOME CONFIG
+This is my Awesome Window Manager config
+
+If LuaRocks is installed, make sure that packages installed through it are found (e.g. lgi). If LuaRocks is not installed, do nothing.
+#+BEGIN_SRC lua :tangle yes
 pcall(require, "luarocks.loader")
+#+END_SRC
+
+* Libraries
+
+#+BEGIN_SRC lua :tangle yes
 
 -- Standard awesome library
 local gears = require("gears")
@@ -20,6 +35,33 @@ local nice = require("nice")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+#+END_SRC
+
+* Modules and Widgets
+
+#+BEGIN_SRC lua :tangle no
+
+-- require('layout')
+
+-- Widgets to add
+-- local batteryarc_widget = require("awesome-wm-widget.batteryarc-widget.batteryarc")
+
+-- >> Daemons
+-- Most widgets that display system/external info depend on evil.
+-- Make sure to initialize it last in order to allow all widgets to connect to
+-- their needed evil signals.
+-- require("evil")
+-- ===================================================================
+-- ===================================================================
+
+#+END_SRC
+
+ =======================================
+               Modules
+        Load all the modules
+ =======================================
+
+#+BEGIN_SRC lua :tangle yes
 require('module.notifications')
 require('module.decorate-client')
 require('module.backdrop')
@@ -33,6 +75,12 @@ require('module.brightness-osd')
 -- require('module.dynamic-wallpaper')
 -- require('module.battery-notifier')
 -- require('module.lockscreen')
+
+#+END_SRC
+
+* Theme and Variables
+
+#+BEGIN_SRC lua :tangle yes
 
 -- -- {{{ Error handling
 -- -- Check if awesome encountered an error during startup and fell back to
@@ -76,6 +124,11 @@ editor_cmd = terminal .. " -e " .. editor
 modkey = "Mod4"
 altkey = "Mod1"
 
+#+END_SRC
+
+* Layouts
+
+#+BEGIN_SRC lua :tangle yes
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
     awful.layout.suit.tile,
@@ -97,6 +150,11 @@ awful.layout.layouts = {
 }
 -- }}}
 
+#+END_SRC
+
+* Menu and Launchers
+
+#+BEGIN_SRC lua :tangle yes
 -- {{{ Menu
 -- Create a launcher widget and a main menu
 myawesomemenu = {
@@ -122,6 +180,11 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- Keyboard map indicator and switcher
 mykeyboardlayout = awful.widget.keyboardlayout()
 
+#+END_SRC
+
+* Bar
+
+#+BEGIN_SRC lua :tangle yes
 -- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock(" %a %b %d, %l:%M %p ")
@@ -398,6 +461,11 @@ awful.screen.connect_for_each_screen(function(s)
 end)
 -- }}}
 
+#+END_SRC
+
+* Mouse bindings
+
+#+BEGIN_SRC lua :tangle yes
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
     awful.button({ }, 3, function () mymainmenu:toggle() end),
@@ -406,6 +474,11 @@ root.buttons(gears.table.join(
 ))
 -- }}}
 
+#+END_SRC
+
+* Key bindings
+
+#+BEGIN_SRC lua :tangle yes
 -- {{{ Key bindings
 globalkeys = gears.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
@@ -685,6 +758,11 @@ clientbuttons = gears.table.join(
 root.keys(globalkeys)
 -- }}}
 
+#+END_SRC
+
+* Rules
+
+#+BEGIN_SRC lua :tangle yes
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
 client.connect_signal("request::rules", function(c)
@@ -765,6 +843,11 @@ end)
 -- }}}
 awful.spawn.with_shell("mpv /home/chris/Videos/transcoded/a love letter.mp4")
 
+#+END_SRC
+
+* Signals
+
+#+BEGIN_SRC lua :tangle yes
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", function (c)
@@ -793,6 +876,12 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
+#+END_SRC
+
+* Autostart Apps
+
+#+BEGIN_SRC lua :tangle yes
+
 -- Autostart Applications
 awful.spawn.with_shell("picom --experimental-backend")
 awful.spawn.with_shell("libinput-gestures-setup start")
@@ -803,3 +892,6 @@ awful.spawn.with_shell("/usr/lib/polkit-kde-authentication-agent-1")
 awful.spawn.with_shell("emacs -daemon")
 awful.spawn.with_shell("nextcloud --background")
 awful.spawn.with_shell("caffeine")
+
+
+#+END_SRC

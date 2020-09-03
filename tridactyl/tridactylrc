@@ -5,13 +5,18 @@ set update.nag true
 set update.nagwait 7
 set update.lastnaggedversion 1.14.0
 set update.checkintervalsecs 86400
-set theme base16-google-dark
+set theme snazzy
 set searchurls.gh https://github.com/search?utf8=✓&q=
 set searchurls.y https://www.yewtu.be/search?q=
+set searchurls.aw https://wiki.archlinux.org/index.php?search=
+set searchurls.qt https://doc.qt.io/qt-5/search-results.html?q=
+set searchurls.mel https://melpa.org/#/?q=
+set searchurls.fel https://felgo.com/search-results?q=
+set searchurls.o https://www.office.com/search?auth=2&q=
 set searchurls.wiki https://en.wikipedia.org/wiki/Special:Search/
 set searchurls.g https://www.google.com/search?q=
 set searchurls.d https://duckduckgo.com/?q=
-set searchurls.ama https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=
+set searchurls.ama https://smile.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=
 set searchurls.google https://www.google.com/search?q=
 set searchurls.googlelucky https://www.google.com/search?btnI=I'm+Feeling+Lucky&q=
 set searchurls.scholar https://scholar.google.com/scholar?q=
@@ -21,7 +26,6 @@ set searchurls.duckduckgo https://duckduckgo.com/?q=
 set searchurls.yahoo https://search.yahoo.com/search?p=
 set searchurls.twitter https://twitter.com/search?q=
 set searchurls.wikipedia https://en.wikipedia.org/wiki/Special:Search/
-set searchurls.youtube https://www.youtube.com/results?search_query=
 set searchurls.amazon https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=
 set searchurls.amazonuk https://www.amazon.co.uk/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=
 set searchurls.startpage https://startpage.com/do/search?language=english&cat=web&query=
@@ -35,3 +39,7 @@ set searchurls.qwant https://www.qwant.com/?q=
 
 " For syntax highlighting see https://github.com/tridactyl/vim-tridactyl
 " vim: set filetype=tridactyl
+
+
+bind v hint -W mpvsafe
+" command oc js -p tri.excmds.shellescape(JS_ARG).then(url => tri.excmds.exclaim_quiet('org-capture ' + url))

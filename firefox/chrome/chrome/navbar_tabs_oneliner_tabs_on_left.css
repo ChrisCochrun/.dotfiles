@@ -49,7 +49,7 @@
 
 .tabbrowser-tab[selected]{
   min-width: 200px !important;
-  max-width: 1600px !important;
+  max-width: 2600px !important;
   max-height: 20px !important;
   height: 20px !important;
   min-height: 20px !important;
@@ -62,15 +62,29 @@
 }
 
 .tabbrowser-tab{
-  max-width: 70px !important;
-  min-width: 0px !important;
+  max-width: 80px !important;
+  min-width: 10px !important;
 }
 
-.tab-throbber, .tab-throbber-tabslist, .tab-icon-pending, .tab-icon-image, .tab-sharing-icon-overlay .tab-icon-sound{
-  max-height: 10px !important;
-  height: 10px !important;
-  min-height: 10px !important;
-  max-width: 10px !important;
+.tab-background {
+  border-top: 0px !important;
+}
+
+.tab-icon-pending, .tab-icon-image, .tab-sharing-icon-overlay .tab-icon-sound{
+  max-height: 13px !important;
+  height: 13px !important;
+  min-height: 13px !important;
+  min-width: 13px !important;
+  max-width: 13px !important;
+  align-self: center !important;
+}
+
+.tab-throbber, .tab-throbber-tabslist {
+  max-height: 18px !important;
+  height: 18px !important;
+  min-height: 18px !important;
+  min-width: 16px !important;
+  max-width: 16px !important;
   align-self: center !important;
 }
 
