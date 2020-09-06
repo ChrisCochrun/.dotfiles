@@ -1,2 +1,2 @@
 #+TITLE: Readme
-#+PROPERTY: header-args :tangle rc.lua
+#+DESCRIPTION: My Awesome config

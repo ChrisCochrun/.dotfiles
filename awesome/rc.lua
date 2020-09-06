@@ -1,4 +1,8 @@
 pcall(require, "luarocks.loader")
+local fennel = require("./fennel")
+fennel.path = fennel.path .. ";.config/awesome/?.fnl"
+table.insert(package.loaders or package.searchers, fennel.make_searcher({correlate=true}))
+require("init") -- loads init.fnl
 
 -- Standard awesome library
 local gears = require("gears")
@@ -21,7 +25,7 @@ local nice = require("nice")
 require("awful.hotkeys_popup.keys")
 
 require('module.notifications')
-require('module.decorate-client')
+-- require('module.decorate-client')
 require('module.backdrop')
 require('module.volume-osd')
 require('module.brightness-osd')
@@ -387,7 +391,7 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.align.horizontal,
             s.myemptywidget,
-            s.myemptywidget,
+            wibox.container.margin (s.mypromptbox,dpi(25),dpi(25),0,0), -- Middle widget
             s.myrightwidgets,
         },
         visible = true,
@@ -482,7 +486,9 @@ awful.keyboard.append_global_keybindings({
     -- dolphin
     awful.key({ modkey,           }, "d", function () awful.spawn("dolphin") end,
               {description = "open dolphin file manager", group = "apps"}),
-
+    -- mpv
+    awful.key({ modkey,  altkey   }, "m", function () awful.spawn("mpv --player-operation-mode=pseudo-gui") end,
+              {description = "open mpv", group = "apps"}),
     -- layout
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
               {description = "increase master width factor", group = "layout"}),
@@ -670,19 +676,25 @@ for i = 1, 9 do
     )
 end
 
-clientbuttons = gears.table.join(
-    awful.button({ }, 1, function (c)
-        c:emit_signal("request::activate", "mouse_click", {raise = true})
-    end),
-    awful.button({ modkey }, 1, function (c)
-        c:emit_signal("request::activate", "mouse_click", {raise = true})
-        awful.mouse.client.move(c)
-    end),
-    awful.button({ modkey }, 3, function (c)
-        c:emit_signal("request::activate", "mouse_click", {raise = true})
-        awful.mouse.client.resize(c)
-    end)
-)
+awful.mouse.append_global_mousebindings({
+    awful.button({ }, 3, function () mymainmenu:toggle() end),
+    awful.button({ }, 4, awful.tag.viewprev),
+    awful.button({ }, 5, awful.tag.viewnext),
+})
+
+client.connect_signal("request::default_mousebindings", function()
+    awful.mouse.append_client_mousebindings({
+        awful.button({ }, 1, function (c)
+            c:activate { context = "mouse_click" }
+        end),
+        awful.button({ modkey }, 1, function (c)
+            c:activate { context = "mouse_click", action = "mouse_move"  }
+        end),
+        awful.button({ modkey }, 3, function (c)
+            c:activate { context = "mouse_click", action = "mouse_resize"}
+        end),
+    })
+end)
 
 -- Set keys
 root.keys(globalkeys)
@@ -690,84 +702,71 @@ root.keys(globalkeys)
 
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
-ruled.client.connect_signal('request::manage', function()
-       ruled.client.append_rule {
-           -- All clients will match this rule.
-           rule = {},
-           properties = {
-               border_width = beautiful.border_width,
-               border_color = beautiful.border_normal,
-               focus = awful.client.focus.filter,
-               raise = true,
-               keys = clientkeys,
-               buttons = clientbuttons,
-               screen = awful.screen.preferred,
-               placement = awful.placement.no_overlap+awful.placement.no_offscreen
-           },
-       }
+ruled.client.connect_signal("request::rules", function()
+    -- All clients will match this rule.
+    ruled.client.append_rule {
+        id = "global",
+        rule = {},
+        properties = {
+            border_width = beautiful.border_width,
+            border_color = beautiful.border_normal,
+            focus = awful.client.focus.filter,
+            raise = true,
+            buttons = clientbuttons,
+            screen = awful.screen.preferred,
+            placement = awful.placement.no_overlap+awful.placement.no_offscreen
+        },
+    }
 
-       ruled.client.append_rule {
-           -- make mpv float
-           rule_any = {
-               class = {
-                   "mpv",
-                   "gl",
-                   "vlc"
-               }
-           },
-           properties = {
-               placement = awful.placement.centered,
-               floating = true,
-               ontop = true,
-               raise = true
-           },
+    -- make mpv specific
+    ruled.client.append_rule {
+        id = "mpv",
+        rule_any = {
+            class = {
+                "mpv"
+            }
+        },
+        properties = {
+                placement = awful.placement.centered,
+                floating = true,
+                ontop = true,
+                raise = true
+        },
+    }
 
-       }
+    -- Floating clients.
+    ruled.client.append_rule {
+        id = "floating",
+        rule_any = {
+            class = {
+                "Arandr",
+                "Blender",
+                "dolphin",
+            },
+            name = {
+                "Event Tester",  -- xev.
+                "remove images?" -- darktable delete window.
+            },
+            role = {
+                "AlarmWindow",  -- Thunderbird's calendar.
+                "ConfigManager",  -- Thunderbird's about:config.
+                "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
+            }
+        },
+        properties = { floating = true },
+    }
 
--- ruled.client.append_rule {
---     -- Floating clients.
---      rule_any = {
---         class = {
---           "Arandr",
---           "Blender",
---           "dolphin",
---         },
---         name = {
---           "Event Tester",  -- xev.
---           "remove images?" -- darktable delete window.
---         },
---         role = {
---           "AlarmWindow",  -- Thunderbird's calendar.
---           "ConfigManager",  -- Thunderbird's about:config.
---           "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
---         }
---      },
---      properties = { floating = true },
--- }
-
--- ruled.client.append_rule {
---     -- Add titlebars to normal clients and dialogs
---     rule_any = { type = { "normal", "dialog" } },
---     properties = { titlebars_enabled = false},
--- }
-
--- ruled.client.append_rule {
---     -- Set Firefox to never have titlebars
---     rule = { class = "Firefox" },
---     properties = { requests_no_titlebar = true, titlebars_enabled = false },
--- }
-
--- ruled.client.append_rule {
---     -- Set Feh center
---     rule = { class = "feh" },
---     properties = {
---         placement = awful.placement.centered,
---         floating = true
---     },
--- }
+    -- Set Feh center
+    ruled.client.append_rule {
+        id = "feh",
+        rule = { class = "feh" },
+        properties = {
+            placement = awful.placement.centered,
+            floating = true
+        },
+    }
 end)
 -- }}}
-awful.spawn.with_shell("mpv /home/chris/Videos/transcoded/a love letter.mp4")
 
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
@@ -797,7 +796,7 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
--- Autostart Applications
+-- {{{ Autostart Applications
 awful.spawn.with_shell("picom --experimental-backend")
 awful.spawn.with_shell("libinput-gestures-setup start")
 awful.spawn.with_shell("flameshot")
@@ -807,3 +806,5 @@ awful.spawn.with_shell("/usr/lib/polkit-kde-authentication-agent-1")
 awful.spawn.with_shell("emacs -daemon")
 awful.spawn.with_shell("nextcloud --background")
 awful.spawn.with_shell("caffeine")
+
+-- }}}
