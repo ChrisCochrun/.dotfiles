@@ -18,7 +18,6 @@ local beautiful = require("beautiful")
 -- local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
-local ruled = require("ruled")
 local nice = require("nice")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
@@ -412,7 +411,7 @@ root.buttons(gears.table.join(
 
 -- {{{ Key bindings
 awful.keyboard.append_global_keybindings({
-    awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
+    awful.key({ modkey,           }, "s",      hotkeys_popup.keys,
               {description="show help", group="awesome"}),
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
               {description = "view previous", group = "tag"}),
@@ -486,9 +485,6 @@ awful.keyboard.append_global_keybindings({
     -- dolphin
     awful.key({ modkey,           }, "d", function () awful.spawn("dolphin") end,
               {description = "open dolphin file manager", group = "apps"}),
-    -- mpv
-    awful.key({ modkey,  altkey   }, "m", function () awful.spawn("mpv --player-operation-mode=pseudo-gui") end,
-              {description = "open mpv", group = "apps"}),
     -- layout
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
               {description = "increase master width factor", group = "layout"}),
@@ -700,73 +696,6 @@ end)
 root.keys(globalkeys)
 -- }}}
 
--- {{{ Rules
--- Rules to apply to new clients (through the "manage" signal).
-ruled.client.connect_signal("request::rules", function()
-    -- All clients will match this rule.
-    ruled.client.append_rule {
-        id = "global",
-        rule = {},
-        properties = {
-            border_width = beautiful.border_width,
-            border_color = beautiful.border_normal,
-            focus = awful.client.focus.filter,
-            raise = true,
-            buttons = clientbuttons,
-            screen = awful.screen.preferred,
-            placement = awful.placement.no_overlap+awful.placement.no_offscreen
-        },
-    }
-
-    -- make mpv specific
-    ruled.client.append_rule {
-        id = "mpv",
-        rule_any = {
-            class = {
-                "mpv"
-            }
-        },
-        properties = {
-                placement = awful.placement.centered,
-                floating = true,
-                ontop = true,
-                raise = true
-        },
-    }
-
-    -- Floating clients.
-    ruled.client.append_rule {
-        id = "floating",
-        rule_any = {
-            class = {
-                "Arandr",
-                "Blender",
-                "dolphin",
-            },
-            name = {
-                "Event Tester",  -- xev.
-                "remove images?" -- darktable delete window.
-            },
-            role = {
-                "AlarmWindow",  -- Thunderbird's calendar.
-                "ConfigManager",  -- Thunderbird's about:config.
-                "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
-            }
-        },
-        properties = { floating = true },
-    }
-
-    -- Set Feh center
-    ruled.client.append_rule {
-        id = "feh",
-        rule = { class = "feh" },
-        properties = {
-            placement = awful.placement.centered,
-            floating = true
-        },
-    }
-end)
--- }}}
 
 -- {{{ Signals
 -- Signal function to execute when a new client appears.

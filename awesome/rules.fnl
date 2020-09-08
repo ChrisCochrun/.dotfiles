@@ -13,23 +13,32 @@
                  :border_color beautiful.border_normal
                  :focus awful.client.focus.filter
                  :raise true
-                 :buttons keybindings.clientbuttons
                  :screen awful.screen.preferred
                  :placement (+ awful.placement.no_overlap awful.placement.no_offscreen)
                  }
    }
 
-  ;; floating
+  ;; floating and centered
   {
    :rule_any {
               :class [
                       "mpv"
                       "dolphin"
+                      "feh"
+                      "Arandr"
                       ]
+              :name [
+                     "Event Tester"
+                     "remove images?"
+                     ]
               :role [
                      "pop-up"
+                     "GtkFileChooserDialog"
                      ]}
-   :properties {:floating true}
+   :properties {
+                :placement awful.placement.centered
+                :floating true
+                }
    }
   ])
 
