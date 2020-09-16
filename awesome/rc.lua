@@ -41,7 +41,6 @@ require('module.brightness-osd')
 -- require('module.battery-notifier')
 -- require('module.lockscreen')
 
-<<<<<<< HEAD
 -- }}}
 
 -- -- {{{ Error handling
@@ -69,12 +68,6 @@ require('module.brightness-osd')
 -- end
 -- -- }}}
 
-<<<<<<< HEAD
->>>>>>> 05f8e08... making nice only work on desktop for now
-=======
-=======
->>>>>>> bdc9927... Added more of awesome into fennel over lua
->>>>>>> 1d4ba76... making nice only work on desktop for now
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init("/home/chris/.config/awesome/theme.lua")
@@ -744,12 +737,6 @@ end)
 
 -- Enable nice titlebars
 -- nice()
-
-=======
--- Enable nice titlebars
--- nice()
-
->>>>>>> 1d4ba76... making nice only work on desktop for now
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
