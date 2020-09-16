@@ -10,13 +10,12 @@
                   :alt "Mod1"
                   })
 
-(local globalkeys (gears.table.join
-                   (key [:mod :alt] "m" (awful.spawn "mpv --player-operation-mode=pseudo-gui"))
-                   (key [:mod] "s" hotkeys_popup.show_help)
-                   ))
+(local globalkeys (awful.keyboard.append_global_keybindings [
+                                                             (awful.key [:mod :alt] "m" (awful.spawn "mpv --player-operation-mode=pseudo-gui"))
+                                                             (awful.key [:mod] "s" hotkeys_popup.show_help)
+                                                             ]))
 
-(root.keys globalkeys)
-keys
+globalkeys
 
 
 

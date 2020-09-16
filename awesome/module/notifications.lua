@@ -18,17 +18,15 @@ naughty.config.defaults.title = 'System Notification'
 naughty.config.defaults.margin = dpi(100)
 naughty.config.defaults.border_width = 0
 naughty.config.defaults.position = 'top_right'
+naughty.config.defaults.screen = 1
 naughty.config.defaults.shape = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, dpi(6)) end
 
 -- Apply theme variables
 
-naughty.config.padding = 8
-naughty.config.spacing = 8
+naughty.config.padding = dpi(20)
+naughty.config.spacing = dpi(20)
 naughty.config.icon_dirs = {
-    "/usr/share/icons/Tela",
-    "/usr/share/icons/Tela-blue-dark",
     "/usr/share/icons/Papirus/",
-    "/usr/share/icons/la-capitaine-icon-theme/",
     "/usr/share/icons/gnome/",
     "/usr/share/icons/hicolor/",
     "/usr/share/pixmaps/"
@@ -150,7 +148,7 @@ naughty.connect_signal("request::display", function(n)
         notification = n,
         type = "notification",
         screen = awful.screen.preferred(),
-        shape = gears.shape.rectangle,
+        shape = gears.shape.rounded_rectangle,
         widget_template = {
             {
                 {
@@ -168,7 +166,6 @@ naughty.connect_signal("request::display", function(n)
                                                         align = 'center',
                                                         valign = 'center',
                                                         widget = wibox.widget.textbox
-
                                                     },
                                                     margins = beautiful.notification_margin,
                                                     widget  = wibox.container.margin,
@@ -192,11 +189,11 @@ naughty.connect_signal("request::display", function(n)
                                                         nil,
                                                         {
                                                             {
-                                                                align = 'left',
+                                                                align = 'center',
                                                                 widget = naughty.widget.title
                                                             },
                                                             {
-                                                                align = "left",
+                                                                align = "center",
                                                                 widget = naughty.widget.message,
                                                             },
                                                             layout = wibox.layout.fixed.vertical
@@ -248,15 +245,14 @@ naughty.connect_signal("request::display", function(n)
             },
             -- Margin of the fake BG to have a space between notification and the screen edge
             -- margins = dpi(15),--beautiful.notification_margin,
-            right = dpi(10),
-            left = dpi(10),
-            bottom = dpi(10),
-            top = dpi(15),
+            right = dpi(20),
+            left = dpi(0),
+            bottom = dpi(0),
+            top = dpi(20),
             widget  = wibox.container.margin
         },
-        right = dpi(100),
-        top = dpi(150),
-        widget  = wibox.container.margin
+        bg = beautiful.transparent,
+        widget = wibox.container.background
     }
 
     -- Destroy popups if dont_disturb mode is on

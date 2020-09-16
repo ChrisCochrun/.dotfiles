@@ -33,6 +33,7 @@ theme.red           = "#ff5c57"
 
 theme.useless_gap   = dpi(16)
 theme.border_width  = dpi(0)
+theme.transparent   = "#00000000"
 theme.border_normal = "#00000000"
 theme.border_focus  = "#00000000"
 theme.border_marked = "#00000000"
@@ -71,6 +72,7 @@ theme.tasklist_bg = theme.red
 -- notification_font
 -- notification_[bg|fg]
 -- notification_[width|height|margin]
+theme.notification_margin = 4
 -- notification_[border_color|border_width|shape|opacity]
 
 -- Variables set for theming the menu:

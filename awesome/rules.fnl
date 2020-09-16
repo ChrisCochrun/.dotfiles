@@ -11,7 +11,7 @@
    :propertites {
                  :border-width beautiful.border_width
                  :border_color beautiful.border_normal
-                 :focus awful.client.focus.filter
+                 :focus true
                  :raise true
                  :screen awful.screen.preferred
                  :placement (+ awful.placement.no_overlap awful.placement.no_offscreen)
@@ -23,6 +23,20 @@
    :rule_any {
               :class [
                       "mpv"
+                      ]
+              }
+   :properties {
+                :floating true
+                :raise true
+                :focus true
+                :height 800
+                :screen 2
+                :placement (+ awful.placement.no_offscreen awful.placement.centered)
+                }
+   }
+  {
+   :rule_any {
+              :class [
                       "dolphin"
                       "feh"
                       "Arandr"
@@ -36,8 +50,10 @@
                      "GtkFileChooserDialog"
                      ]}
    :properties {
-                :placement awful.placement.centered
                 :floating true
+                :raise true
+                :focus true
+                :placement (+ awful.placement.no_offscreen awful.placement.centered)
                 }
    }
   ])

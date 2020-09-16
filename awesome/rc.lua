@@ -37,31 +37,6 @@ require('module.brightness-osd')
 -- require('module.battery-notifier')
 -- require('module.lockscreen')
 
--- -- {{{ Error handling
--- -- Check if awesome encountered an error during startup and fell back to
--- -- another config (This code will only ever execute for the fallback config)
--- if awesome.startup_errors then
---     naughty.notify({ preset = naughty.config.presets.critical,
---                      title = "Oops, there were errors during startup!",
---                      text = awesome.startup_errors })
--- end
-
--- -- Handle runtime errors after startup
--- do
---     local in_error = false
---     awesome.connect_signal("debug::error", function (err)
---         -- Make sure we don't go into an endless error loop
---         if in_error then return end
---         in_error = true
-
---         naughty.notify({ preset = naughty.config.presets.critical,
---                          title = "Oops, an error happened!",
---                          text = tostring(err) })
---         in_error = false
---     end)
--- end
--- -- }}}
-
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init("/home/chris/.config/awesome/theme.lua")
@@ -560,6 +535,16 @@ awful.keyboard.append_global_keybindings({
         awful.util.spawn("/home/chris/.dotfiles/rofi/launchers-git/launcher.sh") end,
               {description = "launch rofi", group = "launcher"}),
 
+    -- Window Switcher
+    awful.key({ modkey },   "Tab",     function ()
+        awful.util.spawn("/home/chris/.dotfiles/rofi/launchers-git/windows.sh") end,
+              {description = "launch rofi window switcher", group = "launcher"}),
+
+    -- Emoji Selector
+    awful.key({ modkey },   ".",     function ()
+        awful.util.spawn("/home/chris/.dotfiles/rofi/launchers-git/emoji.sh") end,
+              {description = "launch rofi emoji picker", group = "launcher"}),
+
     awful.key({ modkey }, "x",
               function ()
                   awful.prompt.run {
@@ -717,23 +702,20 @@ end)
 --     c:emit_signal("request::activate", "mouse_enter", {raise = false})
 -- end)
 
--- Enable nice titlebars
-nice()
-
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
 -- {{{ Autostart Applications
-awful.spawn.with_shell("picom --experimental-backend")
-awful.spawn.with_shell("libinput-gestures-setup start")
-awful.spawn.with_shell("flameshot")
-awful.spawn.with_shell("xset r rate 220 90")
+-- awful.spawn.with_shell("picom --experimental-backend")
+-- awful.spawn.with_shell("libinput-gestures-setup start")
+-- awful.spawn.with_shell("flameshot")
+-- awful.spawn.with_shell("xset r rate 220 90")
 -- awful.spawn.with_shell("feh --bg-fill ~/Pictures/wallpapers/RoyalKing.png")
-awful.spawn.with_shell("/usr/lib/polkit-kde-authentication-agent-1")
-awful.spawn.with_shell("emacs -daemon")
-awful.spawn.with_shell("nextcloud --background")
-awful.spawn.with_shell("caffeine")
+-- awful.spawn.with_shell("/usr/lib/polkit-kde-authentication-agent-1")
+-- awful.spawn.with_shell("emacs -daemon")
+-- awful.spawn.with_shell("nextcloud --background")
+-- awful.spawn.with_shell("caffeine")
 
 -- }}}
