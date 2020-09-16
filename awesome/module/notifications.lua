@@ -111,6 +111,7 @@ naughty.connect_signal(
 -- Naughty template
 naughty.connect_signal("request::display", function(n)
 
+<<<<<<< HEAD
     -- naughty.actions template
     local actions_template = wibox.widget {
         notification = n,
@@ -142,7 +143,148 @@ naughty.connect_signal("request::display", function(n)
         style = { underline_normal = false, underline_selected = true },
         widget = naughty.list.actions
     }
+=======
+	-- naughty.actions template
+	local actions_template = wibox.widget {
+		notification = n,
+		base_layout = wibox.widget {
+			spacing        = dpi(4),
+			layout         = wibox.layout.flex.horizontal
+		},
+		widget_template = {
+			{
+				{
+					{
+						{
+							id     = 'text_role',
+							font   = 'VictorMono Nerd Font 10',
+							widget = wibox.widget.textbox
+						},
+						widget = wibox.container.place
+					},
+					widget = clickable_container
+				},
+				bg                 = beautiful.groups_bg,
+				shape              = gears.shape.rounded_rect,
+				forced_height      = dpi(35),
+				widget             = wibox.container.background
+			},
+			margins = dpi(8),
+			widget  = wibox.container.margin
+		},
+		style = { underline_normal = false, underline_selected = true },
+		widget = naughty.list.actions
+	}
 
+<<<<<<< HEAD
+	-- Custom notification layout
+	naughty.layout.box {
+		notification = n,
+		type = "notification",
+		screen = awful.screen.preferred(),
+		shape = gears.shape.rectangle,
+		widget_template = {
+			{
+				{
+					{
+						{
+							{
+								{
+									{
+										{
+											{
+												{
+													{
+														markup = n.app_name or 'System Notification',
+														font = 'VictorMono Nerd Font 10',
+														align = 'center',
+														valign = 'center',
+														widget = wibox.widget.textbox
+>>>>>>> 1d4ba76... making nice only work on desktop for now
+
+    -- Custom notification layout
+    naughty.layout.box {
+        notification = n,
+        type = "notification",
+        screen = awful.screen.preferred(),
+        shape = gears.shape.rounded_rectangle,
+        widget_template = {
+            {
+                {
+                    {
+                        {
+                            {
+                                {
+                                    {
+                                        {
+                                            {
+                                                {
+                                                    {
+                                                        markup = n.app_name or 'System Notification',
+                                                        font = 'VictorMono Nerd Font 10',
+                                                        align = 'center',
+                                                        valign = 'center',
+                                                        widget = wibox.widget.textbox
+                                                    },
+                                                    margins = beautiful.notification_margin,
+                                                    widget  = wibox.container.margin,
+                                                },
+                                                bg = '#000000'.. '44',
+                                                widget  = wibox.container.background,
+                                            },
+                                            {
+                                                {
+                                                    {
+                                                        resize_strategy = 'center',
+                                                        widget = naughty.widget.icon,
+                                                    },
+                                                    margins = beautiful.notification_margin,
+                                                    widget  = wibox.container.margin,
+                                                },
+                                                {
+                                                    {
+                                                        layout = wibox.layout.align.vertical,
+                                                        expand = 'none',
+                                                        nil,
+                                                        {
+                                                            {
+                                                                align = 'center',
+                                                                widget = naughty.widget.title
+                                                            },
+                                                            {
+                                                                align = "center",
+                                                                widget = naughty.widget.message,
+                                                            },
+                                                            layout = wibox.layout.fixed.vertical
+                                                        },
+                                                        nil
+                                                    },
+                                                    margins = beautiful.notification_margin,
+                                                    widget  = wibox.container.margin,
+                                                },
+                                                layout = wibox.layout.fixed.horizontal,
+                                            },
+                                            fill_space = true,
+                                            spacing = beautiful.notification_margin,
+                                            layout  = wibox.layout.fixed.vertical,
+                                        },
+                                        -- Margin between the fake background
+                                        -- Set to 0 to preserve the 'titlebar' effect
+                                        margins = dpi(0),
+                                        widget  = wibox.container.margin,
+                                    },
+                                    bg = beautiful.bg_normal,
+                                    widget  = wibox.container.background,
+                                },
+                                -- Notification action list
+                                -- naughty.list.actions,
+                                actions_template,
+                                spacing = dpi(4),
+                                layout  = wibox.layout.fixed.vertical,
+                            },
+                            bg     = beautiful.bg_normal,
+                            id     = "background_role",
+                            shape = gears.shape.rounded_rect,
     -- Custom notification layout
     naughty.layout.box {
         notification = n,
@@ -254,6 +396,7 @@ naughty.connect_signal("request::display", function(n)
         bg = beautiful.transparent,
         widget = wibox.container.background
     }
+>>>>>>> 1d4ba76... making nice only work on desktop for now
 
     -- Destroy popups if dont_disturb mode is on
     -- Or if the right_panel is visible
