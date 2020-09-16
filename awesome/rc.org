@@ -30,7 +30,11 @@ local beautiful = require("beautiful")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 local ruled = require("ruled")
+<<<<<<< HEAD
 local nice = require("nice")()
+=======
+-- local nice = require("nice")
+>>>>>>> 05f8e08... making nice only work on desktop for now
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
@@ -240,7 +244,7 @@ local function set_wallpaper(s)
         if type(wallpaper) == "function" then
             wallpaper = wallpaper(s)
         end
-        gears.wallpaper.maximized(wallpaper, s, true)
+        gears.wallpaper.centered(wallpaper, s, "#282a36")
     end
 end
 
@@ -272,7 +276,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "◉", "◉", "◉", "◉"}, s, awful.layout.layouts[1])
+    awful.tag({ "emacs", "web", "chat", "misc"}, s, awful.layout.layouts[1])
 
 
     yoffset = dpi(45)
@@ -384,7 +388,7 @@ awful.screen.connect_for_each_screen(function(s)
     }
     -- Create Battery, Network, and Volume widget
     s.battery = require('widget.battery')()
-    s.network = require('widget.network')()
+    -- s.network = require('widget.network')()
     s.volume = require('widget.volume')()
     s.updater = require('widget.package-updater')()
 
@@ -401,7 +405,7 @@ awful.screen.connect_for_each_screen(function(s)
                 s.volume,
                 s.mysystray,
                 s.updater,
-                s.network,
+                -- s.network,
                 s.battery,
                 wibox.container.margin (s.mylayoutbox,0,dpi(25),0,0),
             },
@@ -765,10 +769,13 @@ root.keys(globalkeys)
 
 * Rules
 
+Since I can't seem to figure out the rules myself, let's see if I can't use someone elses and modify them.
+
+** Broken Rules that I can't figure out
 #+BEGIN_SRC lua :tangle yes
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
-ruled.client.connect_signal('request::manage', function()
+ruled.client.connect_signal("request::rules", function()
        ruled.client.append_rule {
            -- All clients will match this rule.
            rule = {},
@@ -848,6 +855,12 @@ end)
 awful.spawn.with_shell("mpv /home/chris/Videos/transcoded/a love letter.mp4")
 
 #+END_SRC
+** Import other rules
+#+BEGIN_SRC lua :tangle no
+
+    local rules = require("configuration.clients.rules")
+
+#+END_SRC
 
 * Signals
 
@@ -873,7 +886,7 @@ end)
 -- end)
 
 -- Enable nice titlebars
-nice()
+-- nice()
 
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)

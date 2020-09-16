@@ -36,7 +36,7 @@ local return_button = function()
 		font = 'VictorMono Nerd Font 10',
 		align = 'center',
 		valign = 'center',
-		visible = false,
+		visible = true,
 		widget = wibox.widget.textbox
 	}
 
@@ -84,11 +84,11 @@ local return_button = function()
 
 	-- Get battery info script
 	local get_battery_info = function()
-		awful.spawn.easy_async_with_shell('upower -i $(upower -e | grep BAT)', function(stdout)
+		awful.spawn.easy_async_with_shell('upower -i (upower -e | rg BAT)', function(stdout)
 
 			if (stdout == nil or stdout == '') then
 				battery_tooltip:set_text('No battery detected!')
-				battery_widget:set_visible(false)
+				battery_widget:set_visible(true)
 				return
 			end
 
@@ -107,11 +107,11 @@ local return_button = function()
 
 
 	local check_percentage_cmd = [[
-	upower -i $(upower -e | grep BAT) | grep percentage | awk '{print $2}' | tr -d '\n%'
+	upower -i (upower -e | rg BAT | rg 1) | rg percentage | awk '{print $2}' | tr -d '\n%'
 	]]
 
 	local check_status_cmd = [[bash -c "
-	upower -i $(upower -e | grep BAT) | grep state | awk '{print $2}' | tr -d '\n'
+	upower -i (upower -e | rg BAT | rg 1) | rg state | awk '{print $2}' | tr -d '\n'
 	"]]
 
 	local last_battery_check = os.time()
@@ -137,7 +137,7 @@ local return_button = function()
 
 			battery_widget.spacing = dpi(5)
 			battery_percentage_text.visible = true
-			battery_percentage_text:set_text(battery_percentage .. '%')
+			battery_percentage_text:set_text(battery_percentage .. "%")
 
 			local icon_name = 'battery'
 
@@ -243,7 +243,7 @@ local return_button = function()
 		if (stdout == nil or stdout == '') then
 
 			battery_widget.spacing = dpi(0)
-			battery_percentage_text.visible = false
+			battery_percentage_text.visible = true
 
 			battery_tooltip:set_text('No battery detected!')
 			battery_imagebox.icon:set_image(gears.surface.load_uncached(widget_icon_dir .. 'battery-unknown' .. '.svg'))

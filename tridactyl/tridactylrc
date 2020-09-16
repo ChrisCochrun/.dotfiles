@@ -42,4 +42,5 @@ set searchurls.qwant https://www.qwant.com/?q=
 
 
 bind v hint -W mpvsafe
-" command oc js -p tri.excmds.shellescape(JS_ARG).then(url => tri.excmds.exclaim_quiet('org-capture ' + url))
+bind gc composite get_current_url | org-capture
+command org-capture js -p tri.excmds.shellescape(JS_ARG).then(url => tri.excmds.exclaim_quiet('org-capture ' + url))
