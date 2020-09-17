@@ -1,6 +1,6 @@
-(global awful (require "awful"))
-(global beautiful (require "beautiful"))
-(global keybindings (require "keys"))
+(local awful (require "awful"))
+(local beautiful (require "beautiful"))
+(local keybindings (require "keys"))
 
 (local
  rules
