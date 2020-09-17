@@ -1,11 +1,15 @@
 pcall(require, "luarocks.loader")
-local fennel = require("./fennel")
+-- local fennel = require("./fennel")
+fennel = require("fennel")
+local gears = require("gears")
 fennel.path = fennel.path .. ";.config/awesome/?.fnl"
 table.insert(package.loaders or package.searchers, fennel.make_searcher({correlate=true}))
+-- table.insert(package.loaders or package.searchers, fennel.searcher)
 require("init") -- loads init.fnl
 
+
+
 -- Standard awesome library
-local gears = require("gears")
 local awful = require("awful")
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
@@ -19,73 +23,28 @@ local beautiful = require("beautiful")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 local ruled = require("ruled")
-local ruls = require("configuration.client.rules")
--- local nice = require("nice")
+-- local ruls = require("configuration.client.rules")
+
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
--- {{{ Modules
-
+-- Modules
 require('module.notifications')
--- require('module.decorate-client')
 require('module.backdrop')
 require('module.volume-osd')
 require('module.brightness-osd')
--- require('module.auto-start')
--- require('module.exit-screen')
--- require('module.quake-terminal')
--- require('module.titlebar')
--- require('module.menu')
--- require('module.dynamic-wallpaper')
--- require('module.battery-notifier')
--- require('module.lockscreen')
-
--- }}}
-
--- -- {{{ Error handling
--- -- Check if awesome encountered an error during startup and fell back to
--- -- another config (This code will only ever execute for the fallback config)
--- if awesome.startup_errors then
---     naughty.notify({ preset = naughty.config.presets.critical,
---                      title = "Oops, there were errors during startup!",
---                      text = awesome.startup_errors })
--- end
-
--- -- Handle runtime errors after startup
--- do
---     local in_error = false
---     awesome.connect_signal("debug::error", function (err)
---         -- Make sure we don't go into an endless error loop
---         if in_error then return end
---         in_error = true
-
---         naughty.notify({ preset = naughty.config.presets.critical,
---                          title = "Oops, an error happened!",
---                          text = tostring(err) })
---         in_error = false
---     end)
--- end
--- -- }}}
 
 -- {{{ Variable definitions
--- Themes define colours, icons, font and wallpapers.
 beautiful.init("/home/chris/.config/awesome/theme.lua")
-
--- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
 editor = "emacsclient -a emacs"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
--- Usually, Mod4 is the key with a logo between Control and Alt.
--- If you do not like this or do not have such a key,
--- I suggest you to remap Mod4 to another key using xmodmap or other tools.
--- However, you can use another modifier like Mod1, but it may interact with others.
 modkey = "Mod4"
 altkey = "Mod1"
 
--- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
     awful.layout.suit.tile,
     awful.layout.suit.magnifier,
@@ -104,10 +63,8 @@ awful.layout.layouts = {
     -- awful.layout.suit.corner.sw,
     -- awful.layout.suit.corner.se,
 }
--- }}}
 
--- {{{ Menu
--- Create a launcher widget and a main menu
+-- Menu
 myawesomemenu = {
    { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
    { "manual", terminal .. " -e man awesome" },
@@ -131,12 +88,8 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- Keyboard map indicator and switcher
 mykeyboardlayout = awful.widget.keyboardlayout()
 
--- {{{ Wibar
--- Create a textclock widget
+-- Wibar
 mytextclock = wibox.widget.textclock(" %a %b %d, %l:%M %p ")
-
--- Create a volume widget
--- myvolumewidget = wibox.widget.button()
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -194,217 +147,165 @@ end
 screen.connect_signal("property::geometry", set_wallpaper)
 
 
---     mynewpanel:setup {
---         layout = wibox.layout.align.horizontal,
---         expand = "outside",
---         { -- Left widgets
---             layout = wibox.layout.align.horizontal,
---             -- wibox.container.margin (s.mytaglist,25,0,0,0),
---             -- wibox.container.margin (s.mytasklist,25,25,0,0), -- Middle widget
---             -- s.myemptywidget,
---             spacing = 15
---         },
---             -- mytextclock,
---         { -- Right widgets
---             layout = wibox.layout.align.horizontal,
---             -- s.myemptywidget,
---             -- s.myemptywidget,
---             -- s.myrightwidgets,
---         },
---     }
-
 awful.screen.connect_for_each_screen(function(s)
-    -- Wallpaper
-    set_wallpaper(s)
+     -- Wallpaper
+     set_wallpaper(s)
 
-    -- Each screen has its own tag table.
-    awful.tag({ "emacs", "web", "chat", "misc"}, s, awful.layout.layouts[1])
+     -- Each screen has its own tag table.
+     awful.tag({ "   ", "   ", "   ", "   "}, s, awful.layout.layouts[1])
 
 
-    yoffset = dpi(45)
-    xoffset = dpi(18)
+     yoffset = dpi(45)
+     xoffset = dpi(18)
 
-    mypanel = wibox
-    ({
-        x = s.geometry.x + xoffset,
-        y = s.geometry.height - yoffset,
-        height = dpi(30),
-        width = s.geometry.width - (xoffset * 2),
-        ontop = false,
-        stretch = false,
-        type = "dock",
-        screen = s,
-        shape = gears.shape.rounded_bar,
-        -- widget = wibox.widget.textbox
-        bg = beautiful.bg_normal,
-        fg = beautiful.fg_normal,
-        opacity = 0.65,
-    })
+     mypanel = wibox
+     ({
+         x = s.geometry.x + xoffset,
+         y = s.geometry.height - yoffset,
+         height = dpi(30),
+         width = s.geometry.width - (xoffset * 2),
+         ontop = false,
+         stretch = false,
+         type = "dock",
+         screen = s,
+         shape = gears.shape.rounded_bar,
+         bg = beautiful.bg_normal,
+         fg = beautiful.fg_normal,
+         opacity = 0.65,
+     })
 
-    mypanel:struts {
-        bottom = dpi(40)
-    }
+     mypanel:struts {
+         bottom = dpi(40)
+     }
 
-    -- Create a promptbox for each screen
-    s.mypromptbox = awful.widget.prompt()
-    -- Create an imagebox widget which will contain an icon indicating which layout we're using.
-    -- We need one layoutbox per screen.
-    s.mylayoutbox = awful.widget.layoutbox(s)
-    s.mylayoutbox:buttons(gears.table.join(
-                           awful.button({ }, 1, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 3, function () awful.layout.inc(-1) end),
-                           awful.button({ }, 4, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 5, function () awful.layout.inc(-1) end)))
-    -- Create a taglist widget
-    s.mytaglist = awful.widget.taglist {
-        screen  = s,
-        filter  = awful.widget.taglist.filter.all,
-        buttons = taglist_buttons
-    }
+     -- Create a promptbox for each screen
+     s.mypromptbox = awful.widget.prompt()
+     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
+     -- We need one layoutbox per screen.
+     s.mylayoutbox = awful.widget.layoutbox(s)
+     s.mylayoutbox:buttons(gears.table.join(
+                            awful.button({ }, 1, function () awful.layout.inc( 1) end),
+                            awful.button({ }, 3, function () awful.layout.inc(-1) end),
+                            awful.button({ }, 4, function () awful.layout.inc( 1) end),
+                            awful.button({ }, 5, function () awful.layout.inc(-1) end)))
+     -- Create a taglist widget
+     s.mytaglist = awful.widget.taglist {
+         screen  = s,
+         filter  = awful.widget.taglist.filter.all,
+         buttons = taglist_buttons
+     }
 
-    -- Create a systray widget
-    s.mysystray = {
-        wibox.widget.systray(),
-        -- bg = "#00FF0066",
-        widget = wibox.container.background,
-    }
-    -- Create a tasklist widget
-    -- s.mytasklist = awful.widget.tasklist {
-    --     screen  = s,
-    --     filter  = awful.widget.tasklist.filter.currenttags,
-    --     buttons = tasklist_buttons
-    --     style =
-    -- }
+     -- Create a systray widget
+     s.mysystray = {
+         wibox.widget.systray(),
+         -- bg = "#00FF0066",
+         widget = wibox.container.background,
+     }
 
-    s.mytasklist = awful.widget.tasklist {
-        screen   = s,
-        filter   = awful.widget.tasklist.filter.currenttags,
-        buttons  = tasklist_buttons,
-        style    = {
-            border_width = 0,
-            border_color = '#777777',
-            shape        = gears.shape.rounded_bar,
+     s.mytasklist = awful.widget.tasklist {
+         screen   = s,
+         filter   = awful.widget.tasklist.filter.currenttags,
+         buttons  = tasklist_buttons,
+         style    = {
+             border_width = 0,
+             border_color = '#777777',
+             shape        = gears.shape.rounded_bar,
 
-        },
-        layout   = {
-            spacing = 20,
-            spacing_widget = {
-                {
-                    forced_width = 5,
-                    forced_height = dpi(20),
-                    -- shape        = gears.shape.circle,
-                    widget       = wibox.widget.separator
-                },
-                valign = 'center',
-                halign = 'center',
-                widget = wibox.container.place,
-            },
-            layout  = wibox.layout.flex.horizontal
-        },
-        -- notice that there is *no* wibox.wibox prefix, it is a template,
-        -- not a widget instance.
-        widget_template = {
-            {
-                {
-                    {
-                        {
-                            id     = 'icon_role',
-                            widget = wibox.widget.imagebox,
-                        },
-                        margins = 2,
-                        widget  = wibox.container.margin,
-                    },
-                    {
-                        id     = 'text_role',
-                        widget = wibox.widget.textbox,
-                    },
-                    layout = wibox.layout.align.horizontal,
-                },
-                left  = 10,
-                right = 10,
-                widget = wibox.container.margin
-            },
-            id     = 'background_role',
-            widget = wibox.container.background,
-        },
-    }
-    -- Create Battery, Network, and Volume widget
-    s.battery = require('widget.battery')()
-    -- s.network = require('widget.network')()
-    s.volume = require('widget.volume')()
-    s.updater = require('widget.package-updater')()
+         },
+         layout   = {
+             spacing = 20,
+             spacing_widget = {
+                 {
+                     forced_width = 5,
+                     forced_height = dpi(20),
+                     -- shape        = gears.shape.circle,
+                     widget       = wibox.widget.separator
+                 },
+                 valign = 'center',
+                 halign = 'center',
+                 widget = wibox.container.place,
+             },
+             layout  = wibox.layout.flex.horizontal
+         },
+         -- notice that there is *no* wibox.wibox prefix, it is a template,
+         -- not a widget instance.
+         widget_template = {
+             {
+                 {
+                     {
+                         {
+                             id     = 'icon_role',
+                             widget = wibox.widget.imagebox,
+                         },
+                         margins = 2,
+                         widget  = wibox.container.margin,
+                     },
+                     {
+                         id     = 'text_role',
+                         widget = wibox.widget.textbox,
+                     },
+                     layout = wibox.layout.align.horizontal,
+                 },
+                 left  = 10,
+                 right = 10,
+                 widget = wibox.container.margin
+             },
+             id     = 'background_role',
+             widget = wibox.container.background,
+         },
+     }
+     -- Create Battery, Network, and Volume widget
+     s.battery = require('widget.battery')()
+     -- s.network = require('widget.network')()
+     s.volume = require('widget.volume')()
+     s.updater = require('widget.package-updater')()
 
-    -- Create the wibox
-    -- s.mywibox = awful.wibar({
-    --         y = s.geometry.y + dpi(1080) - yoffset,
-    --         position = "bottom",
-    --         screen = s})
+     s.myrightwidgets =
+         {
+             { -- Right widgets
+                 layout = wibox.layout.fixed.horizontal,
+                 s.volume,
+                 s.mysystray,
+                 s.updater,
+                 -- s.network,
+                 s.battery,
+                 wibox.container.margin (s.mylayoutbox,0,dpi(25),0,0),
+             },
+             -- bg = "#00FF0066",
+             widget = wibox.container.background,
+         }
 
-    s.myrightwidgets =
-        {
-            { -- Right widgets
-                layout = wibox.layout.fixed.horizontal,
-                s.volume,
-                s.mysystray,
-                s.updater,
-                -- s.network,
-                s.battery,
-                wibox.container.margin (s.mylayoutbox,0,dpi(25),0,0),
-            },
-            -- bg = "#00FF0066",
-            widget = wibox.container.background,
-        }
-    -- Empty widget to use for spacing
-    s.myemptywidget = wibox.widget{
-        markup = '',
-        align = '',
-        valign = '',
-        widget = wibox.widget.textbox
-    }
-    -- Add widgets to the wibox
-    -- s.mywibox:setup {
-    --     layout = wibox.layout.align.horizontal,
-    --     expand = "outside",
-    --     { -- Left widgets
-    --         layout = wibox.layout.align.horizontal,
-    --         wibox.container.margin (s.mytaglist,25,0,0,0),
-    --         wibox.container.margin (s.mytasklist,25,25,0,0), -- Middle widget
-    --         s.myemptywidget,
-    --         spacing = 15
-    --     },
-    --         mytextclock,
-    --     { -- Right widgets
-    --         layout = wibox.layout.align.horizontal,
-    --         s.myemptywidget,
-    --         s.myemptywidget,
-    --         s.myrightwidgets,
-    --     },
-    -- }
+     -- Empty widget to use for spacing
+     s.myemptywidget = wibox.widget{
+         markup = '',
+         align = '',
+         valign = '',
+         widget = wibox.widget.textbox
+     }
 
-    -- Add widgets to the wibox
-    mypanel:setup {
-        layout = wibox.layout.align.horizontal,
-        expand = "outside",
-        { -- Left widgets
-            layout = wibox.layout.align.horizontal,
-            wibox.container.margin (s.mytaglist,dpi(15),0,dpi(-3),0),
-            wibox.container.margin (s.mytasklist,dpi(25),dpi(25),0,0), -- Middle widget
-            s.myemptywidget,
-            spacing = dpi(15)
-        },
-            mytextclock,
-        { -- Right widgets
-            layout = wibox.layout.align.horizontal,
-            s.myemptywidget,
-            wibox.container.margin (s.mypromptbox,dpi(25),dpi(25),0,0), -- Middle widget
-            s.myrightwidgets,
-        },
-        visible = true,
-    }
+--     -- Add widgets to the wibox
+     mypanel:setup {
+         layout = wibox.layout.align.horizontal,
+         expand = "outside",
+         { -- Left widgets
+             layout = wibox.layout.align.horizontal,
+             wibox.container.margin (s.mytaglist,dpi(15),0,dpi(-3),0),
+             wibox.container.margin (s.mytasklist,dpi(25),dpi(25),0,0), -- Middle widget
+             s.myemptywidget,
+             spacing = dpi(15)
+         },
+             mytextclock,
+         { -- Right widgets
+             layout = wibox.layout.align.horizontal,
+             s.myemptywidget,
+             wibox.container.margin (s.mypromptbox,dpi(25),dpi(25),0,0), -- Middle widget
+             s.myrightwidgets,
+         },
+         visible = true,
+     }
 
-    mypanel.visible = true
-    -- return mypanel
-end)
+     mypanel.visible = true
+ end)
 -- }}}
 
 -- {{{ Mouse bindings
