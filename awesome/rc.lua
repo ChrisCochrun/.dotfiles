@@ -139,7 +139,7 @@ local function set_wallpaper(s)
         if type(wallpaper) == "function" then
             wallpaper = wallpaper(s)
         end
-        gears.wallpaper.centered(wallpaper, s, "#282a36")
+        gears.wallpaper.maximized(wallpaper, s)
     end
 end
 
@@ -154,6 +154,9 @@ awful.screen.connect_for_each_screen(function(s)
      -- Each screen has its own tag table.
      awful.tag({ "   ", "   ", "   ", "   "}, s, awful.layout.layouts[1])
 
+     s.padding = {
+         bottom = dpi(20)
+     }
 
      yoffset = dpi(45)
      xoffset = dpi(18)
@@ -448,7 +451,23 @@ awful.keyboard.append_global_keybindings({
    awful.key({}, "XF86AudioPrev", function()
      awful.util.spawn("playerctl previous", false)
    end),
+       -- Mute Microphone
+   awful.key({}, "XF86Launch8", function()
+     awful.util.spawn("amixer -c 2 set Mic toggle", false)
+   end),
 
+   awful.key({}, "XF86Launch7", function()
+     awful.util.spawn("", false)
+   end),
+   awful.key({}, "XF86Launch6", function()
+     awful.util.spawn("", false)
+   end),
+   awful.key({}, "XF86Launch5", function()
+     awful.util.spawn("", false)
+   end),
+   awful.key({}, "XF86Tools", function()
+     awful.util.spawn("", false)
+   end),
     -- Brightness Keys
    awful.key({}, "XF86MonBrightnessUp", function()
            awful.util.spawn("brightnessctl set +10%", false)
@@ -614,6 +633,7 @@ root.keys(globalkeys)
 -- }}}
 
 
+
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", function (c)
@@ -631,27 +651,6 @@ client.connect_signal("manage", function (c)
     ruled.client.apply(c)
 end)
 
--- Enable sloppy focus, so that focus follows mouse.
--- client.connect_signal("mouse::enter", function(c)
---     c:emit_signal("request::activate", "mouse_enter", {raise = false})
--- end)
-
--- Enable nice titlebars
--- nice()
-
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
--- }}}
-
--- {{{ Autostart Applications
--- awful.spawn.with_shell("picom --experimental-backend")
--- awful.spawn.with_shell("libinput-gestures-setup start")
--- awful.spawn.with_shell("flameshot")
--- awful.spawn.with_shell("xset r rate 220 90")
--- awful.spawn.with_shell("feh --bg-fill ~/Pictures/wallpapers/RoyalKing.png")
--- awful.spawn.with_shell("/usr/lib/polkit-kde-authentication-agent-1")
--- awful.spawn.with_shell("emacs -daemon")
--- awful.spawn.with_shell("nextcloud --background")
--- awful.spawn.with_shell("caffeine")
-
 -- }}}

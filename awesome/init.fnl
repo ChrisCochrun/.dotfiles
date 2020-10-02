@@ -4,13 +4,13 @@
 (local ruled (require "ruled"))
 (local rules (require "rules"))
 (local beautiful (require "beautiful"))
-(local keys (require "keys"))
 (local wibox (require "wibox"))
 (local xresources (require "beautiful.xresources"))
 ;; (local naughty (require "naughty"))
 (local menubar (require "menubar"))
 (local hotkeys_popup (require "awful.hotkeys_popup"))
 (local dpi xresources.apply_dpi)
+(local globalkeys (require "globalkeys"))
 
 ;;; rules
 (set awful.rules.rules rules)
@@ -176,9 +176,7 @@
 ;;                           })
 ;;      ))
 
-
-
-
+(root.keys globalkeys)
 
 ;;; autostart applications
 (awful.spawn.with_shell "picom --experimental-backend")

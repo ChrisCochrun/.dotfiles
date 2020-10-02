@@ -1,6 +1,5 @@
 (local awful (require "awful"))
 (local beautiful (require "beautiful"))
-(local keybindings (require "keys"))
 
 (local
  rules

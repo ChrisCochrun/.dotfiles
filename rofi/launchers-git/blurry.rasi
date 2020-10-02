@@ -9,7 +9,7 @@
  */
 
 configuration {
-    font:                           "VictorMono Nerd Font 38.0";
+    font:                           "VictorMono Nerd Font 22.0";
     show-icons:                     true;
 	icon-theme: 					"Papirus";
     display-drun: 					" ";

@@ -1,8 +1,85 @@
 /* Color controls for theme_***.css files */
-:root{
-  --uc-dark-bkgnd-color: #2b2b2b;
-  --uc-light-bkgnd-color: rgb(24, 24, 24);
-  --uc-active-color: rgb(59, 59, 59);
-  --uc-text-color: rgb(228, 228, 228);
-  --uc-border-color: rgb(172, 172, 172);
+:root {
+  /* All the CSS variables here are global */
+  /* These applies to all colorschemes */
+
+  /* If windows - `-moz-win-glass`, if macOS - `-moz-mac-vibrancy-dark` */
+ 
+  --bf-moz-appearance: -moz-win-glass !important;
+
+  --bf-backdrop-blur: 6px;
+
+  --bf-sidebar-searchbar-radius: 6px;
+
+  --bf-accent-bg: #9aedfeCC;
+  --bf-blank-page-bg: #282a36;
+  
+  --bf-urlbar-hightlight-bg: var(--bf-accent-bg);
+  --bf-urlbar-radius: 9px;
+  --bf-urlbar-results-font-size: 12pt;
+  --bf-urlbar-results-font-weight: 550;
+  --bf-urlbar-font-size: 12pt;
+  --bf-urlbar-font-weight: 500;
+  --bf-urlbar-switch-tab-color: #57c7ff;
+  --bf-urlbar-bookmark-color: #5af78e;
+  
+  --bf-navbar-padding: 6px;
+  
+  --bf-tab-selected-bg: #34353e88;
+  --bf-tab-font-size: 11pt;
+  --bf-tab-font-weight: 400;
+  --bf-tab-height: 36px;
+  --bf-tab-border-radius: 6px;
+  --bf-tab-soundplaying-bg: #ff6ac1CC;
+
+  /*--toolbar-bgcolor: transparent !important;
+  --urlbar-separator-color: transparent !important;*/
+}
+
+/* Light Mode */
+:root:-moz-lwtheme-darktext {
+  --bf-main-window: transparent;
+  --bf-bg: #F2F2F266;
+  --bf-color: #0A0A0A;
+  
+  --bf-hover-bg: #1A1A1A33;
+  --bf-active-bg: #1A1A1A66;
+  
+  --bf-icon-color: #0A0A0A;
+  --bf-tab-toolbar-bg: #F2F2F2AA;
+  --bf-tab-selected-bg: #00000022;
+  --bf-navbar-bg: var(--bf-bg);
+  --bf-urlbar-bg: var(--bf-bg);
+  --bf-urlbar-active-bg: var(--bf-bg);
+  --bf-urlbar-focused-color: var(--bf-color);
+  
+  --bf-sidebar-bg: var(--bf-bg);
+  --bf-sidebar-color: var(--bf-color);
+  
+  --bf-menupopup-bg: #F2F2F2AA;
+  --bf-menupopup-color: var(--bf-color);
+}
+
+/* Dark Mode */
+:root:-moz-lwtheme-brighttext {
+  --bf-main-window: transparent;
+  --bf-bg: #282a3666;
+  --bf-color: #e2e4e5;
+  
+  --bf-hover-bg: #34353e33;
+  --bf-active-bg: #eff0eb66;
+  
+  --bf-icon-color: #eff0eb;
+  --bf-tab-toolbar-bg: #282a36AA;
+  --bf-tab-selected-bg: #e2e4e510;
+  --bf-navbar-bg: var(--bf-bg);
+  --bf-urlbar-bg: var(--bf-bg);
+  --bf-urlbar-active-bg: var(--bf-bg);
+  --bf-urlbar-focused-color: var(--bf-color);
+  
+  --bf-sidebar-bg: var(--bf-bg);
+  --bf-sidebar-color: var(--bf-color);
+  
+  --bf-menupopup-bg: #282a36AA;
+  --bf-menupopup-color: var(--bf-color);
 }

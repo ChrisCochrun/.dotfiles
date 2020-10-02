@@ -11,6 +11,7 @@ set searchurls.y https://www.yewtu.be/search?q=
 set searchurls.aw https://wiki.archlinux.org/index.php?search=
 set searchurls.qt https://doc.qt.io/qt-5/search-results.html?q=
 set searchurls.mel https://melpa.org/#/?q=
+set searchurls.ser https://searx.xyz/?q=
 set searchurls.fel https://felgo.com/search-results?q=
 set searchurls.o https://www.office.com/search?auth=2&q=
 set searchurls.wiki https://en.wikipedia.org/wiki/Special:Search/
@@ -30,12 +31,12 @@ set searchurls.amazon https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3
 set searchurls.amazonuk https://www.amazon.co.uk/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=
 set searchurls.startpage https://startpage.com/do/search?language=english&cat=web&query=
 set searchurls.github https://github.com/search?utf8=✓&q=
-set searchurls.searx https://searx.me/?category_general=on&q=
 set searchurls.cnrtl http://www.cnrtl.fr/lexicographie/
 set searchurls.osm https://www.openstreetmap.org/search?query=
 set searchurls.mdn https://developer.mozilla.org/en-US/search?q=
 set searchurls.gentoo_wiki https://wiki.gentoo.org/index.php?title=Special%3ASearch&profile=default&fulltext=Search&search=
 set searchurls.qwant https://www.qwant.com/?q=
+set searchengine ser
 
 " For syntax highlighting see https://github.com/tridactyl/vim-tridactyl
 " vim: set filetype=tridactyl
@@ -43,4 +44,5 @@ set searchurls.qwant https://www.qwant.com/?q=
 
 bind v hint -W mpvsafe
 bind gc composite get_current_url | org-capture
-command org-capture js -p tri.excmds.shellescape(JS_ARG).then(url => tri.excmds.exclaim_quiet('org-capture ' + url))
+bind gC hint -W org-capture
+command org-capture js -p tri.excmds.exclaim_quiet('org-capture ' + JS_ARG)
