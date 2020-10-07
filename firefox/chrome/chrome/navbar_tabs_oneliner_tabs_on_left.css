@@ -1,5 +1,5 @@
 /* Modify these to change relative widths or default height */
-#navigator-toolbox{ --uc-navigationbar-width: -2vw; --uc-toolbar-height: 10px; --window-drag-space-width: 0px}
+#navigator-toolbox{ --uc-navigationbar-width: -2vw; --uc-toolbar-height: 27px; --window-drag-space-width: 0px}
 /* Override for other densities */
 :root[uidensity="compact"] > #navigator-toolbox{ --uc-toolbar-height: 22px;}
 :root[uidensity="touch"] > #navigator-toolbox{ --uc-toolbar-height: 40px; }

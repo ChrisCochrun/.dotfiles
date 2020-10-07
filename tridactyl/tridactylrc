@@ -11,7 +11,7 @@ set searchurls.y https://www.yewtu.be/search?q=
 set searchurls.aw https://wiki.archlinux.org/index.php?search=
 set searchurls.qt https://doc.qt.io/qt-5/search-results.html?q=
 set searchurls.mel https://melpa.org/#/?q=
-set searchurls.ser https://searx.xyz/?q=
+set searchurls.ser https://search.snopyta.org/?q=
 set searchurls.fel https://felgo.com/search-results?q=
 set searchurls.o https://www.office.com/search?auth=2&q=
 set searchurls.wiki https://en.wikipedia.org/wiki/Special:Search/
@@ -41,8 +41,9 @@ set searchengine ser
 " For syntax highlighting see https://github.com/tridactyl/vim-tridactyl
 " vim: set filetype=tridactyl
 
-
 bind v hint -W mpvsafe
+bind F hint -w
+bind gy hint -y
 bind gc composite get_current_url | org-capture
 bind gC hint -W org-capture
 command org-capture js -p tri.excmds.exclaim_quiet('org-capture ' + JS_ARG)
