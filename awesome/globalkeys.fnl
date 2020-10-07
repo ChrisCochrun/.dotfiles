@@ -8,13 +8,14 @@
 (var ctrl "Control")
 (var alt "Mod1'")
 
-(global globalkeys (gears.table.join
+(global globekeys (gears.table.join
                  (awful.key [mod alt] "m" (awful.spawn "mpv --player-operation-mode=pseudo-gui")
                       { :description "launch mpv" :group "apps" })
                  (awful.key [mod] "s" hotkeys_popup.show_help
                       { :description "show help" :group "awesome" })))
 
-globalkeys
+globekeys
+
 
 
 
