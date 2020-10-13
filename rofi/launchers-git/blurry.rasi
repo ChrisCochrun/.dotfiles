@@ -9,7 +9,7 @@
  */
 
 configuration {
-    font:                           "VictorMono Nerd Font 22.0";
+    font:                           "VictorMono Nerd Font 14.0";
     show-icons:                     true;
 	icon-theme: 					"Papirus";
     display-drun: 					" ";
@@ -37,7 +37,7 @@ configuration {
 window {
     background-color:               #44444444;
     text-color:                     @foreground;
-    border-radius:                  35px;
+    border-radius:                  0px;
     border:                         0px;
 //    height:                         60%;
     width:                          50%;
@@ -62,13 +62,13 @@ inputbar {
     expand:                         false;
     border-radius:                  36px;
     margin:                         0px 0px 0px 0px;
-    padding:                        10px 10px 10px 10px;
+    padding:                        6px 6px 6px 6px;
     position:                       north;
 }
 
 prompt {
   enabled:                  				true;
-	padding: 						              0px 10px 0px 5px;
+	padding: 						              0px 6px 0px 5px;
 	background-color: 				        @transparent;
     text-color:                     @foreground;
 	// font:							                "FantasqueSansMono Nerd Font 16";
@@ -84,7 +84,7 @@ entry {
     placeholder:                    "Search";
     blink:                          true;
     border:                         0px;
-    padding:                        0px 0px 0px 10px;
+    padding:                        0px 0px 0px 6px;
 }
 
 case-indicator {
@@ -113,7 +113,7 @@ mainbox {
     text-color:                     @transparent;
     children:                       [ inputbar, listview ];
     spacing:                        5px;
-    padding:                        30px 25px 15px 25px;
+    padding:                        10px 10px 10px 10px;
 }
 
 element {
@@ -125,7 +125,7 @@ element {
 }
 
 element-icon {
-    size:                           25px;
+    size:                           20px;
     border:                         0px;
     padding:                        0px 10px 0px;
 }

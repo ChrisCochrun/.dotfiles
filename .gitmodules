@@ -1,3 +1,9 @@
 [submodule "nice"]
 	path = awesome/nice
 	url = https://github.com/mut-ex/awesome-wm-nice.git
+[submodule "awesomestarter"]
+	path = awesomestarter
+	url = https://gitlab.com/bloxiebird/linux-awesomewm-modular-starter-kit.git
+[submodule "awesomeshrt"]
+	path = awesomeshrt
+	url = https://github.com/shtwzrd/awesome-wm-config.git
