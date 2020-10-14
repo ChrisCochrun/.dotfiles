@@ -165,11 +165,10 @@
                                                      :bg_focus beautiful.bg_normal
                                                      }
                                              :layout {
-                                                      :spacing 20
+                                                      :spacing (dpi 20)
                                                       :spacing_widget {
                                                                        1 {
-                                                                          :forced_width 5
-                                                                          :forced_height (dpi 20)
+                                                                          :forced_width (dpi 5)                                                                          :forced_height (dpi 20)
                                                                           :widget wibox.widget.separator
                                                                           }
                                                                        :valign "center"
@@ -195,8 +194,8 @@
                                                                         }
                                                                      :layout wibox.layout.align.horizontal
                                                                      }
-                                                                  :left 10
-                                                                  :right 10
+                                                                  :left (dpi 10)
+                                                                  :right (dpi 10)
                                                                   :widget wibox.container.margin
                                                                   }
                                                                :id "background_role"
@@ -213,11 +212,10 @@
                                                      :shape gears.shape.rounded_bar
                                                      }
                                              :layout {
-                                                      :spacing 20
+                                                      :spacing (dpi 20)
                                                       :spacing_widget {
                                                                        1 {
-                                                                          :forced_width 5
-                                                                          :forced_height (dpi 20)
+                                                                          :forced_width (dpi 5)                                                                          :forced_height (dpi 20)
                                                                           :widget wibox.widget.separator
                                                                           }
                                                                        :valign "center"
@@ -243,8 +241,8 @@
                                                                         }
                                                                      :layout wibox.layout.align.horizontal
                                                                      }
-                                                                  :left 10
-                                                                  :right 10
+                                                                  :left (dpi 10)
+                                                                  :right (dpi 10)
                                                                   :widget wibox.container.margin
                                                                   }
                                                                :id "background_role"
@@ -305,8 +303,8 @@
                               2 s.mypromptbox
                               3 s.mytasklist ;; Middle widget
                               }
-                           :left 10
-                           :right 10
+                           :left (dpi 10)
+                           :right (dpi 10)
                            :widget wibox.container.margin
                            }
                         2 s.mytextclock
@@ -314,11 +312,16 @@
                            1 {
                               :layout wibox.layout.align.horizontal
                               1 s.myemptywidget
-                              2 s.myminimizedtasklist
+                              2 {
+                                 1 s.myminimizedtasklist
+                                 :left (dpi 10)
+                                 :right (dpi 20)
+                                 :widget wibox.container.margin
+                                 }
                               3 s.myrightwidgets
                               }
-                           :left 10
-                           :right 10
+                           :left (dpi 10)
+                           :right (dpi 10)
                            :widget wibox.container.margin
                            }
                         })
