@@ -386,13 +386,14 @@
  (fn [c]
    ;; Set the windows at the slave,
    ;; i.e. put it at the end of others instead of setting it master.
-   ;; (when (not awesome.startup) (awful.client.setslave c))
+   (when (not awesome.startup) (awful.client.setslave c))
 
    (when (and awesome.startup
               (not c.size_hints.user_position)
               (not c.size_hints.program_position))
      ;; Prevent clients from being unreachable after screen count changes.
-     (awful.placement.no_offscreen c))))
+     (awful.placement.no_offscreen c))
+     (awful.client.focus.byidx 1)))
 
 
 (client.connect_signal "focus" (fn [c] (set c.border_color beautiful.border_focus)))
