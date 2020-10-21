@@ -393,7 +393,8 @@
               (not c.size_hints.program_position))
      ;; Prevent clients from being unreachable after screen count changes.
      (awful.placement.no_offscreen c))
-     (awful.client.focus.byidx 1)))
+     (awful.client.focus.byidx 1)
+     (: c :activate [])))
 
 
 (client.connect_signal "focus" (fn [c] (set c.border_color beautiful.border_focus)))

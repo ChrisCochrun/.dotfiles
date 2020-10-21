@@ -28,20 +28,6 @@
 ## Type: Bool
 c.auto_save.session = True
 
-## Backend to use to display websites. qutebrowser supports two different
-## web rendering engines / backends, QtWebKit and QtWebEngine. QtWebKit
-## was discontinued by the Qt project with Qt 5.6, but picked up as a
-## well maintained fork: https://github.com/annulen/webkit/wiki -
-## qutebrowser only supports the fork. QtWebEngine is Qt's official
-## successor to QtWebKit. It's slightly more resource hungry than
-## QtWebKit and has a couple of missing features in qutebrowser, but is
-## generally the preferred choice.
-## Type: String
-## Valid values:
-##   - webengine: Use QtWebEngine (based on Chromium).
-##   - webkit: Use QtWebKit (based on WebKit, similar to Safari).
-# c.backend = 'webengine'
-
 ## This setting can be used to map keys to other keys. When the key used
 ## as dictionary-key is pressed, the binding for the key used as
 ## dictionary-value is invoked instead. This is useful for global
@@ -766,7 +752,7 @@ c.colors.hints.match.fg = base02
 ## `colors.webpage.darkmode.algorithm` is set to `lightness-hsl` or
 ## `brightness-rgb`.
 ## Type: Float
-# c.colors.webpage.darkmode.contrast = 0.0
+c.colors.webpage.darkmode.contrast = 0.7
 
 ## Render all web contents using a dark theme. Example configurations
 ## from Chromium's `chrome://flags`:  - "With simple HSL/CIELAB/RGB-based
@@ -778,7 +764,7 @@ c.colors.hints.match.fg = base02
 ## `colors.webpage.darkmode.threshold.background` to 205.  - "With
 ## selective inversion of everything": Combines the two variants   above.
 ## Type: Bool
-c.colors.webpage.darkmode.enabled = False
+c.colors.webpage.darkmode.enabled = True
 
 ## Render all colors as grayscale. This only has an effect when
 ## `colors.webpage.darkmode.algorithm` is set to `lightness-hsl` or
@@ -801,14 +787,14 @@ c.colors.webpage.darkmode.enabled = False
 ##   - always: Apply dark mode filter to all images.
 ##   - never: Never apply dark mode filter to any images.
 ##   - smart: Apply dark mode based on image content.
-# c.colors.webpage.darkmode.policy.images = 'never'
+c.colors.webpage.darkmode.policy.images = 'smart'
 
 ## Which pages to apply dark mode to.
 ## Type: String
 ## Valid values:
 ##   - always: Apply dark mode filter to all frames, regardless of content.
 ##   - smart: Apply dark mode filter to frames based on background color.
-# c.colors.webpage.darkmode.policy.page = 'smart'
+c.colors.webpage.darkmode.policy.page = 'smart'
 
 ## Threshold for inverting background elements with dark mode. Background
 ## elements with brightness above this threshold will be inverted, and
@@ -2089,7 +2075,7 @@ c.tabs.title.alignment = 'center'
 ## the search engine name to the search term, e.g. `:open google
 ## qutebrowser`.
 ## Type: Dict
-c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}', 'yt': 'https://yewtu.be/search?q={}', 'mel': 'https://melpa.org/#/?q={}'}
+c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}', 'yt': 'https://yewtu.be/search?q={}', 'mel': 'https://melpa.org/#/?q={}', 'y': 'https://www.youtube.com/results?search_query={}'}
 
 ## Page(s) to open at the start.
 ## Type: List of FuzzyUrl, or FuzzyUrl
@@ -2314,6 +2300,7 @@ config.bind('J', 'tab-prev')
 # config.bind('{{', 'navigate prev -t')
 # config.bind('}}', 'navigate next -t')
 config.bind('v', 'hint links spawn --detach mpv --force-window yes {hint-url}')
+config.bind('gv', 'spawn --detach mpv --force-window yes {url}')
 
 ## Bindings for caret mode
 # config.bind('$', 'move-to-end-of-line', mode='caret')

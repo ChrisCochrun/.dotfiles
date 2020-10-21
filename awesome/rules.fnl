@@ -1,4 +1,5 @@
 (local awful (require "awful"))
+(local gears (require "gears"))
 (local beautiful (require "beautiful"))
 (local keybindings (require "keybindings"))
 
@@ -15,6 +16,7 @@
                              ;; :buttons clientbuttons
                              :screen awful.screen.preferred
                              :placement (+ awful.placement.no_overlap awful.placement.no_offscreen)
+                             ;; :shape gears.shape.rounded_rect
                              }
                }
 
@@ -29,8 +31,18 @@
                             :floating true
                             :raise true
                             :height 900
-                            :screen 2
+                            :screen (screen.count)
                             :placement (+ awful.placement.no_offscreen awful.placement.centered)
+                            }
+               }
+              {
+               :rule_any {
+                          :class [
+                                  "qutebrowser"
+                                  ]
+                          }
+               :properties {
+                            :screen (screen.count)
                             }
                }
               {
