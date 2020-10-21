@@ -97,6 +97,8 @@
                      ;; Programs
                      (awful.key [ modkey ] "d" (fn [] (awful.spawn "emacsclient -c -e '(dired-jump)'"))
                                 {:description "launch dired in new emacs frame" :group "apps" })
+                     (awful.key [ modkey ] "i" (fn [] (awful.spawn "emacsclient -c -e '(mu4e)'"))
+                                {:description "launch mu4e in new emacs frame" :group "apps" })
                      ;; rofi
                      (awful.key [] "Menu" (fn [] (awful.spawn "/home/chris/.dotfiles/rofi/launchers-git/launcher.sh"))
                                 {:description "launch rofi" :group "launcher"})

@@ -51,6 +51,8 @@
 (var editor (or (os.getenv "EDITOR") "emacsclient"))
 (var editor_cmd (.. terminal " -e " editor))
 
+;; (lambda battery-capacity (awful.spawn.easy_async "cat /sys/class/power_supply/BAT*/capacity"))
+
 ;; Default modkey.
 ;; Usually, Mod4 is the key with a logo between Control and Alt.
 ;; If you do not like this or do not have such a key,
@@ -116,6 +118,7 @@
         (awful.button [ modkey ] 3 (fn [t] (when client.focus (: client.focus :toggle_tag t))))
         (awful.button [] 4 (fn [t] (awful.tag.viewnext t.screen)))
         (awful.button [] 5 (fn [t] (awful.tag.viewprev t.screen)))))
+
 
 (local tasklist_buttons
        (gears.table.join
@@ -261,6 +264,13 @@
                            :align ""
                            :valign ""
                            :widget wibox.widget.textbox}))
+
+     ;; (set batterywidget (wibox.widget {
+     ;;                                   :text battery1-capacity
+     ;;                                   :align ""
+     ;;                                   :valign ""
+     ;;                                   :widget wibox.widget.textbox
+     ;;                                   }))
 
      (set s.myrightwidgets {
                             1 {
