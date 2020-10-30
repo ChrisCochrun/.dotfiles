@@ -9,4 +9,5 @@ settings:
   content.notifications:
     https://192.168.1.35: true
     https://staff.tfcconnection.org: true
+    https://linuxmc.hopto.org: true
     https://www.reddit.com: false

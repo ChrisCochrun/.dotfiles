@@ -1680,7 +1680,7 @@ c.hints.radius = 6
 ## with some bitmap fonts. As an alternative to this, it's possible to
 ## set font sizes and the `zoom.default` setting.
 ## Type: Bool
-# c.qt.highdpi = False
+c.qt.highdpi = True
 
 ## When to use Chromium's low-end device mode. This improves the RAM
 ## usage of renderer processes, at the expense of performance.
@@ -1715,7 +1715,7 @@ c.hints.radius = 6
 ## Enable smooth scrolling for web pages. Note smooth scrolling does not
 ## work with the `:scroll-px` command.
 ## Type: Bool
-# c.scrolling.smooth = False
+c.scrolling.smooth = False
 
 ## When to find text on a page case-insensitively.
 ## Type: IgnoreCase
@@ -1796,7 +1796,7 @@ c.hints.radius = 6
 
 ## Padding (in pixels) for the statusbar.
 ## Type: Padding
-# c.statusbar.padding = {'top': 1, 'bottom': 1, 'left': 0, 'right': 0}
+c.statusbar.padding = {'top': 1, 'bottom': 1, 'left': 0, 'right': 2}
 
 ## Position of the status bar.
 ## Type: VerticalPosition
