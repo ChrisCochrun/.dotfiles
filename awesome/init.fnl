@@ -138,7 +138,7 @@
  (fn [s]
 
    ;; Each screen has its own tag table.
-   (awful.tag [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ] s (. awful.layout.layouts 1))
+   (awful.tag [ "   " "   " "   " "   " ] s (. awful.layout.layouts 1))
 
    ;; Create a promptbox for each screen
    (set s.mypromptbox (awful.widget.prompt))
@@ -382,6 +382,7 @@
                                                                      (awful.button [modkey] 1 (fn [c] (: c :activate {:context "mouse_click" :action "mouse_move"})))
                                                                      (awful.button [modkey] 3 (fn [c] (: c :activate {:context "mouse_click" :action "mouse_resize"})))
                                                                      ])))
+
 
 ;; Set keys
 (root.keys keybindings.globalkeys)

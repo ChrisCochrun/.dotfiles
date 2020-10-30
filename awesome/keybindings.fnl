@@ -120,47 +120,153 @@
                                                                   "pactl set-source-mute @DEFAULT_SOURCE@ toggle"))
                                 {:description "Mute microphone" :group "audio"})
 
+                     ;; Because I don't know much fennel yet I'm doing each one individually
+                     ;; View tags only.
+                     (awful.key [ modkey ] "1"
+                                (fn []
+                                    (let [screen (awful.screen.focused)
+                                          tag    (. screen.tags 1)]
+                                      (when tag
+                                        (: tag :view_only))))
+                                {:description "view tag #1" :group "tag"})
+                     (awful.key [ modkey ] "2"
+                                (fn []
+                                    (let [screen (awful.screen.focused)
+                                          tag    (. screen.tags 2)]
+                                      (when tag
+                                        (: tag :view_only))))
+                                {:description "view tag #2" :group "tag"})
+                     (awful.key [ modkey ] "3"
+                                (fn []
+                                    (let [screen (awful.screen.focused)
+                                          tag    (. screen.tags 3)]
+                                      (when tag
+                                        (: tag :view_only))))
+                                {:description "view tag #3" :group "tag"})
+                     (awful.key [ modkey ] "4"
+                                (fn []
+                                    (let [screen (awful.screen.focused)
+                                          tag    (. screen.tags 4)]
+                                      (when tag
+                                        (: tag :view_only))))
+                                {:description "view tag #4" :group "tag"})
+                     (awful.key [] "XF86Tools"
+                                (fn []
+                                    (let [screen (awful.screen.focused)
+                                          tag    (. screen.tags 1)]
+                                      (when tag
+                                        (: tag :view_only))))
+                                {:description "view tag #1" :group "tag"})
+                     (awful.key [] "XF86Launch5"
+                                (fn []
+                                    (let [screen (awful.screen.focused)
+                                          tag    (. screen.tags 2)]
+                                      (when tag
+                                        (: tag :view_only))))
+                                {:description "view tag #2" :group "tag"})
+                     (awful.key [] "XF86Launch6"
+                                (fn []
+                                    (let [screen (awful.screen.focused)
+                                          tag    (. screen.tags 3)]
+                                      (when tag
+                                        (: tag :view_only))))
+                                {:description "view tag #3" :group "tag"})
+                     (awful.key [] "XF86Launch7"
+                                (fn []
+                                    (let [screen (awful.screen.focused)
+                                          tag    (. screen.tags 4)]
+                                      (when tag
+                                        (: tag :view_only))))
+                                {:description "view tag #4" :group "tag"})
+                     ;; Move client to tag
+                     (awful.key [ modkey shift ] "1"
+                                (fn []
+                                    (when client.focus
+                                      (let [tag (. client.focus.screen.tags 1)]
+                                        (when tag
+                                          (: client.focus :move_to_tag tag)))))
+                                {:description "move focused client to tag #1" :group "tag"})
+                     (awful.key [ modkey shift ] "2"
+                                (fn []
+                                    (when client.focus
+                                      (let [tag (. client.focus.screen.tags 2)]
+                                        (when tag
+                                          (: client.focus :move_to_tag tag)))))
+                                {:description "move focused client to tag #2" :group "tag"})
+                     (awful.key [ modkey shift ] "3"
+                                (fn []
+                                    (when client.focus
+                                      (let [tag (. client.focus.screen.tags 3)]
+                                        (when tag
+                                          (: client.focus :move_to_tag tag)))))
+                                {:description "move focused client to tag #3" :group "tag"})
+                     (awful.key [ modkey shift ] "4"
+                                (fn []
+                                    (when client.focus
+                                      (let [tag (. client.focus.screen.tags 4)]
+                                        (when tag
+                                          (: client.focus :move_to_tag tag)))))
+                                {:description "move focused client to tag #4" :group "tag"})
+                     ;; Toggle tag display. Not working yet, can't pinpoint the problem.
+                     (awful.key [ modkey ctrl ] "1"
+                                (fn []
+                                    (let [screen (awful.screen.focused)
+                                          tag    (. screen.tags 1)]
+                                      (when tag
+                                        (awful.tag.viewtoggle))))
+                                {:description "toggle tag #1" :group "tag"})
+                     (awful.key [ modkey ctrl ] "2"
+                                (fn []
+                                    (let [screen (awful.screen.focused)
+                                          tag    (. screen.tags 2)]
+                                      (when tag
+                                        (awful.tag.viewtoggle))))
+                                {:description "toggle tag #2" :group "tag"})
+                     (awful.key [ modkey ctrl ] "3"
+                                (fn []
+                                    (let [screen (awful.screen.focused)
+                                          tag    (. screen.tags 3)]
+                                      (when tag
+                                        (awful.tag.viewtoggle))))
+                                {:description "toggle tag #3" :group "tag"})
+                     (awful.key [ modkey ctrl ] "4"
+                                (fn []
+                                    (let [screen (awful.screen.focused)
+                                          tag    (. screen.tags 4)]
+                                      (when tag
+                                        (awful.tag.viewtoggle))))
+                                {:description "toggle tag #4" :group "tag"})
+                   ;; Toggle tag on focused client.
+                   (awful.key [ modkey ctrl shift ] "1"
+                              (fn []
+                                (when client.focus
+                                  (let [tag (. client.focus.screen.tags 1)]
+                                    (when tag
+                                      (: client.focus :toggle_tag tag)))))
+                              {:description "toggle focused client on tag #1" :group "tag"})
+                   (awful.key [ modkey ctrl shift ] "2"
+                              (fn []
+                                (when client.focus
+                                  (let [tag (. client.focus.screen.tags 2)]
+                                    (when tag
+                                      (: client.focus :toggle_tag tag)))))
+                              {:description "toggle focused client on tag #2" :group "tag"})
+                   (awful.key [ modkey ctrl shift ] "3"
+                              (fn []
+                                (when client.focus
+                                  (let [tag (. client.focus.screen.tags 3)]
+                                    (when tag
+                                      (: client.focus :toggle_tag tag)))))
+                              {:description "toggle focused client on tag #3" :group "tag"})
+                   (awful.key [ modkey ctrl shift ] "4"
+                              (fn []
+                                (when client.focus
+                                  (let [tag (. client.focus.screen.tags 4)]
+                                    (when tag
+                                      (: client.focus :toggle_tag tag)))))
+                              {:description "toggle focused client on tag #4" :group "tag"})
                      )
 
-        ;; ;; Bind all key numbers to tags.
-        ;; ;; Be careful: we use keycodes to make it work on any keyboard layout.
-        ;; ;; This should map on the top row of your keyboard, usually 1 to 9.
-        ;; (for [i 1 9]
-        ;;   (global globalkeys
-        ;;           (gears.table.join
-        ;;            globalkeys
-        ;;            ;; View tag only.
-        ;;            (awful.key [ modkey ] (.. "#" (+ i 9))
-        ;;                       (fn []
-        ;;                         (let [screen (awful.screen.focused)
-        ;;                               tag    (. screen.tags i)]
-        ;;                           (when tag
-        ;;                             (: tag :view_only))))
-        ;;                       {:description (.. "view tag #" i) :group "tag"})
-        ;;            ;; Toggle tag display
-        ;;            (awful.key [ modkey ctrl ] (.. "#" (+ i 9))
-        ;;                       (fn []
-        ;;                         (let [screen (awful.screen.focused)
-        ;;                               tag    (. screen.tags i)]
-        ;;                           (when tag
-        ;;                             (awful.tag.viewtoggle))))
-        ;;                       {:description (.. "toggle tag #" i) :group "tag"})
-        ;;            ;; Move client to tag
-        ;;            (awful.key [ modkey shift ] (.. "#"  (+ i 9))
-        ;;                       (fn []
-        ;;                         (when client.focus
-        ;;                           (let [tag (. client.focus.screen.tags i)]
-        ;;                             (when tag
-        ;;                               (: client.focus :move_to_tag tag)))))
-        ;;                       {:description (.. "move focused client to tag #" i) :group "tag"})
-        ;;            ;; Toggle tag on focused client.
-        ;;            (awful.key [ modkey ctrl shift ] (.. "#" (+ i 9))
-        ;;                       (fn []
-        ;;                         (when client.focus
-        ;;                           (let [tag (. client.focus.screen.tags i)]
-        ;;                             (when tag
-        ;;                               (: client.focus :toggle_tag tag)))))
-        ;;                       {:description (.. "toggle focused client on tag #" i) :group "tag"}))))
 
         :clientkeys (gears.table.join
                      (awful.key [ modkey ] "f" (fn [c] (set c.fullscreen (not c.fullscreen)) (: c :raise))

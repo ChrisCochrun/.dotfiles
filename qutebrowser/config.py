@@ -1007,7 +1007,7 @@ c.content.dns_prefetch = True
 ## qutebrowser asks websites to not track your identity. If set to null,
 ## the DNT header is not sent at all.
 ## Type: Bool
-# c.content.headers.do_not_track = True
+c.content.headers.do_not_track = True
 
 ## When to send the Referer header. The Referer header tells websites
 ## from which website you were coming from when visiting them. No restart
@@ -2075,7 +2075,11 @@ c.tabs.title.alignment = 'center'
 ## the search engine name to the search term, e.g. `:open google
 ## qutebrowser`.
 ## Type: Dict
-c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}', 'yt': 'https://yewtu.be/search?q={}', 'mel': 'https://melpa.org/#/?q={}', 'y': 'https://www.youtube.com/results?search_query={}'}
+c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
+                       'yt': 'https://yewtu.be/search?q={}',
+                       'mel': 'https://melpa.org/#/?q={}',
+                       'y': 'https://www.youtube.com/results?search_query={}',
+                       'aw': 'https://wiki.archlinux.org/index.php?search={}'}
 
 ## Page(s) to open at the start.
 ## Type: List of FuzzyUrl, or FuzzyUrl
@@ -2204,7 +2208,7 @@ config.bind('J', 'tab-prev')
 # config.bind('b', 'set-cmd-text -s :quickmark-load')
 # config.bind('cd', 'download-clear')
 # config.bind('co', 'tab-only')
-# config.bind('d', 'tab-close')
+config.bind('d', 'close')
 # config.bind('f', 'hint')
 # config.bind('g$', 'tab-focus -1')
 # config.bind('g0', 'tab-focus 1')
@@ -2301,6 +2305,7 @@ config.bind('J', 'tab-prev')
 # config.bind('}}', 'navigate next -t')
 config.bind('v', 'hint links spawn --detach mpv --force-window yes {hint-url}')
 config.bind('gv', 'spawn --detach mpv --force-window yes {url}')
+config.bind('gV', 'hint links spawn alacritty -e youtube-dl -o ~/Videos/%(title)s-%(id)s.%(ext)s {hint-url}')
 
 ## Bindings for caret mode
 # config.bind('$', 'move-to-end-of-line', mode='caret')
