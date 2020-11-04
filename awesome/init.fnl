@@ -420,3 +420,4 @@
 (awful.spawn.with_shell "nextcloud --background")
 (awful.spawn.with_shell "emacs --daemon")
 (awful.spawn.with_shell "libinput-gestures-setup start")
+(awful.spawn.with_shell "bluetoothctl power on")
