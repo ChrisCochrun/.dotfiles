@@ -140,6 +140,9 @@
    ;; Each screen has its own tag table.
    (awful.tag [ "   " "   " "   " "   " ] s (. awful.layout.layouts 1))
 
+     ;; Make buffers on all sides so that tiled clients aren't pushed to edges
+     (set s.padding (dpi 10))
+
    ;; Create a promptbox for each screen
    (set s.mypromptbox (awful.widget.prompt))
    ;; Create an imagebox widget which will contain an icon indicating which layout we're using.
