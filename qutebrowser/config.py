@@ -2305,7 +2305,7 @@ config.bind('d', 'close')
 # config.bind('}}', 'navigate next -t')
 config.bind('v', 'hint links spawn --detach mpv --force-window yes {hint-url}')
 config.bind('gv', 'spawn --detach mpv --force-window yes {url}')
-config.bind('gV', 'hint links spawn alacritty -e youtube-dl -o ~/Videos/%(title)s-%(id)s.%(ext)s {hint-url}')
+config.bind('gV', 'hint links spawn alacritty -e youtube-dl -o ~/Videos/%(title)s.%(ext)s {hint-url}')
 
 ## Bindings for caret mode
 # config.bind('$', 'move-to-end-of-line', mode='caret')
