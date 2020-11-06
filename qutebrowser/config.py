@@ -764,7 +764,7 @@ c.colors.webpage.darkmode.contrast = 0.7
 ## `colors.webpage.darkmode.threshold.background` to 205.  - "With
 ## selective inversion of everything": Combines the two variants   above.
 ## Type: Bool
-c.colors.webpage.darkmode.enabled = True
+# c.colors.webpage.darkmode.enabled = True
 
 ## Render all colors as grayscale. This only has an effect when
 ## `colors.webpage.darkmode.algorithm` is set to `lightness-hsl` or
@@ -2303,9 +2303,6 @@ config.bind('d', 'close')
 # config.bind('yy', 'yank')
 # config.bind('{{', 'navigate prev -t')
 # config.bind('}}', 'navigate next -t')
-config.bind('v', 'hint links spawn --detach mpv --force-window yes {hint-url}')
-config.bind('gv', 'spawn --detach mpv --force-window yes {url}')
-config.bind('gV', 'hint links spawn alacritty -e youtube-dl -o ~/Videos/%(title)s.%(ext)s {hint-url}')
 
 ## Bindings for caret mode
 # config.bind('$', 'move-to-end-of-line', mode='caret')
@@ -2422,3 +2419,11 @@ config.bind('gV', 'hint links spawn alacritty -e youtube-dl -o ~/Videos/%(title)
 # config.bind('Y', 'prompt-accept --save yes', mode='yesno')
 # config.bind('n', 'prompt-accept no', mode='yesno')
 # config.bind('y', 'prompt-accept yes', mode='yesno')
+
+## Bindings for MPV and YTDL
+config.bind('v', 'hint links spawn --detach mpv --force-window yes {hint-url}')
+config.bind('gv', 'spawn --detach mpv --force-window yes {url}')
+config.bind('gV', 'hint links spawn alacritty -e youtube-dl -o ~/Videos/%(title)s.%(ext)s {hint-url}')
+
+## Bindings for MPV and YTDL
+config.bind('o', 'spawn --userscript rofi')
