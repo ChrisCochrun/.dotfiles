@@ -3,5 +3,6 @@
 configuration {
   show-icons:         true;
   icon-theme:         "Papirus";
+  dpi:                0;
 }
 @import "/home/chris/.dotfiles/rofi/launchers-git/blurry.rasi"

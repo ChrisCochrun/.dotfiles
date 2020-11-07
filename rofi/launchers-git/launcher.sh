@@ -13,12 +13,14 @@
 # row		row_center		screen				row_dock		row_dropdown
 
 
-if [ $(hostname) = "chris-linuxlaptop" ]; then
-    style="blurry-hidpi"
-    #echo "this is hidpi"
-else 
-    style="blurry"
-    #echo "this is not hidpi"
-fi
+# if [ $(hostname) = "chris-linuxlaptop" ]; then
+#     style="blurry-hidpi"
+#     #echo "this is hidpi"
+# else 
+#     style="blurry"
+#     #echo "this is not hidpi"
+# fi
+
+style="blurry"
 
 rofi -no-lazy-grab -show drun -modi drun,window,calc,ssh,run,emoji -theme launchers-git/"$style".rasi
