@@ -10,6 +10,6 @@
 
 
 configuration {
-    font:                           "VictorMono Nerd Font 30.0";
+    font:                           "VictorMono Nerd Font 14.0";
 }
 @import "/home/chris/.dotfiles/rofi/launchers-git/blurry.rasi"
