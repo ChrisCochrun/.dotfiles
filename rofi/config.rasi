@@ -3,9 +3,5 @@
 configuration {
   show-icons:         true;
   icon-theme:         "Papirus";
-  // location: 5;
-  // yoffset: -50;
-  // xoffset: -20;
 }
-// @import "/usr/share/rofi/themes/android_notification.rasi"
 @import "/home/chris/.dotfiles/rofi/launchers-git/blurry.rasi"
