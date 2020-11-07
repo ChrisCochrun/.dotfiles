@@ -3,6 +3,9 @@
 configuration {
   show-icons:         true;
   icon-theme:         "Papirus";
-  dpi:                0;
+  terminal:           "alacritty";
+  sidebar-mode:       true;
+  run-command:        "fish -c {cmd}";
+  run-list-command:   "fish -c functions";
 }
 @import "/home/chris/.dotfiles/rofi/launchers-git/blurry.rasi"
