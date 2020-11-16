@@ -14,10 +14,10 @@
 
 
 if [ $(hostname) = "chris-linuxlaptop" ]; then
-    style="blurry-hidpi"
+    style="laptop"
     #echo "this is hidpi"
 else 
-    style="blurry"
+    style="desktop"
     #echo "this is not hidpi"
 fi
 

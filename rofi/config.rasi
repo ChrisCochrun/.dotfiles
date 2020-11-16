@@ -1,4 +1,6 @@
+/*-*- mode: css; -*-*/
 /** Configured For Applets **/
+
 
 configuration {
   show-icons:         true;
