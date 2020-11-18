@@ -63,6 +63,10 @@
 (local ctrl "Control")
 (local alt "Mod1")
 
+(fn get-volume [?callback]
+    (let [cb (or ?callback (fn [] nil))]
+      (awful.spawn.easy_async_with_shell "pamixer --get-volume" cb)))
+
 ;; Table of layouts to cover with awful.layout.inc, order matters.
 (set awful.layout.layouts [
                            awful.layout.suit.tile
@@ -268,18 +272,19 @@
                            :valign ""
                            :widget wibox.widget.textbox}))
 
-     ;; (set batterywidget (wibox.widget {
-     ;;                                   :text battery1-capacity
-     ;;                                   :align ""
-     ;;                                   :valign ""
-     ;;                                   :widget wibox.widget.textbox
-     ;;                                   }))
+     (set s.volumewidget (wibox.widget {
+                                        :text "墳 get-volume "
+                                        :align ""
+                                        :valign ""
+                                        :widget wibox.widget.textbox
+                                        }))
 
      (set s.myrightwidgets {
                             1 {
                                :layout wibox.layout.fixed.horizontal
-                               1 wibox.widget.systray
-                               2 s.mylayoutbox
+                               1 s.volumewidget
+                               2 wibox.widget.systray
+                               3 s.mylayoutbox
                                }
                             :widget wibox.container.background
                             })

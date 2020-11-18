@@ -7,7 +7,4 @@
 config_version: 2
 settings:
   content.notifications:
-    https://192.168.1.35: true
-    https://kickass.onl: false
-    https://staff.tfcconnection.org: true
     https://www.reddit.com: false
