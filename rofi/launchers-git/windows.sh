@@ -1,17 +1,11 @@
 #!/usr/bin/env bash
 
-## Author : Aditya Shakya (adi1090x)
-## Mail : adi1090x@gmail.com
-## Github : @adi1090x
-## Reddit : @adi1090x
+if [ $(hostname) = "chris-linuxlaptop" ]; then
+    style="laptop"
+    #echo "this is hidpi"
+else 
+    style="desktop"
+    #echo "this is not hidpi"
+fi
 
-# Available Styles
-# >> Styles Below Only Works With "rofi-git(AUR)", Current Version: 1.5.4-76-gca067234
-#
-# blurry	blurry_full		kde_simplemenu		kde_krunner		launchpad
-# gnome_do	slingshot		appdrawer			appfolder		column
-# row		row_center		screen				row_dock		row_dropdown
-
-style="blurry"
-
-rofi -no-lazy-grab -show window -modi drun,window,calc,ssh,run,emoji -theme launchers-git/"$style".rasi
+rofi -no-lazy-grab -show window -modi window -theme launchers-git/"$style".rasi

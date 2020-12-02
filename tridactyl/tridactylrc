@@ -36,14 +36,23 @@ set searchurls.osm https://www.openstreetmap.org/search?query=
 set searchurls.mdn https://developer.mozilla.org/en-US/search?q=
 set searchurls.gentoo_wiki https://wiki.gentoo.org/index.php?title=Special%3ASearch&profile=default&fulltext=Search&search=
 set searchurls.qwant https://www.qwant.com/?q=
-set searchengine ser
+set searchengine d
 
 " For syntax highlighting see https://github.com/tridactyl/vim-tridactyl
 " vim: set filetype=tridactyl
 
+" Org Capture
+command org-capture js -p tri.excmds.exclaim_quiet('org-capture ' + JS_ARG)
+
+" Adding my own bindings
 bind v hint -W mpvsafe
 bind F hint -w
 bind gy hint -y
 bind gc composite get_current_url | org-capture
 bind gC hint -W org-capture
-command org-capture js -p tri.excmds.exclaim_quiet('org-capture ' + JS_ARG)
+
+" buffers show as windows
+bind b bufferall
+
+" Smoothscroll
+set smoothscroll true

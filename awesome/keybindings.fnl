@@ -10,6 +10,10 @@
 (local ctrl "Control")
 (local alt "Mod1")
 
+(fn get-volume [?callback]
+    (let [cb (or ?callback (fn [] nil))]
+      (awful.spawn.easy_async_with_shell "pamixer --get-volume-human" cb)))
+
 (local keybindings
        {
         :globalkeys (gears.table.join
@@ -74,7 +78,7 @@
                                 {:description "restore minimized" :group "client"})
 
                      ;; Prompt
-                     (awful.key [ modkey ] "r" (fn [] (: (. (awful.screen.focused) :mypromptbox) :run))
+                     (awful.key [ modkey ] "r" (fn [] (awful.spawn "/home/chris/.dotfiles/rofi/launchers-git/run.sh"))
                                 {:description "run prompt" :group "launcher"})
 
                      (awful.key [ modkey ] "x" (fn []
@@ -90,6 +94,10 @@
                      ;; utilities
                      (awful.key [] "Print" (fn [] (awful.spawn "flameshot gui"))
                                 {:description "screenshot" :group "utilities"})
+                     (awful.key [ modkey ] "." (fn [] (awful.spawn "/home/chris/.dotfiles/rofi/launchers-git/emoji.sh"))
+                                {:description "emoji picker" :group "utilities"})
+                     (awful.key [ modkey ] "v" (get-volume)
+                                {:description "See current volume" :group "audio" })
                      ;; Menubar
                      ;; (awful.key [ modkey ] "p" (fn [] (menubar.show))
                      ;;            {:description "show the menubar" :group "launcher"})
@@ -99,6 +107,8 @@
                                 {:description "launch dired in new emacs frame" :group "apps" })
                      (awful.key [ modkey ] "i" (fn [] (awful.spawn "emacsclient -c -e '(mu4e)'"))
                                 {:description "launch mu4e in new emacs frame" :group "apps" })
+                     (awful.key [ modkey shift ] "Return" (fn [] (awful.spawn "emacsclient -c -e '(+eshell/frame)'"))
+                                {:description "launch eshell in new emacs frame" :group "apps" })
                      (awful.key [ modkey ] "e" (fn [] (awful.spawn "emacsclient -c -a 'emacs'"))
                                 {:description "launch new emacs frame" :group "apps" })
                      ;; rofi

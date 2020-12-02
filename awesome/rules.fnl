@@ -20,11 +20,14 @@
                              }
                }
 
-              ;; floating and centered
+              ;; floating and centered videos from mpv or firefox pnp
               {
                :rule_any {
                           :class [
                                   "mpv"
+                                  ]
+                          :name [
+                                  "Picture-in-Picture"
                                   ]
                           }
                :properties {
@@ -35,6 +38,23 @@
                             :placement (+ awful.placement.no_offscreen awful.placement.centered)
                             }
                }
+              ;; sxiv floating on main screen for quick picture viewing
+              {
+               :rule_any {
+                          :class [
+                                  "sxiv"
+                                  "Sxiv"
+                                  ]
+                          }
+               :properties {
+                            :floating true
+                            :raise true
+                            :height 900
+                            :width 1500
+                            :placement (+ awful.placement.no_offscreen awful.placement.centered)
+                            }
+               }
+              ;; Tell qb to open primarily on the secondary monitor
               {
                :rule_any {
                           :class [
@@ -45,6 +65,7 @@
                             :screen (screen.count)
                             }
                }
+              ;; floating windows
               {
                :rule_any {
                           :class [

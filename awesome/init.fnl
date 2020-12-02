@@ -65,7 +65,7 @@
 
 (fn get-volume [?callback]
     (let [cb (or ?callback (fn [] nil))]
-      (awful.spawn.easy_async_with_shell "pamixer --get-volume" cb)))
+      (awful.spawn.easy_async_with_shell "pamixer --get-volume-human" cb)))
 
 ;; Table of layouts to cover with awful.layout.inc, order matters.
 (set awful.layout.layouts [
@@ -426,6 +426,6 @@
 (awful.spawn.with_shell "flameshot")
 (awful.spawn.with_shell "caffeine")
 (awful.spawn.with_shell "nextcloud --background")
-(awful.spawn.with_shell "emacs --daemon")
+(awful.spawn.with_shell "emacs --with-profile --daemon default")
 (awful.spawn.with_shell "libinput-gestures-setup start")
 (awful.spawn.with_shell "bluetoothctl power on")

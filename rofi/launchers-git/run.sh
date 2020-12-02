@@ -8,4 +8,4 @@ else
     #echo "this is not hidpi"
 fi
 
-rofi -no-lazy-grab -show emoji -modi emoji -theme launchers-git/"$style".rasi
+rofi -no-lazy-grab -show run -modi run -theme launchers-git/"$style".rasi

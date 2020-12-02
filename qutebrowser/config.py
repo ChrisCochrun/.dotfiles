@@ -2079,6 +2079,9 @@ c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
                        'yt': 'https://yewtu.be/search?q={}',
                        'mel': 'https://melpa.org/#/?q={}',
                        'y': 'https://www.youtube.com/results?search_query={}',
+                       'ama': 'https://smile.amazon.com/s?k={}',
+                       'aur': 'https://aur.archlinux.org/packages/?O=0&K={}',
+                       'od': 'https://odysee.com/$/search?q={}',
                        'aw': 'https://wiki.archlinux.org/index.php?search={}'}
 
 ## Page(s) to open at the start.
