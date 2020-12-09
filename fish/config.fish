@@ -32,7 +32,7 @@ end
 
 function _prompt_whoami -a sep_color -a color -d "Display user@host if on a SSH session"
     if set -q SSH_TTY
-        echo -n -s $color (whoami)@(hostname) $sep_color '|'
+        echo -n -s $color (whoami)@(hostnamectl --static) $sep_color '|'
     end
 end
 

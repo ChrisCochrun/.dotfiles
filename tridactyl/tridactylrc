@@ -41,18 +41,21 @@ set searchengine d
 " For syntax highlighting see https://github.com/tridactyl/vim-tridactyl
 " vim: set filetype=tridactyl
 
-" Org Capture
-command org-capture js -p tri.excmds.exclaim_quiet('org-capture ' + JS_ARG)
+"" Org Capture
+command org-capture composite get_current_url | js -p tri.excmds.exclaim_quiet('org-capture ' + JS_ARG);
 
-" Adding my own bindings
+"" Adding my own bindings
 bind v hint -W mpvsafe
+bind gv current_url mpvsafe
 bind F hint -w
 bind gy hint -y
-bind gc composite get_current_url | org-capture
+bind gc org-capture
 bind gC hint -W org-capture
+bind go current_url open
+bind m fillcmdline quickmark 
 
-" buffers show as windows
-bind b bufferall
+"" buffers show as windows
+bind b fillcmdline taball 
 
-" Smoothscroll
+"" Smoothscroll
 set smoothscroll true
