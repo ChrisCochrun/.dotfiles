@@ -2,6 +2,7 @@
 (local gears (require "gears"))
 (local beautiful (require "beautiful"))
 (local keybindings (require "keybindings"))
+(local dpi xresources.apply_dpi)
 
 (local rules [
               ;; All clients match this rule
@@ -33,7 +34,7 @@
                :properties {
                             :floating true
                             :raise true
-                            :height 900
+                            :height (dpi 900)
                             :screen (screen.count)
                             :placement (+ awful.placement.no_offscreen awful.placement.centered)
                             }

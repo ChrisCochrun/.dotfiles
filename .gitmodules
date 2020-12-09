@@ -7,3 +7,6 @@
 [submodule "awesomeshrt"]
 	path = awesomeshrt
 	url = https://github.com/shtwzrd/awesome-wm-config.git
+[submodule "emacs-native-comp-git-enhanced"]
+	path = emacs-native-comp-git-enhanced
+	url = https://aur.archlinux.org/emacs-native-comp-git-enhanced
