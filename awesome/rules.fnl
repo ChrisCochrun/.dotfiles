@@ -2,6 +2,7 @@
 (local gears (require "gears"))
 (local beautiful (require "beautiful"))
 (local keybindings (require "keybindings"))
+(local xresources (require "beautiful.xresources"))
 (local dpi xresources.apply_dpi)
 
 (local rules [
