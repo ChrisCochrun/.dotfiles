@@ -2426,6 +2426,7 @@ config.bind('o', 'set-cmd-text -s :open')
 ## Bindings for MPV and YTDL
 config.bind('v', 'hint links spawn --detach mpv --force-window yes {hint-url}')
 config.bind('gv', 'spawn --detach mpv --force-window yes {url}')
+config.bind('gc', 'spawn org-capture {url}')
 config.bind('gV', 'hint links spawn alacritty -e youtube-dl -o ~/Videos/%(title)s.%(ext)s {hint-url}')
 
 ## Bindings for MPV and YTDL

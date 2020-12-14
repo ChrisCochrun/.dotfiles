@@ -2,6 +2,7 @@
 (local gears (require "gears"))
 (local beautiful (require "beautiful"))
 (local keybindings (require "keybindings"))
+(local xresources (require "beautiful.xresources"))
 (local dpi xresources.apply_dpi)
 
 (local rules [
@@ -50,8 +51,23 @@
                :properties {
                             :floating true
                             :raise true
-                            :height 900
-                            :width 1500
+                            :height (dpi 900)
+                            :width (dpi 1500)
+                            :placement (+ awful.placement.no_offscreen awful.placement.centered)
+                            }
+               }
+              ;; Pacmixer center and smaller
+              {
+               :rule_any {
+                          :name [
+                                  "(pacmixer) ~"
+                                  ]
+                          }
+               :properties {
+                            :floating true
+                            :raise true
+                            :height (dpi 600)
+                            :height (dpi 800)
                             :placement (+ awful.placement.no_offscreen awful.placement.centered)
                             }
                }

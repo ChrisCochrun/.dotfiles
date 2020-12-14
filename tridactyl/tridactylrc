@@ -58,4 +58,4 @@ bind m fillcmdline quickmark
 bind b fillcmdline taball 
 
 "" Smoothscroll
-set smoothscroll true
+set smoothscroll false

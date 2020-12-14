@@ -81,7 +81,7 @@
                      (awful.key [ modkey ] "r" (fn [] (awful.spawn "/home/chris/.dotfiles/rofi/launchers-git/run.sh"))
                                 {:description "run prompt" :group "launcher"})
 
-                     (awful.key [ modkey ] "x" (fn []
+                     (awful.key [ modkey shift ctrl ] "x" (fn []
                                                    (let [fscr (awful.screen.focused)]
                                                      (awful.prompt.run {
                                                                         :prompt       "Run Lua code: "
@@ -105,6 +105,12 @@
                      ;; Programs
                      (awful.key [ modkey ] "d" (fn [] (awful.spawn "emacsclient -c -e '(dired-jump)'"))
                                 {:description "launch dired in new emacs frame" :group "apps" })
+                     (awful.key [ modkey ] "x" (fn [] (awful.spawn "emacsclient -c -e '(+org-capture/open-frame)'"))
+                                {:description "launch scratchpad in new emacs frame" :group "apps" })
+                     (awful.key [ modkey alt ] "m" (fn [] (awful.spawn "emacsclient -c -e '(org-roam-capture)'"))
+                                {:description "launch scratchpad in new emacs frame" :group "apps" })
+                     (awful.key [ modkey shift ] "x" (fn [] (awful.spawn "emacsclient -c -e '(doom/switch-to-scratch-buffer)'"))
+                                {:description "launch scratchpad in new emacs frame" :group "apps" })
                      (awful.key [ modkey ] "i" (fn [] (awful.spawn "emacsclient -c -e '(mu4e)'"))
                                 {:description "launch mu4e in new emacs frame" :group "apps" })
                      (awful.key [ modkey shift ] "Return" (fn [] (awful.spawn "emacsclient -c -e '(+eshell/frame)'"))
@@ -119,6 +125,11 @@
                      (awful.key [modkey] "b" (fn [] (awful.spawn "bwmenu"))
                                 {:description "launch rofi bitwarden selector" :group "launcher"})
                      ;; audio
+                     (awful.key [modkey] "a" (fn [] (awful.spawn "alacritty -e pulsemixer" {
+                                                                                            :floating true
+                                                                                            :placement awful.placement.centered
+                                                                                            }))
+                                {:description "launch pacmixer" :group "audio"})
                      (awful.key [] "XF86AudioRaiseVolume" (fn [] (awful.spawn.with_shell
                                                                   "pactl set-sink-volume @DEFAULT_SINK@ +5% && pactl play-sample audio-volume-change"))
                                 {:description "Increase volume by 5%" :group "audio"})
