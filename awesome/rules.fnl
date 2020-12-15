@@ -59,8 +59,9 @@
               ;; Pacmixer center and smaller
               {
                :rule_any {
-                          :name [
-                                  "(pacmixer) ~"
+                          :class [
+                                  "pulsemixer"
+                                  "pulsemixer,Alacritty"
                                   ]
                           }
                :properties {

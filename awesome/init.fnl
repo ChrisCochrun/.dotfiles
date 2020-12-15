@@ -20,6 +20,7 @@
 ;; my splits
 (local rules (require "rules"))
 (local keybindings (require "keybindings"))
+;; (local volume-widget (require :widgets.volume))
 
 ;; (local bar (require "bar"))
 ;; Error handling
@@ -63,10 +64,7 @@
 (local ctrl "Control")
 (local alt "Mod1")
 
-(fn get-volume [?callback]
-    (let [cb (or ?callback (fn [] nil))]
-      (awful.spawn.easy_async_with_shell "pamixer --get-volume-human" cb)))
-
+;; (local volume-string (awful.widget.watch "pamixer --get-volume-human" 1))
 ;; Table of layouts to cover with awful.layout.inc, order matters.
 (set awful.layout.layouts [
                            awful.layout.suit.tile
@@ -260,11 +258,11 @@
                                                                }
                                              }))
 
-   (set s.mytextclock (wibox.widget {
-                                     :layout wibox.layout.fixed.horizontal
-                                     1 {
-                                        :format "<b> %a %b %d, %l:%M %p </b>"
-                                        :widget wibox.widget.textclock}}))
+     (set s.mytextclock (wibox.widget {
+                                       :layout wibox.layout.fixed.horizontal
+                                       1 {
+                                          :format "<b> %a %b %d, %l:%M %p </b>"
+                                          :widget wibox.widget.textclock}}))
 
      (set s.myemptywidget (wibox.widget { ;; an empty widget for spacing things out
                            :text ""
@@ -272,19 +270,33 @@
                            :valign ""
                            :widget wibox.widget.textbox}))
 
+     (set s.temptext (awful.widget.watch "cat /sys/class/thermal/thermal_zone3/temp" 10))
+     (set s.tempicon (wibox.widget.textbox "  "))
+     (set s.tempspace (wibox.widget.textbox "  "))
+     (set s.tempwidget (wibox.widget {
+                                      1 s.tempicon
+                                      2 s.temptext
+                                      3 s.tempspace
+                                      :layout wibox.layout.fixed.horizontal}))
+
+     (set s.volumetext (awful.widget.watch "pamixer --get-volume-human" 1))
+     (set s.volumeicon (wibox.widget.textbox "  "))
+     (set s.volumespace (wibox.widget.textbox "  "))
+
      (set s.volumewidget (wibox.widget {
-                                        :text "墳 get-volume "
-                                        :align ""
-                                        :valign ""
-                                        :widget wibox.widget.textbox
+                                        1 s.volumeicon
+                                        2 s.volumetext
+                                        3 s.volumespace
+                                        :layout wibox.layout.fixed.horizontal
                                         }))
 
      (set s.myrightwidgets {
                             1 {
                                :layout wibox.layout.fixed.horizontal
-                               1 s.volumewidget
-                               2 wibox.widget.systray
-                               3 s.mylayoutbox
+                               1 s.tempwidget
+                               2 s.volumewidget
+                               3 wibox.widget.systray
+                               4 s.mylayoutbox
                                }
                             :widget wibox.container.background
                             })

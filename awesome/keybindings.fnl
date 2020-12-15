@@ -125,7 +125,7 @@
                      (awful.key [modkey] "b" (fn [] (awful.spawn "bwmenu"))
                                 {:description "launch rofi bitwarden selector" :group "launcher"})
                      ;; audio
-                     (awful.key [modkey] "a" (fn [] (awful.spawn "alacritty -e pulsemixer" {
+                     (awful.key [modkey] "a" (fn [] (awful.spawn "alacritty --class pulsemixer -e pulsemixer" {
                                                                                             :floating true
                                                                                             :placement awful.placement.centered
                                                                                             }))
