@@ -96,8 +96,12 @@
                                 {:description "screenshot" :group "utilities"})
                      (awful.key [ modkey ] "." (fn [] (awful.spawn "/home/chris/.dotfiles/rofi/launchers-git/emoji.sh"))
                                 {:description "emoji picker" :group "utilities"})
-                     (awful.key [ modkey ] "v" (get-volume)
-                                {:description "See current volume" :group "audio" })
+                     (awful.key [] "XF86MonBrightnessUp" (fn [] (awful.spawn
+                                                                  "light -A 5"))
+                                {:description "Increase monitor brightness by 5%" :group "utilities"})
+                     (awful.key [] "XF86MonBrightnessDown" (fn [] (awful.spawn
+                                                                  "light -U 5"))
+                                {:description "Decrease monitor brightness by 5%" :group "utilities"})
                      ;; Menubar
                      ;; (awful.key [ modkey ] "p" (fn [] (menubar.show))
                      ;;            {:description "show the menubar" :group "launcher"})
@@ -125,19 +129,19 @@
                      (awful.key [modkey] "b" (fn [] (awful.spawn "bwmenu"))
                                 {:description "launch rofi bitwarden selector" :group "launcher"})
                      ;; audio
-                     (awful.key [modkey] "a" (fn [] (awful.spawn "alacritty --class pulsemixer -e pulsemixer" {
+                     (awful.key [modkey] "a" (fn [] (awful.spawn "urxvt -e pulsemixer" {
                                                                                             :floating true
                                                                                             :placement awful.placement.centered
                                                                                             }))
                                 {:description "launch pacmixer" :group "audio"})
                      (awful.key [] "XF86AudioRaiseVolume" (fn [] (awful.spawn.with_shell
-                                                                  "pactl set-sink-volume @DEFAULT_SINK@ +5% && pactl play-sample audio-volume-change"))
+                                                                  "pactl set-sink-volume @DEFAULT_SINK@ +5% && paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"))
                                 {:description "Increase volume by 5%" :group "audio"})
                      (awful.key [] "XF86AudioLowerVolume" (fn [] (awful.spawn.with_shell
-                                                                  "pactl set-sink-volume @DEFAULT_SINK@ -5% && pactl play-sample audio-volume-change"))
+                                                                  "pactl set-sink-volume @DEFAULT_SINK@ -5% && paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"))
                                 {:description "Decrease volume by 5%" :group "audio"})
                      (awful.key [] "XF86AudioMute" (fn [] (awful.spawn.with_shell
-                                                                  "pactl set-sink-mute @DEFAULT_SINK@ toggle && pactl play-sample audio-volume-change"))
+                                                                  "pactl set-sink-mute @DEFAULT_SINK@ toggle && paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"))
                                 {:description "Mute volume" :group "audio"})
                      (awful.key [] "XF86Launch8" (fn [] (awful.spawn.with_shell
                                                                   "pactl set-source-mute @DEFAULT_SOURCE@ toggle"))

@@ -64,7 +64,6 @@
 (local ctrl "Control")
 (local alt "Mod1")
 
-;; (local volume-string (awful.widget.watch "pamixer --get-volume-human" 1))
 ;; Table of layouts to cover with awful.layout.inc, order matters.
 (set awful.layout.layouts [
                            awful.layout.suit.tile
@@ -290,13 +289,36 @@
                                         :layout wibox.layout.fixed.horizontal
                                         }))
 
+     (set s.batterytext (awful.widget.watch "cat /sys/class/power_supply/BAT1/capacity" 30))
+     (set s.batteryicon (wibox.widget.textbox " "))
+     (set s.batteryspace (wibox.widget.textbox "  "))
+
+     (set s.batterywidget (wibox.widget {
+                                         1 s.batteryicon
+                                         2 s.batterytext
+                                         3 s.batteryspace
+                                        :layout wibox.layout.fixed.horizontal
+                                        }))
+
+     (set s.cputext (awful.widget.watch "cat /proc/loadavg | awk '{print $1}'" 10))
+     (set s.cpuicon (wibox.widget.textbox " "))
+     (set s.cpuspace (wibox.widget.textbox "  "))
+
+     (set s.cpuwidget (wibox.widget {
+                                         1 s.cpuicon
+                                         2 s.cputext
+                                         3 s.cpuspace
+                                        :layout wibox.layout.fixed.horizontal
+                                        }))
+     
      (set s.myrightwidgets {
                             1 {
                                :layout wibox.layout.fixed.horizontal
-                               1 s.tempwidget
+                               1 s.cpuwidget
                                2 s.volumewidget
-                               3 wibox.widget.systray
-                               4 s.mylayoutbox
+                               3 s.batterywidget
+                               4 wibox.widget.systray
+                               5 s.mylayoutbox
                                }
                             :widget wibox.container.background
                             })
@@ -431,13 +453,18 @@
 (client.connect_signal "focus" (fn [c] (set c.border_color beautiful.border_focus)))
 (client.connect_signal "unfocus" (fn [c] (set c.border_color beautiful.border_normal)))
 
-(awful.spawn.with_shell "picom --experimental-backend")
-(awful.spawn.with_shell "xset r rate 220 90")
-(awful.spawn.with_shell "/usr/lib/polkit-kde-authentication-agent-1")
-(awful.spawn.with_shell "feh --bg-fill ~/Pictures/wallpapers/RoyalKing.png")
-(awful.spawn.with_shell "flameshot")
-(awful.spawn.with_shell "caffeine")
-(awful.spawn.with_shell "nextcloud --background")
-(awful.spawn.with_shell "emacs --with-profile --daemon default")
-(awful.spawn.with_shell "libinput-gestures-setup start")
-(awful.spawn.with_shell "bluetoothctl power on")
+(awful.spawn "picom --experimental-backend")
+(awful.spawn "xset r rate 220 90")
+(awful.spawn "/usr/lib/polkit-kde-authentication-agent-1")
+(awful.spawn "feh --bg-fill /home/chris/Pictures/wallpapers/RoyalKing.png")
+(awful.spawn "flameshot")
+(awful.spawn "caffeine")
+(awful.spawn "nextcloud --background")
+(awful.spawn "libinput-gestures-setup start")
+(awful.spawn "bluetoothctl power on")
+(awful.spawn.easy_async "hostname" (fn [stdout stderr reason exit_code]
+                                         (if (= "chris-linuxlaptop\n" stdout)
+                                             (awful.spawn "env GDK_SCALE=2 emacs --daemon")
+                                             (= "archdesktop\n" stdout)
+                                             (awful.spawn "emacs --daemon")
+                                             )))
