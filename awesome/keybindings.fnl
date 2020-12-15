@@ -115,7 +115,7 @@
                                 {:description "launch mu4e in new emacs frame" :group "apps" })
                      (awful.key [ modkey shift ] "Return" (fn [] (awful.spawn "emacsclient -c -e '(+eshell/frame)'"))
                                 {:description "launch eshell in new emacs frame" :group "apps" })
-                     (awful.key [ modkey ] "e" (fn [] (awful.spawn "emacsclient -c -a 'emacs'"))
+                     (awful.key [ modkey ] "e" (fn [] (awful.spawn "env GDK_SCALE=2 emacsclient -c -a 'emacs'"))
                                 {:description "launch new emacs frame" :group "apps" })
                      ;; rofi
                      (awful.key [] "Menu" (fn [] (awful.spawn "/home/chris/.dotfiles/rofi/launchers-git/launcher.sh"))
