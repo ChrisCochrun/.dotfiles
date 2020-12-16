@@ -20,9 +20,7 @@
 ;; my splits
 (local rules (require "rules"))
 (local keybindings (require "keybindings"))
-;; (local volume-widget (require :widgets.volume))
 
-;; (local bar (require "bar"))
 ;; Error handling
 ;; Check if awesome encountered an error during startup and fell back to
 ;; another config (This code will only ever execute for the fallback config)
@@ -63,6 +61,10 @@
 (local shift "Shift")
 (local ctrl "Control")
 (local alt "Mod1")
+
+;; Set hostname so that we can utilize specific features on different machines
+(var hostname "")
+(awful.spawn.easy_async "hostname" (fn [ stdout stderr reason exit_code ] (set hostname stdout)))
 
 ;; Table of layouts to cover with awful.layout.inc, order matters.
 (set awful.layout.layouts [
@@ -297,8 +299,7 @@
                                          1 s.batteryicon
                                          2 s.batterytext
                                          3 s.batteryspace
-                                        :layout wibox.layout.fixed.horizontal
-                                        }))
+                                         :layout wibox.layout.fixed.horizontal}))
 
      (set s.cputext (awful.widget.watch "cat /proc/loadavg | awk '{print $1}'" 10))
      (set s.cpuicon (wibox.widget.textbox " "))
@@ -316,7 +317,7 @@
                                :layout wibox.layout.fixed.horizontal
                                1 s.cpuwidget
                                2 s.volumewidget
-                               3 s.batterywidget
+                               3 (if (= "chris_linuxlaptop\n" hostname) s.batterywidget s.myemptywidget)
                                4 wibox.widget.systray
                                5 s.mylayoutbox
                                }
@@ -462,9 +463,7 @@
 (awful.spawn "nextcloud --background")
 (awful.spawn "libinput-gestures-setup start")
 (awful.spawn "bluetoothctl power on")
-(awful.spawn.easy_async "hostname" (fn [stdout stderr reason exit_code]
-                                         (if (= "chris-linuxlaptop\n" stdout)
-                                             (awful.spawn "env GDK_SCALE=2 emacs --daemon")
-                                             (= "archdesktop\n" stdout)
-                                             (awful.spawn "emacs --daemon")
-                                             )))
+(if (= "chris-linuxlaptop\n" hostname)
+    (awful.spawn "env GDK_SCALE=2 emacs --daemon")
+    (= "archdesktop\n" hostname)
+    (awful.spawn "emacs --daemon"))

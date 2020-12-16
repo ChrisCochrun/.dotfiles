@@ -1,0 +1,9 @@
+#!/usr/bin/env fish
+
+for aud in *.opus
+    touch $aud.txt
+    echo $aud >>$aud.txt
+    set newaud (sed "s/\.opus//g" $aud.txt)
+    echo $newaud
+    ffmpeg -i $aud -vn -ar 44100 -ac 2 -b:a 192k $newaud.mp3
+end
