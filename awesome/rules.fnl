@@ -56,19 +56,23 @@
                             :placement (+ awful.placement.no_offscreen awful.placement.centered)
                             }
                }
-              ;; Pacmixer center and smaller
+              ;; Pulsemixer center and smaller
               {
                :rule_any {
                           :class [
                                   "pulsemixer"
                                   "pulsemixer,Alacritty"
                                   ]
+                          :name [
+                                  "pulsemixer"
+                                  ]
                           }
                :properties {
                             :floating true
                             :raise true
-                            :height (dpi 600)
-                            :height (dpi 800)
+                            :ontop true
+                            ;; :height (dpi 350)
+                            ;; :width (dpi 700)
                             :placement (+ awful.placement.no_offscreen awful.placement.centered)
                             }
                }
