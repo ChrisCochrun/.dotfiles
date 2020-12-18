@@ -6,11 +6,5 @@
 
 config_version: 2
 settings:
-  content.geolocation:
-    https://staff.tfcconnection.org: true
   content.notifications:
     https://www.reddit.com: false
-    https://www.tradingview.com: false
-    https://staff.tfcconnection.org: false
-  content.register_protocol_handler:
-    https://staff.tfcconnection.org: true

@@ -129,22 +129,19 @@
                      (awful.key [modkey] "b" (fn [] (awful.spawn "bwmenu"))
                                 {:description "launch rofi bitwarden selector" :group "launcher"})
                      ;; audio
-                     (awful.key [modkey] "a" (fn [] (awful.spawn "urxvt -e pulsemixer" {
-                                                                                            :floating true
-                                                                                            :placement awful.placement.centered
-                                                                                            }))
-                                {:description "launch pacmixer" :group "audio"})
-                     (awful.key [] "XF86AudioRaiseVolume" (fn [] (awful.spawn.with_shell
-                                                                  "pactl set-sink-volume @DEFAULT_SINK@ +5% && paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"))
+                     (awful.key [modkey] "a" (fn [] (awful.spawn "urxvt -b 80 -g 80x14 --class pulsemixer -e pulsemixer"))
+                                {:description "launch pulsemixer" :group "audio"})
+                     (awful.key [] "XF86AudioRaiseVolume" (fn [] (awful.spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")
+                                                              (awful.spawn "paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"))
                                 {:description "Increase volume by 5%" :group "audio"})
-                     (awful.key [] "XF86AudioLowerVolume" (fn [] (awful.spawn.with_shell
-                                                                  "pactl set-sink-volume @DEFAULT_SINK@ -5% && paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"))
+                     (awful.key [] "XF86AudioLowerVolume" (fn [] (awful.spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%")
+                                                              (awful.spawn "paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"))
                                 {:description "Decrease volume by 5%" :group "audio"})
-                     (awful.key [] "XF86AudioMute" (fn [] (awful.spawn.with_shell
-                                                                  "pactl set-sink-mute @DEFAULT_SINK@ toggle && paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"))
+                     (awful.key [] "XF86AudioMute" (fn [] (awful.spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
+                                                       (awful.spawn "paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"))
                                 {:description "Mute volume" :group "audio"})
-                     (awful.key [] "XF86Launch8" (fn [] (awful.spawn.with_shell
-                                                                  "pactl set-source-mute @DEFAULT_SOURCE@ toggle"))
+                     (awful.key [] "XF86Launch8" (fn [] (awful.spawn "pactl set-source-mute @DEFAULT_SOURCE@ toggle")
+                                                     (awful.spawn "paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"))
                                 {:description "Mute microphone" :group "audio"})
 
                      ;; Because I don't know much fennel yet I'm doing each one individually

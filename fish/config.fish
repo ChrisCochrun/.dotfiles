@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-set -U fish_user_paths $fish_user_paths $HOME/.local/bin $HOME/scripts $HOME/.doom-emacs/bin
+set -U fish_user_paths $HOME/.local/bin $HOME/scripts $HOME/.doom-emacs/bin
 set TERM "xterm-256color"
 set EDITOR "emacsclient -t -a"
 set VISUAL "emacsclient -c -a emacs"
