@@ -129,7 +129,7 @@
                      (awful.key [modkey] "b" (fn [] (awful.spawn "bwmenu"))
                                 {:description "launch rofi bitwarden selector" :group "launcher"})
                      ;; audio
-                     (awful.key [modkey] "a" (fn [] (awful.spawn "urxvt -b 80 -g 80x14 --class pulsemixer -e pulsemixer"))
+                     (awful.key [modkey] "a" (fn [] (awful.spawn "alacritty -d 80 14 --class pulsemixer -e pulsemixer"))
                                 {:description "launch pulsemixer" :group "audio"})
                      (awful.key [] "XF86AudioRaiseVolume" (fn [] (awful.spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")
                                                               (awful.spawn "paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"))

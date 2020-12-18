@@ -51,19 +51,15 @@
                :properties {
                             :floating true
                             :raise true
-                            :height (dpi 900)
-                            :width (dpi 1500)
+                            ;; :height (dpi 900)
+                            ;; :width (dpi 1500)
                             :placement (+ awful.placement.no_offscreen awful.placement.centered)
                             }
                }
               ;; Pulsemixer center and smaller
               {
                :rule_any {
-                          :class [
-                                  "pulsemixer"
-                                  "pulsemixer,Alacritty"
-                                  ]
-                          :name [
+                          :instance [
                                   "pulsemixer"
                                   ]
                           }
@@ -71,8 +67,7 @@
                             :floating true
                             :raise true
                             :ontop true
-                            ;; :height (dpi 350)
-                            ;; :width (dpi 700)
+                            :screen awful.screen.preferred
                             :placement (+ awful.placement.no_offscreen awful.placement.centered)
                             }
                }
