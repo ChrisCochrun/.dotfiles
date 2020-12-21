@@ -51,7 +51,7 @@ window {
     text-color:                     @base05;
     border-radius:                  0px;
     border:                         0px;
-    width:                          50%;
+    width:                          60%;
     location:                       center;
     anchor:                         center;
     x-offset:                       0;

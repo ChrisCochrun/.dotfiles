@@ -19,6 +19,14 @@
 # not work in dash and others), so we cannot store the result of listfiles to a
 # variable.
 
+if [ $(hostname) = 'chris-linuxlaptop' ]; then
+    echo laptop
+    size=2300x1500
+else
+    echo desktop
+    size=1500x900
+fi
+
 if [ $# -eq 0 ]; then
     echo "Usage: ${0##*/} PICTURES"
     exit
@@ -42,7 +50,7 @@ target="$(abspath "$1")"
 count="$(listfiles | grep -m 1 -ZznF "$target" | cut -d: -f1)"
 
 if [ -n "$count" ]; then
-    listfiles | xargs -0 sxiv -g 1500x900 -n "$count" --
+    listfiles | xargs -0 sxiv -g $size -n "$count" --
 else
-    sxiv -g 1500x900 -- "$@" # fallback
+    sxiv -g $size -- "$@" # fallback
 fi
