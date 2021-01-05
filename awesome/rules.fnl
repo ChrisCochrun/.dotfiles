@@ -104,6 +104,21 @@
                             :placement (+ awful.placement.no_offscreen awful.placement.centered)
                             }
                }
+              {
+               :rule_any {
+                          :class [
+                                  "fp64"
+                                  ]
+                          :instance [
+                                     "fp64"
+                                     ]
+                          }
+               :properties {
+                            :fullscreen true
+                            :raise true
+                            :placement (+ awful.placement.no_offscreen awful.placement.centered)
+                            }
+               }
               ])
 
 rules

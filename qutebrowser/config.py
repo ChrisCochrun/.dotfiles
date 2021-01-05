@@ -9,6 +9,7 @@
 ## Documentation:
 ##   qute://help/configuring.html
 ##   qute://help/settings.html
+import glob
 
 ## This is here so configs done via the GUI are still loaded.
 ## Remove it to not load settings done via the GUI.
@@ -1037,7 +1038,7 @@ c.content.headers.do_not_track = True
 
 ## Enable host blocking.
 ## Type: Bool
-# c.content.host_blocking.enabled = True
+c.content.host_blocking.enabled = False
 
 ## List of URLs of lists which contain hosts to block.  The file can be
 ## in one of the following formats:  - An `/etc/hosts`-like file - One
@@ -1228,7 +1229,8 @@ c.content.headers.do_not_track = True
 
 ## List of user stylesheet filenames to use.
 ## Type: List of File, or File
-# c.content.user_stylesheets = []
+# or if you have a directory with .user.css files:
+c.content.user_stylesheets = glob.glob('./css*.user.css')
 
 ## Enable WebGL.
 ## Type: Bool
@@ -2426,7 +2428,7 @@ config.bind('o', 'set-cmd-text -s :open')
 ## Bindings for MPV and YTDL
 config.bind('v', 'hint links spawn --detach mpv --force-window yes {hint-url}')
 config.bind('gv', 'spawn --detach mpv --force-window yes {url}')
-config.bind('gc', 'spawn org-capture {url}')
+config.bind('gc', 'spawn org-capture "{url}"')
 config.bind('gV', 'hint links spawn alacritty -e youtube-dl -o ~/Videos/%(title)s.%(ext)s {hint-url}')
 
 ## Bindings for MPV and YTDL

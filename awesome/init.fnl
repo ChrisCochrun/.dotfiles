@@ -20,6 +20,7 @@
 ;; my splits
 (local rules (require "rules"))
 (local keybindings (require "keybindings"))
+;; (local notifications (require "notifications"))
 
 ;; Error handling
 ;; Check if awesome encountered an error during startup and fell back to
@@ -63,7 +64,7 @@
 (local alt "Mod1")
 
 ;; Set hostname so that we can utilize specific features on different machines
-(var laptop true )
+(var laptop false )
 (awful.spawn.easy_async "hostname" (fn [ stdout stderr reason exit_code ]
                                        (if (= "chris-linuxlaptop\n" stdout)
                                            (set laptop true)

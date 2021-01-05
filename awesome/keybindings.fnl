@@ -14,6 +14,10 @@
     (let [cb (or ?callback (fn [] nil))]
       (awful.spawn.easy_async_with_shell "pamixer --get-volume-human" cb)))
 
+(if (= "chris-linuxlaptop" (awful.spawn "hostname"))
+    (global bwmenu "bwmenu -- -config /home/chris/.dotfiles/rofi/launchers-git/laptop.rasi")
+    (global bwmenu "bwmenu -- -config /home/chris/.dotfiles/rofi/launchers-git/desktop.rasi"))
+
 (local keybindings
        {
         :globalkeys (gears.table.join
@@ -109,10 +113,10 @@
                      ;; Programs
                      (awful.key [ modkey ] "d" (fn [] (awful.spawn "emacsclient -c -e '(dired-jump)'"))
                                 {:description "launch dired in new emacs frame" :group "apps" })
-                     (awful.key [ modkey ] "x" (fn [] (awful.spawn "emacsclient -c -e '(+org-capture/open-frame)'"))
+                     (awful.key [ modkey ] "x" (fn [] (awful.spawn "org-capture"))
                                 {:description "launch scratchpad in new emacs frame" :group "apps" })
                      (awful.key [ modkey alt ] "m" (fn [] (awful.spawn "emacsclient -c -e '(org-roam-capture)'"))
-                                {:description "launch scratchpad in new emacs frame" :group "apps" })
+                                {:description "launch org-roam-capture in new emacs frame" :group "apps" })
                      (awful.key [ modkey shift ] "x" (fn [] (awful.spawn "emacsclient -c -e '(doom/switch-to-scratch-buffer)'"))
                                 {:description "launch scratchpad in new emacs frame" :group "apps" })
                      (awful.key [ modkey ] "i" (fn [] (awful.spawn "emacsclient -c -e '(mu4e)'"))
@@ -126,8 +130,10 @@
                                 {:description "launch rofi" :group "launcher"})
                      (awful.key [modkey] "w" (fn [] (awful.spawn "/home/chris/.dotfiles/rofi/launchers-git/windows.sh"))
                                 {:description "launch rofi window switcher" :group "launcher"})
-                     (awful.key [modkey] "b" (fn [] (awful.spawn "bwmenu"))
+                     (awful.key [modkey] "b" (fn [] (awful.spawn bwmenu))
                                 {:description "launch rofi bitwarden selector" :group "launcher"})
+                     (awful.key [modkey] "y" (fn [] (awful.spawn "yt -r"))
+                                {:description "search youtube" :group "launcher"})
                      ;; audio
                      (awful.key [modkey] "a" (fn [] (awful.spawn "alacritty -d 80 14 --class pulsemixer -e pulsemixer"))
                                 {:description "launch pulsemixer" :group "audio"})
@@ -143,6 +149,16 @@
                      (awful.key [] "XF86Launch8" (fn [] (awful.spawn "pactl set-source-mute @DEFAULT_SOURCE@ toggle")
                                                      (awful.spawn "paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga"))
                                 {:description "Mute microphone" :group "audio"})
+                     (awful.key [modkey] "]" (fn [] (awful.spawn "mpvc -x 0.10"))
+                                {:description "MPV speed up by .10" :group "audio"})
+                     (awful.key [modkey] "[" (fn [] (awful.spawn "mpvc -x -0.10"))
+                                {:description "MPV slow down by .10" :group "audio"})
+                     (awful.key [modkey] "=" (fn [] (awful.spawn "mpvc -X 1.95"))
+                                {:description "MPV set to 2x speed" :group "audio"})
+                     (awful.key [modkey shift] "0" (fn [] (awful.spawn "mpvc -t 10"))
+                                {:description "MPV seek forward 10 sec" :group "audio"})
+                     (awful.key [modkey shift] "9" (fn [] (awful.spawn "mpvc -t -20"))
+                                {:description "MPV seek backward 20 sec" :group "audio"})
 
                      ;; Because I don't know much fennel yet I'm doing each one individually
                      ;; View tags only.
