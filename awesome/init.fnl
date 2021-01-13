@@ -64,10 +64,9 @@
 (local alt "Mod1")
 
 ;; Set hostname so that we can utilize specific features on different machines
-(var laptop false )
 (awful.spawn.easy_async "hostname" (fn [ stdout stderr reason exit_code ]
                                        (if (= "chris-linuxlaptop\n" stdout)
-                                           (set laptop true)
+                                           (global laptop true)
                                            (naughty.notify {:text "didn't set"}))))
 (if laptop (naughty.notify {:text "yayyayayayayayyay"}))
 (naughty.notify {:text (tostring laptop)})
@@ -466,7 +465,7 @@
 (awful.spawn "feh --bg-fill /home/chris/Pictures/wallpapers/RoyalKing.png")
 (awful.spawn "flameshot")
 (awful.spawn "caffeine")
-(awful.spawn "nextcloud --background")
+;; (awful.spawn "nextcloud --background")
 (awful.spawn "libinput-gestures-setup start")
 (awful.spawn "bluetoothctl power on")
 (if laptop (awful.spawn "env GDK_SCALE=2 emacs --daemon") (awful.spawn "emacs --daemon"))
