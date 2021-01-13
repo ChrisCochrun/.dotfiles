@@ -14,9 +14,10 @@
     (let [cb (or ?callback (fn [] nil))]
       (awful.spawn.easy_async_with_shell "pamixer --get-volume-human" cb)))
 
-(if (= "chris-linuxlaptop" (awful.spawn "hostname"))
-    (global bwmenu "bwmenu -- -config /home/chris/.dotfiles/rofi/launchers-git/laptop.rasi")
-    (global bwmenu "bwmenu -- -config /home/chris/.dotfiles/rofi/launchers-git/desktop.rasi"))
+(awful.spawn.easy_async "cat /etc/hostname" (fn [ stdout stderr reason exit_code ]
+                                                (if (= "chris-linuxlaptop\n" stdout)
+                                                    (global bwmenu "bwmenu -- -config /home/chris/.dotfiles/rofi/launchers-git/laptop.rasi")
+                                                    (global bwmenu "bwmenu -- -config /home/chris/.dotfiles/rofi/launchers-git/desktop.rasi"))))
 
 (local keybindings
        {

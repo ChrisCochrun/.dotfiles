@@ -64,12 +64,12 @@
 (local alt "Mod1")
 
 ;; Set hostname so that we can utilize specific features on different machines
+(global laptop true)
 (awful.spawn.easy_async "hostname" (fn [ stdout stderr reason exit_code ]
                                        (if (= "chris-linuxlaptop\n" stdout)
                                            (global laptop true)
                                            (naughty.notify {:text "didn't set"}))))
-(if laptop (naughty.notify {:text "yayyayayayayayyay"}))
-(naughty.notify {:text (tostring laptop)})
+(if laptop (naughty.notify {:text "laptop detected"}))
 
 ;; Table of layouts to cover with awful.layout.inc, order matters.
 (set awful.layout.layouts [
