@@ -18,7 +18,7 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-background = #282a36
+background = #CC282a36
 background-alt = #34353e
 ;foreground = ${xrdb:color7:#222}
 foreground = #a5a5a9
@@ -34,7 +34,7 @@ width = 100%
 height = 60
 ;offset-x = 1%
 ;offset-y = 1%
-radius = 28.0
+radius = 0.0
 fixed-center = true
 bottom = true
 
@@ -44,28 +44,29 @@ foreground = ${colors.foreground}
 line-size = 3
 line-color = #f00
 
-border-size = 15
+border-size = 0
 border-color = #00000000
 
-padding-left = 13
-padding-right = 2
+padding-left = 1
+padding-right = 0
 
 module-margin-left = 1
 module-margin-right = 1
 
-font-0 = VictorMono Nerd Font Mono:size=20;1
+font-0 = VictorMono Nerd Font Mono:size=20;4
 font-1 = unifont:fontformat=truetype:size=19:antialias=false;0
 font-2 = siji:pixelsize=30;1
-font-3 = all-the-icons:size=40;1
+font-3 = all\-the\-icons:style=Regular:size=30;6
+font-4 = VictorMono Nerd Font Mono:size=40;11
 
-modules-left = exwm-buffer-name
-modules-center = date 
-modules-right = filesystem exwm-mail xbacklight pulseaudio memory cpu wlan battery powermenu
+modules-left = filesystem exwm-mail xbacklight pulseaudio exwm-buffer-name
+modules-center = memory date cpu 
+modules-right =  wlan battery powermenu
 
-tray-position = center
+tray-position = right
 tray-padding = 5
 tray-maxsize = 30
-tray-offset-x = -1400
+; tray-offset-x = -1428
 
 ;wm-restack = bspwm
 ;wm-restack = i3
@@ -140,36 +141,25 @@ enable-ipc = true
 
 [module/exwm-buffer-name]
 type = custom/ipc
-hook-0 = emacsclient -e "(buffer-name)"
+hook-0 = emacsclient -e '(selected-frame)' | sed -r "s/.*e([[:space:]].*)0x.*/\1/" | sed -r "s/(...Doom.Emacs)//"
 initial = 1
+format = <label>
 format-foreground = ${colors.primary}
+label = %output%
+label-maxlen = 30
 
 [module/exwm-mail]
 type = custom/ipc
 hook-0 = emacsclient -e "mu4e-alert-mode-line"
 initial = 1
-format-prefix = " "
+format-prefix = "  "
 format-prefix-foreground = ${colors.secondary}
+format-prefix-font = 5
 
 [module/xwindow]
 type = internal/xwindow
 label = %title:0:30:...%
-
-[module/xkeyboard]
-type = internal/xkeyboard
-blacklist-0 = num lock
-
-format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
-format-prefix-underline = ${colors.secondary}
-
-label-layout = %layout%
-label-layout-underline = ${colors.secondary}
-
-label-indicator-padding = 2
-label-indicator-margin = 1
-label-indicator-background = ${colors.secondary}
-label-indicator-underline = ${colors.secondary}
+label-foreground = ${colors.primary}
 
 [module/filesystem]
 type = internal/fs
@@ -207,7 +197,8 @@ card = intel_backlight
 type = internal/cpu
 interval = 2
 format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-foreground = ${colors.secondary}
+format-prefix-font = 5
 label = %percentage:2%%
 
 [module/memory]
@@ -259,10 +250,10 @@ format-disconnected =
 type = internal/date
 interval = 5
 
-date = "%a %b %e, "
+date = "  %a %b %e, "
 date-alt = " %Y-%m-%d"
 
-time = %l:%M %p
+time = "%l:%M %p  "
 time-alt = %H:%M
 
 format-prefix = 
@@ -415,7 +406,7 @@ compositing-background = xor
 pseudo-transparency = true
 
 [global/wm]
-margin-top = 3
-margin-bottom = 2
+margin-top = 0
+margin-bottom = 0
 
 ; vim:ft=dosini
