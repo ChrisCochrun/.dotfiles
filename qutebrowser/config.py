@@ -1813,7 +1813,7 @@ c.statusbar.padding = {'top': 1, 'bottom': 1, 'left': 0, 'right': 2}
 ##   - always: Always show the statusbar.
 ##   - never: Always hide the statusbar.
 ##   - in-mode: Show the statusbar when in modes other than normal mode.
-# c.statusbar.show = 'always'
+c.statusbar.show = 'in-mode'
 
 ## List of widgets displayed in the statusbar.
 ## Type: List of String
